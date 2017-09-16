@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Document>
+    <Pays nom="France">
+        <Capitale>Paris</Capitale>
+        <Population date="2007">64102000</Population>
+    </Pays>
+    <Pays nom="Italie">
+        <Capitale>Rome</Capitale>
+        <Population date="2006">58133509</Population>
+    </Pays>
+    <Pays nom="Espagne">
+        <Capitale>Madrid</Capitale>
+        <Population date="2006">44708964</Population>
+    </Pays>
+</Document>

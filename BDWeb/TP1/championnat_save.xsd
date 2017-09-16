@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="championnat">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="clubs" type="clubs" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="journees" type="journees" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+
+    <xs:key name="clubId">
+      <xs:selector xpath="clubId" />
+      <xs:field xpath="@key-id" />
+    </xs:key>
+  </xs:element>
+  
+  <!-- CLUBS -->
+
+  <xs:complexType name="clubs">
+    <xs:sequence>
+      <xs:element name="club" type="club" minOccurs="20" maxOccurs="20">
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="club">
+    <xs:sequence>
+      <xs:element name="nom" type="xs:string"/>
+      <xs:element name="ville" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- JOURNEES -->
+  
+  <xs:complexType name="journees">
+    <xs:sequence>
+      <xs:element name="journee" type="journee" minOccurs="0" maxOccurs="38">
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="journee">
+    <xs:sequence>
+      <xs:element name="date" type="xs:date"/>
+      <xs:element name="rencontre" minOccurs="1" maxOccurs="10"/>
+    </xs:sequence>
+    <xs:attribute name="num" type="xs:integer" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="rencontre">
+    <xs:sequence>
+      <xs:element name="clubReceveur" type="xs:string"/>
+      <xs:element name="clubInvite" type="xs:string"/>
+      <xs:element name="score" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
