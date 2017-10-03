@@ -1,18 +1,18 @@
 require 'rake/clean'
 
-CLEAN.include('∗.o','example')
+CLEAN.include('*.o','example')
 
 task :default => ["example"]
 
-SRC = FileList['∗.c']
+SRC = FileList['*.c']
 OBJ = SRC.ext('o')
 
 rule '.o' => '.c' do |t|
-	sh "cc −c −o #{t.name} #{t.source}"
+	sh "cc -c -o #{t.name} #{t.source}"
 end
 
 file "example" => OBJ do
-	sh "cc −o example #{OBJ}"
+	sh "cc -o example #{OBJ}"
 end
 
 # File dependencies go here ...

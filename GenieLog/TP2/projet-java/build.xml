@@ -15,11 +15,11 @@
 
 	<target name="dist" depends="compile" description="generate the 'distribution" >
 <mkdir dir="${dist}/lib"/>
-<jar jarfile="${dist}/lib/MyProject−${DSTAMP}.jar" '
+<jar jarfile="${dist}/lib/MyProject−${DSTAMP}.jar"
 basedir="${build}">
-<manifest>
-<attribute name="Main−Class" value="Main"/>
-</manifest>
+	<manifest>
+		<attribute name="Main−Class" value="Main"/>
+	</manifest>
 </jar>
 </target>
 <target name="clean" description="clean up" >
