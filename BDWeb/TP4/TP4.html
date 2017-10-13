@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+</head>
+<body>
+<h1 id="tp4">TP4</h1>
+<h2 id="exercice-1">Exercice 1</h2>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;html&gt;</span>
+ <span class="kw">&lt;body&gt;</span>
+    <span class="kw">&lt;table</span><span class="ot"> border=</span><span class="st">&quot;1&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;thead&gt;</span>
+            <span class="kw">&lt;tr&gt;&lt;th&gt;</span>Maisons<span class="kw">&lt;/th&gt;&lt;th&gt;</span>Surfaces (m2)<span class="kw">&lt;/th&gt;&lt;/tr&gt;</span>
+        <span class="kw">&lt;/thead&gt;</span>
+        <span class="kw">&lt;tbody&gt;</span>
+            {
+            for $x in doc(&quot;maisons.xml&quot;)/maisons/maison
+            return 
+                <span class="kw">&lt;tr&gt;</span>
+                    <span class="kw">&lt;td&gt;</span>Maison {data($x/@id)}<span class="kw">&lt;/td&gt;</span>
+                    <span class="kw">&lt;td&gt;</span>{sum($x//@surface-m2 except $x//alcove/@surface-m2)}<span class="kw">&lt;/td&gt;</span>
+                <span class="kw">&lt;/tr&gt;</span>
+            }
+        <span class="kw">&lt;/tbody&gt;</span>
+    <span class="kw">&lt;/table&gt;</span>
+ <span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span> </code></pre></div>
+<h2 id="exercice-2">Exercice 2</h2>
+<ol style="list-style-type: decimal">
+<li><ol style="list-style-type: lower-alpha">
+<li><p>Affiche le nombre total de déclarations rdf:type. Exemple : rdf:type humans:Man, humans:Researcher ; Correspond à deux déclarations.</p></li>
+<li><pre><code>PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX humans: &lt;http://www.inria.fr/2007/09/11/humans.rdfs#&gt;
+SELECT ?type WHERE
+{
+?c humans:name &quot;John&quot; .
+?c rdf:type ?type .
+}</code></pre></li>
+</ol></li>
+<li><p>Retourne les instances ayant une arete hasSpouse.</p></li>
+<li><pre><code>PREFIX humans: &lt;http://www.inria.fr/2007/09/11/humans.rdfs#&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+SELECT ?x WHERE
+{
+?x humans:age ?age .
+FILTER (xsd:integer(?age) &gt; &quot;20&quot;^^xsd:integer)
+}</code></pre></li>
+<li><ol style="list-style-type: lower-alpha">
+<li><pre><code>PREFIX humans: &lt;http://www.inria.fr/2007/09/11/humans.rdfs#&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+SELECT ?x ?pointure WHERE
+{
+?x rdf:type humans:Person .
+?x humans:shoesize ?pointure.
+}</code></pre></li>
+<li><pre><code>PREFIX humans: &lt;http://www.inria.fr/2007/09/11/humans.rdfs#&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+SELECT ?x ?pointure WHERE
+{
+?x rdf:type humans:Person .
+OPTIONAL { ?x humans:shoesize ?pointure. }
+}</code></pre></li>
+<li><pre><code>PREFIX humans: &lt;http://www.inria.fr/2007/09/11/humans.rdfs#&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+SELECT ?x ?pointure WHERE
+{
+?x rdf:type humans:Person .
+OPTIONAL
+{
+?x humans:shoesize ?pointure.
+FILTER (xsd:integer(?pointure) &gt; &quot;8&quot;^^xsd:integer)
+}
+}</code></pre></li>
+<li></li>
+</ol></li>
+</ol>
+<pre><code>PREFIX humans: &lt;http://www.inria.fr/2007/09/11/humans.rdfs#&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+SELECT ?x ?pointure ?chemise WHERE
+{
+?x rdf:type humans:Person .
+
+{
+?x humans:shoesize ?pointure.
+FILTER (xsd:integer(?pointure) &gt; &quot;8&quot;^^xsd:integer)
+}
+UNION
+{
+?x humans:shirtsize ?chemise .
+FILTER (xsd:integer(?chemise) &gt; &quot;12&quot;^^xsd:integer)
+}
+} </code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li><ol style="list-style-type: lower-alpha">
+<li><pre><code>PREFIX humans: &lt;http://www.inria.fr/2007/09/11/humans.rdfs#&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+SELECT * WHERE
+{
+?x humans:name &quot;John&quot;.
+?x ?links ?p.
+}</code></pre></li>
+<li><pre><code>PREFIX humans: &lt;http://www.inria.fr/2007/09/11/humans.rdfs#&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+DESCRIBE ?x WHERE
+{
+?x humans:name &quot;John&quot;.
+}</code></pre></li>
+</ol></li>
+<li><ol style="list-style-type: lower-alpha">
+<li><pre><code>PREFIX humans: &lt;http://www.inria.fr/2007/09/11/humans.rdfs#&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+SELECT ?parent ?enfant WHERE
+{
+{?enfant humans:hasParent ?parent.}
+UNION
+{?enfant humans:hasFather ?parent.}
+UNION
+{?parent humans:hasChild ?enfant.}
+UNION
+{?enfant humans:hasMother ?parent.}
+}</code></pre></li>
+<li><pre><code>PREFIX humans: &lt;http://www.inria.fr/2007/09/11/humans.rdfs#&gt;
+PREFIX instance: &lt;http://www.inria.fr/2007/09/11/humans.rdfs-instances#&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+SELECT ?parent WHERE
+{
+{?enfant humans:hasParent ?parent.}
+UNION
+{?enfant humans:hasFather ?parent.}
+UNION
+{?parent humans:hasChild ?enfant.}
+UNION
+{?enfant humans:hasMother ?parent.}
+}</code></pre></li>
+<li><pre><code>PREFIX humans: &lt;http://www.inria.fr/2007/09/11/humans.rdfs#&gt;
+PREFIX instance: &lt;http://www.inria.fr/2007/09/11/humans.rdfs-instances#&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+SELECT DISTINCT ?parent WHERE
+{
+{?enfant humans:hasParent ?parent.}
+UNION
+{?enfant humans:hasFather ?parent.}
+UNION
+{?parent humans:hasChild ?enfant.}
+UNION
+{?enfant humans:hasMother ?parent.}
+}</code></pre></li>
+<li>``` PREFIX humans: <a href="http://www.inria.fr/2007/09/11/humans.rdfs#" class="uri">http://www.inria.fr/2007/09/11/humans.rdfs#</a> PREFIX instance: <a href="http://www.inria.fr/2007/09/11/humans.rdfs-instances#" class="uri">http://www.inria.fr/2007/09/11/humans.rdfs-instances#</a> PREFIX rdf: <a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#" class="uri">http://www.w3.org/1999/02/22-rdf-syntax-ns#</a> PREFIX xsd: <a href="http://www.w3.org/2001/XMLSchema#" class="uri">http://www.w3.org/2001/XMLSchema#</a> SELECT DISTINCT ?parent WHERE { ?parent rdf:type humans:Man.</li>
+</ol></li>
+</ol>
+<p>MINUS {?enfant humans:hasParent ?parent. } MINUS {?enfant humans:hasFather ?parent.} MINUS {?parent humans:hasChild ?enfant.} MINUS {?enfant humans:hasMother ?parent.} }</p>
+<pre><code>
+    e.</code></pre>
+<p>PREFIX humans: <a href="http://www.inria.fr/2007/09/11/humans.rdfs#" class="uri">http://www.inria.fr/2007/09/11/humans.rdfs#</a> PREFIX instance: <a href="http://www.inria.fr/2007/09/11/humans.rdfs-instances#" class="uri">http://www.inria.fr/2007/09/11/humans.rdfs-instances#</a> PREFIX rdf: <a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#" class="uri">http://www.w3.org/1999/02/22-rdf-syntax-ns#</a> PREFIX xsd: <a href="http://www.w3.org/2001/XMLSchema#" class="uri">http://www.w3.org/2001/XMLSchema#</a> SELECT ?mere ?enfant WHERE { ?mere rdf:type humans:Woman. ?mere humans:hasSpouse ?x.</p>
+<p>OPTIONAL {?mere humans:hasChild ?enfant.} OPTIONAL {?enfant humans:hasMother ?mere.} }</p>
+<pre><code>
+7.
+</code></pre>
+<p>PREFIX humans: <a href="http://www.inria.fr/2007/09/11/humans.rdfs#" class="uri">http://www.inria.fr/2007/09/11/humans.rdfs#</a> PREFIX instance: <a href="http://www.inria.fr/2007/09/11/humans.rdfs-instances#" class="uri">http://www.inria.fr/2007/09/11/humans.rdfs-instances#</a> PREFIX rdf: <a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#" class="uri">http://www.w3.org/1999/02/22-rdf-syntax-ns#</a> PREFIX xsd: <a href="http://www.w3.org/2001/XMLSchema#" class="uri">http://www.w3.org/2001/XMLSchema#</a> SELECT DISTINCT ?x ?y WHERE { ?x humans:shirtsize ?taille. ?y humans:shirtsize ?taille. FILTER (?x != ?y) }</p>
+<pre><code>
+8.
+
+    a.</code></pre>
+<p>PREFIX humans: <a href="http://www.inria.fr/2007/09/11/humans.rdfs#" class="uri">http://www.inria.fr/2007/09/11/humans.rdfs#</a> PREFIX instance: <a href="http://www.inria.fr/2007/09/11/humans.rdfs-instances#" class="uri">http://www.inria.fr/2007/09/11/humans.rdfs-instances#</a> PREFIX rdf: <a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#" class="uri">http://www.w3.org/1999/02/22-rdf-syntax-ns#</a> PREFIX xsd: <a href="http://www.w3.org/2001/XMLSchema#" class="uri">http://www.w3.org/2001/XMLSchema#</a> CONSTRUCT {?x humans:hasFriend ?y } WHERE { {?x humans:hasFriend ?y.} UNION {?y humans:hasFriend ?x.} }</p>
+<pre><code>
+    b.</code></pre>
+<p>PREFIX humans: <a href="http://www.inria.fr/2007/09/11/humans.rdfs#" class="uri">http://www.inria.fr/2007/09/11/humans.rdfs#</a> PREFIX instance: <a href="http://www.inria.fr/2007/09/11/humans.rdfs-instances#" class="uri">http://www.inria.fr/2007/09/11/humans.rdfs-instances#</a> PREFIX rdf: <a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#" class="uri">http://www.w3.org/1999/02/22-rdf-syntax-ns#</a> PREFIX xsd: <a href="http://www.w3.org/2001/XMLSchema#" class="uri">http://www.w3.org/2001/XMLSchema#</a> CONSTRUCT { ?x humans:hasFriend ?y. } WHERE { ?x (humans:hasFriend|^humans:hasFriend)+ ?y }</p>
+<pre><code>
+9.
+</code></pre>
+<p>PREFIX humans: <a href="http://www.inria.fr/2007/09/11/humans.rdfs#" class="uri">http://www.inria.fr/2007/09/11/humans.rdfs#</a> PREFIX instance: <a href="http://www.inria.fr/2007/09/11/humans.rdfs-instances#" class="uri">http://www.inria.fr/2007/09/11/humans.rdfs-instances#</a> PREFIX rdf: <a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#" class="uri">http://www.w3.org/1999/02/22-rdf-syntax-ns#</a> PREFIX xsd: <a href="http://www.w3.org/2001/XMLSchema#" class="uri">http://www.w3.org/2001/XMLSchema#</a> SELECT DISTINCT ?y WHERE { ?y rdf:type ?l. MINUS {?y rdf:type humans:Man. } } ```</p>
+</body>
+</html>
