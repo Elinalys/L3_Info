@@ -1,0 +1,108 @@
+ ./sparql --data ../../human.ttl --query "../../requete3.rq"
+ 1a :
+ Affiche le nombre total de déclarations rdf:type.
+ Exemple :
+ rdf:type humans:Man, humans:Researcher ;
+ Correspond à deux déclarations.
+
+ 1b :
+ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+ PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+ SELECT ?type WHERE
+{
+?c humans:name "John" .
+?c rdf:type ?type .
+
+}
+
+2 :
+Retourne les instances ayant une arete hasSpouse.
+
+3 :
+PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?x WHERE
+{
+?x humans:age ?age .
+FILTER (xsd:integer(?age) > "20"^^xsd:integer)
+
+}
+
+4a.
+PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?x ?pointure WHERE
+{
+?x rdf:type humans:Person .
+?x humans:shoesize ?pointure.
+
+}
+
+4b.
+PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?x ?pointure WHERE
+{
+?x rdf:type humans:Person .
+OPTIONAL { ?x humans:shoesize ?pointure.  }
+
+}
+
+4c.
+PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?x ?pointure WHERE
+{
+?x rdf:type humans:Person .
+OPTIONAL
+{
+?x humans:shoesize ?pointure.
+FILTER (xsd:integer(?pointure) > "8"^^xsd:integer)
+
+}
+
+}
+
+4d.
+PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?x ?pointure ?chemise WHERE
+{
+?x rdf:type humans:Person .
+?x humans:shoesize ?pointure.
+?x humans:shirtsize ?chemise .
+FILTER (xsd:integer(?pointure) > "8"^^xsd:integer || xsd:integer(?chemise) > "12"^^xsd:integer)
+
+}
+
+5a.
+QUESTION PAS ASSEZ DE GAUCHE.
+AUCUN DROIT DE PROPRIETE NE PEUT ETRE TOLERE SUR UN HUMAIN !
+
+5b.
+PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+DESCRIBE ?x WHERE
+{
+?x humans:name "John".
+
+}
+
+6a.
+FLEMME DE CONTINUER, DONC ELLE EST PAS TERMINEE.
+PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?parent ?enfant WHERE
+{
+{?enfant humans:hasParent ?parent.}
+UNION
+{?enfant humans:hasFather ?parent.}
+
+}
