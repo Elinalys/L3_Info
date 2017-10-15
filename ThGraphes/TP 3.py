@@ -1,7 +1,4 @@
-global d
-global f
-global date
-
+#graphes d'exemples (pour tests)
 cycle= Graph();
 cycle.add_edges([[i,(i+1)%6]for i in range(6)]);
 
@@ -31,8 +28,7 @@ art.add_edges([[0,1],[1,2],[2,3],[0,3],[0,2],[2,4],[4,5],[5,6],[6,7],[5,7],[4,8]
 no_con = Graph(5)    #no connectivity
 no_con.add_edges([[0,1],[1,2],[2,0],[3,4]])
 
-def pronfondeur_recursif(g, couleur, v, L,T,C):
-    global date
+def pronfondeur_recursif(g, couleur, v, L,T,C, date, d, f):
     couleur[v] = 'Gris'
     date = date+1
     d[v] = date
@@ -48,7 +44,7 @@ def pronfondeur_recursif(g, couleur, v, L,T,C):
         if couleur[voisin] == 'Blanc':
             T.add_edges([[voisin, v, 1]])
             couleur[voisin] = 'Gris'
-            pronfondeur_recursif(g, couleur, voisin, L,T,C)
+            pronfondeur_recursif(g, couleur, voisin, L,T,C, date, d, f)
 
     couleur[v] = 'Noir'
     date = date+1
@@ -128,30 +124,31 @@ def show_2_edge_connected(G, visited):
         i
 
 def Schmidt(G):
+    # Variable pour parcours pronfondeur
     depart = g.vertices()[0]
     couleur = []
-    L = []
-    C = [] # each backedge == a chain
+    L = []          # ordre du parcours en profondeur
+    date = 0
+    del d[:]        # dates de debut
+    del f[:]        # dates de fin
+
+    # Variable pour decomposition en chaine
+    C = []          # Ensemble des chaines (C1, C2... Ck)
     visited = []
-    del d[:]
-    del f[:]
-    global date
-    date = 0;
-    boucle = 0;
 
     L.append(depart)
-    T = DiGraph(len(G.vertices()));
+    T = DiGraph(len(G.vertices())); # Tree (du parcours en profondeur)
 
-    for v in G.vertices():
+    for v in G.vertices(): # Initialisation
         couleur.append('Blanc')
         d.append(-1)
         f.append(-1)
 
-    for v in G.vertices():
+    for v in G.vertices(): # Parcours Profondeur(création de T)
         if couleur[v]  == 'Blanc':
-            couleur = pronfondeur_recursif(G,couleur,v,L,T,C);
+            couleur = pronfondeur_recursif(G,couleur,v,L,T,C, date, d, f);
 
-        if (len(G.vertices()) != len(L)):
+        if (len(G.vertices()) != len(L)): # G non connexe
             print "G is not connected."
             return Graph(0)
 
@@ -166,14 +163,9 @@ def Schmidt(G):
     else:
         print "2-CONNECTED."
 
-    #print "parcours en profondeur : " + str(L)
     return T
 
-g = fig1
+g = TP
 g.show()
 
-d = []
-f = []
 Schmidt(g).show()
-#print "debut : " + str(d)
-#print "fin : " + str(f)
