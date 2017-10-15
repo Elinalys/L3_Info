@@ -22,7 +22,7 @@ TP.add_edges([[0,1],[1,2],[4,3],[1,4],[2,3],[3,5],[5,6],[6,8],[7,8],[5,7],[6,9],
 fig1 = Graph(7) # Figure 1 of the TP document
 fig1.add_edges([[0,1],[1,2],[2,0],[2,3],[3,4],[4,5],[5,6],[6,2]])
 
-fig2 = Graph(10) # Figure 2 of the TP document
+fig2 = Graph(12) # Figure 2 of the TP document
 fig2.add_edges([[0,1],[1,2],[2,4],[4,3],[3,1],[4,5],[5,6],[6,8],[5,7],[7,8],[6,9],[9,10],[9,12],[10,11],[11,12],[11,13],[12,13]])
 
 art = Graph(10) # The graph in the scientific article (given as example)
@@ -63,6 +63,7 @@ def decomposition_en_chaine(T,C,visited):
             if c[0] not in visited:
                 visited.append([])
                 visited[len(visited)-1].append(c[0])
+
             decomposition_en_chaine_recursif(T, visited,v)
 
     print "visited : " + str(visited)
@@ -79,6 +80,7 @@ def decomposition_en_chaine_recursif(T, visited, v):
         else:
             return
 
+# Retourne True s'il y a un cycle différent de C[0]
 def is_there_various_circles(T,visited):
     for i in range(1, len(visited)):
         chain = visited[i]
@@ -94,6 +96,36 @@ def countSublists(lists):
                 newList.append(ele)
 
     return len(newList)
+
+# Créé un graphe G1, qui parcourt les sommets visités dans l'ordre, et les ajoute comme cycle (éléments connexes)
+def show_2_connected(G,visited):
+    found = []
+    G1 = Graph (G.order()+1)
+    for i in visited:
+        for y in range(0,len(i)):
+            current = i[y]
+            if i[y] in found:
+                current = max(G.order(),len(found))
+
+            if y == 0:
+                G1.add_edge(i[0],i[len(i)-1])    # relie le premier element du cycle au dernier
+            else:
+                G1.add_edge(current,found[len(found)-1])    # relie deux sommets consecutifs du cycle ou chemin
+
+            found.append(current)
+
+    G1.show()    # Affichage
+
+def max(value1, value2):
+    if value1 >= value2:
+        return value1
+    else :
+        return value2
+
+def show_2_edge_connected(G, visited):
+    found = []
+    for i in visited:
+        i
 
 def Schmidt(G):
     depart = g.vertices()[0]
@@ -120,22 +152,24 @@ def Schmidt(G):
             couleur = pronfondeur_recursif(G,couleur,v,L,T,C);
 
         if (len(G.vertices()) != len(L)):
-            print "G is neither 2- nor 2-edge-connected. (no connectivity)"
+            print "G is neither 2- nor 2-edge-connected. (not connected)"
             return Graph(0)
 
     decomposition_en_chaine(T,C,visited)
 
     if len(G.vertices()) != countSublists(visited):
         print "Not a 2-EDGE-CONNECTED."
+        show_2_edge_connected(G, visited)
     elif is_there_various_circles(T,visited):
         print "2-EDGE-CONNECTED BUT NOT 2-CONNECTED."
+        show_2_connected(G, visited)
     else:
         print "2-CONNECTED."
 
     #print "parcours en profondeur : " + str(L)
     return T
 
-g = fig2
+g = fig1
 g.show()
 
 d = []
