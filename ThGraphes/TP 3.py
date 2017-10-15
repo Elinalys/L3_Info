@@ -75,7 +75,7 @@ def decomposition_en_chaine_recursif(T, visited, v):
         print "error"
 
     for neighbor in T.neighbors_out(v):
-        if not any(neighbor in sublist for sublist in visited):
+        if not any(neighbor in sublist for sublist in visited): # sommet non présent dans visited
             decomposition_en_chaine_recursif(T, visited, neighbor)
         else:
             return
@@ -152,7 +152,7 @@ def Schmidt(G):
             couleur = pronfondeur_recursif(G,couleur,v,L,T,C);
 
         if (len(G.vertices()) != len(L)):
-            print "G is neither 2- nor 2-edge-connected. (not connected)"
+            print "G is not connected."
             return Graph(0)
 
     decomposition_en_chaine(T,C,visited)
@@ -175,3 +175,5 @@ g.show()
 d = []
 f = []
 Schmidt(g).show()
+#print "debut : " + str(d)
+#print "fin : " + str(f)
