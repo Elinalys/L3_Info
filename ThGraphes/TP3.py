@@ -51,32 +51,33 @@ def pronfondeur_recursif(g, couleur, v, L,T,C, date, d, f):
     f[v] = date
     return couleur
 
-def decomposition_en_chaine(T,C,visited):
+def decomposition_en_chaine(T,C,visited,G1):
     print "C:" + str(C)
+
     for c in C:
         v = c[1]
         if v not in visited:
             if c[0] not in visited:
                 visited.append([])
                 visited[len(visited)-1].append(c[0])
-
-            decomposition_en_chaine_recursif(T, visited,v)
+                G1.add_vertex(c[0])
+            decomposition_en_chaine_recursif(T, visited,v, G1)
 
     print "visited : " + str(visited)
 
-def decomposition_en_chaine_recursif(T, visited, v):
-    if v not in visited:
-        visited[len(visited)-1].append(v)
-    else:
-        print "error"
+def decomposition_en_chaine_recursif(T, visited, v,G1):
+    visited[len(visited)-1].append(v)
+    G1.add_vertex(v)
+    G1.add_edge(v,visited[len(visited)-1][len(visited[len(visited)-1])-2]) # ajoute l'élément courant de la chaine et le précédent
 
     for neighbor in T.neighbors_out(v):
         if not any(neighbor in sublist for sublist in visited): # sommet non présent dans visited
-            decomposition_en_chaine_recursif(T, visited, neighbor)
+            decomposition_en_chaine_recursif(T, visited, neighbor,G1)
         else:
+            G1.add_edge(visited[len(visited)-1][0],visited[len(visited)-1][len(visited[len(visited)-1])-1]) # ajoute le premier et le dernier element de la chaine (j'espère que c'est un cycle)
             return
 
-# Retourne True s'il y a un cycle différent de C[0]
+# Retourne True s'il y a un cycle différent de C[0] dans C
 def is_there_various_circles(T,visited):
     for i in range(1, len(visited)):
         chain = visited[i]
@@ -94,23 +95,23 @@ def countSublists(lists):
     return len(newList)
 
 # Créé un graphe G1, qui parcourt les sommets visités dans l'ordre, et les ajoute comme cycle (éléments connexes)
-def show_2_connected(G,visited):
-    found = []
-    G1 = Graph (G.order()+1)
-    for i in visited:
-        for y in range(0,len(i)):
-            current = i[y]
-            if i[y] in found:
-                current = max(G.order(),len(found))
+# def show_2_connected(G,visited):
+#     found = []
+#     G1 = Graph (G.order()+1)
+#     for i in visited:
+#         for y in range(0,len(i)):
+#             current = i[y]
+#             if i[y] in found:
+#                 current = max(G.order(),len(found))
 
-            if y == 0:
-                G1.add_edge(i[0],i[len(i)-1])    # relie le premier element du cycle au dernier
-            else:
-                G1.add_edge(current,found[len(found)-1])    # relie deux sommets consecutifs du cycle ou chemin
+#             if y == 0:
+#               G1.add_edge(i[0],i[len(i)-1])     relie le premier element du cycle au dernier
+#             else:
+#               G1.add_edge(current,found[len(found)-1])     relie deux sommets consecutifs du cycle ou chemin
 
-            found.append(current)
+#             found.append(current)
 
-    G1.show()    # Affichage
+#   G1.show()     Affichage
 
 def max(value1, value2):
     if value1 >= value2:
@@ -122,6 +123,11 @@ def show_2_edge_connected(G, visited):
     found = []
     for i in visited:
         i
+
+def Exercice2(T,C):
+    T2 = T
+    T2.delete_edges(C)
+    T2.show()
 
 def Schmidt(G):
     # Variable pour parcours pronfondeur
@@ -152,20 +158,25 @@ def Schmidt(G):
             print "G is not connected."
             return Graph(0)
 
-    decomposition_en_chaine(T,C,visited)
+    G1 = Graph(0)
+    decomposition_en_chaine(T,C,visited,G1)
 
+    print "Exercice 1 :"
     if len(G.vertices()) != countSublists(visited):
         print "Not a 2-EDGE-CONNECTED."
-        show_2_edge_connected(G, visited)
+        #show_2_edge_connected(G, visited)
+        G1.show()
     elif is_there_various_circles(T,visited):
         print "2-EDGE-CONNECTED BUT NOT 2-CONNECTED."
-        show_2_connected(G, visited)
+        #show_2_connected(G, visited)
     else:
         print "2-CONNECTED."
 
-    return T
+    print "\nExercice 2 : orientation fortement connexe."
+    Exercice2(T,C)
 
-g = TP
+g = fig1
+print "Graphe : "
 g.show()
 
-Schmidt(g).show()
+Schmidt(g)
