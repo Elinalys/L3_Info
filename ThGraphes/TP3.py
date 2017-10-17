@@ -135,8 +135,8 @@ def Schmidt(G):
     couleur = []
     L = []          # ordre du parcours en profondeur
     date = 0
-    del d[:]        # dates de debut
-    del f[:]        # dates de fin
+    d = list()        # dates de debut
+    f = list()        # dates de fin
 
     # Variable pour decomposition en chaine
     C = []          # Ensemble des chaines (C1, C2... Ck)
