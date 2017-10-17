@@ -28,7 +28,7 @@ art.add_edges([[0,1],[1,2],[2,3],[0,3],[0,2],[2,4],[4,5],[5,6],[6,7],[5,7],[4,8]
 no_con = Graph(5)    #no connectivity
 no_con.add_edges([[0,1],[1,2],[2,0],[3,4]])
 
-def pronfondeur_recursif(g, couleur, v, L,T,C, date, d, f):
+def pronfondeur_recursif(g, couleur, v, L, T, C, date, d, f, DFI):
     couleur[v] = 'Gris'
     date = date+1
     d[v] = date
@@ -37,145 +37,124 @@ def pronfondeur_recursif(g, couleur, v, L,T,C, date, d, f):
         L.append(v)
 
     for voisin in g.neighbors(v):
+        # voisin déjà parcouru
         if couleur[voisin] == 'Noir':
             T.add_edges([[v, voisin, 1]])
             C.append([v, voisin,1])
 
+        # sommet nouvellement découvert
         if couleur[voisin] == 'Blanc':
             T.add_edges([[voisin, v, 1]])
+            DFI.append(voisin)
             couleur[voisin] = 'Gris'
-            pronfondeur_recursif(g, couleur, voisin, L,T,C, date, d, f)
+            couleur, date, DFI = pronfondeur_recursif(g, couleur, voisin, L,T,C, date, d, f, DFI)
 
     couleur[v] = 'Noir'
     date = date+1
     f[v] = date
-    return couleur
+    return couleur, date, DFI
 
-def decomposition_en_chaine(T,C,visited,G1):
-    print "C:" + str(C)
+def trier_aretes(aretes, DFI):
+    newList = list()
 
-    for c in C:
-        v = c[1]
-        if v not in visited:
-            if c[0] not in visited:
-                visited.append([])
-                visited[len(visited)-1].append(c[0])
-                G1.add_vertex(c[0])
-            decomposition_en_chaine_recursif(T, visited,v, G1)
+    for i in DFI:
+        for arete in aretes:
+            if arete[0] == i:
+                newList.append(arete)
+
+    return newList
+
+def decomposition_en_chaine(G, T, backedges, visited, DFI, chaines):
+    backedges = trier_aretes(backedges, DFI)
+    print "backedges:" + str(backedges)
+
+    for e in backedges:
+        chaines.append(list())
+        chaines[len(chaines)-1].append([e[0],e[1]])
+        if e[0] not in visited:
+            visited.append(e[0])
+        decomposition_en_chaine_recursif(T, visited, DFI, e[1], chaines)
 
     print "visited : " + str(visited)
+    return visited, chaines
 
-def decomposition_en_chaine_recursif(T, visited, v,G1):
-    visited[len(visited)-1].append(v)
-    G1.add_vertex(v)
-    G1.add_edge(v,visited[len(visited)-1][len(visited[len(visited)-1])-2]) # ajoute l'élément courant de la chaine et le précédent
+def decomposition_en_chaine_recursif(T, visited, DFI, v, chaines):
+    if v not in visited :
+        visited.append(v)
 
-    for neighbor in T.neighbors_out(v):
-        if not any(neighbor in sublist for sublist in visited): # sommet non présent dans visited
-            decomposition_en_chaine_recursif(T, visited, neighbor,G1)
-        else:
-            G1.add_edge(visited[len(visited)-1][0],visited[len(visited)-1][len(visited[len(visited)-1])-1]) # ajoute le premier et le dernier element de la chaine (j'espère que c'est un cycle)
+    voisins = T.neighbors_out(v)
+    for i in DFI:
+        if (i in voisins) and (i not in visited):
+            chaines[len(chaines)-1].append([v, i])
+            decomposition_en_chaine_recursif(T, visited, DFI, i, chaines)
+            return
+        elif (i in voisins) and (i in visited):
+            chaines[len(chaines)-1].append([v, i])
             return
 
 # Retourne True s'il y a un cycle différent de C[0] dans C
-def is_there_various_circles(T,visited):
-    for i in range(1, len(visited)):
-        chain = visited[i]
-        if chain[0] in T.neighbors_out(chain[len(chain)-1]):
+def is_there_various_circles(chaines):
+    for i in range(1, len(chaines)):
+        if chaines[i][0][0] == chaines[i][len(chaines[i])-1][1]:
             return True
     return False
 
-def countSublists(lists):
-    newList = [];
-    for list in lists:
-        for ele in list:
-            if ele not in newList:
-                newList.append(ele)
-
-    return len(newList)
-
-# Créé un graphe G1, qui parcourt les sommets visités dans l'ordre, et les ajoute comme cycle (éléments connexes)
-# def show_2_connected(G,visited):
-#     found = []
-#     G1 = Graph (G.order()+1)
-#     for i in visited:
-#         for y in range(0,len(i)):
-#             current = i[y]
-#             if i[y] in found:
-#                 current = max(G.order(),len(found))
-
-#             if y == 0:
-#               G1.add_edge(i[0],i[len(i)-1])     relie le premier element du cycle au dernier
-#             else:
-#               G1.add_edge(current,found[len(found)-1])     relie deux sommets consecutifs du cycle ou chemin
-
-#             found.append(current)
-
-#   G1.show()     Affichage
-
-def max(value1, value2):
-    if value1 >= value2:
-        return value1
-    else :
-        return value2
-
-def show_2_edge_connected(G, visited):
-    found = []
-    for i in visited:
-        i
-
-def Exercice2(T,C):
+def Exercice2(T):
     T2 = T
-    T2.delete_edges(C)
+    #T2.delete_edges(C)
     T2.show()
 
 def Schmidt(G):
     # Variable pour parcours pronfondeur
     depart = g.vertices()[0]
-    couleur = []
-    L = []          # ordre du parcours en profondeur
-    date = 0
+    couleurs = list()
+    L = list()        # ordre du parcours en profondeur
     d = list()        # dates de debut
     f = list()        # dates de fin
+    DFI = list()      # Depth First Index
+    date = 0
 
     # Variable pour decomposition en chaine
-    C = []          # Ensemble des chaines (C1, C2... Ck)
-    visited = []
+    backedges = list()
+    chaines = list()    # ensembles des chaines
+    visited = list()    # ordre des sommets visités
 
     L.append(depart)
-    T = DiGraph(len(G.vertices())); # Tree (du parcours en profondeur)
+    T = DiGraph(len(G.vertices()));     # Tree (Arbre de la décomposition en chaînes)
 
     for v in G.vertices(): # Initialisation
-        couleur.append('Blanc')
+        couleurs.append('Blanc')
         d.append(-1)
         f.append(-1)
 
     for v in G.vertices(): # Parcours Profondeur(création de T)
-        if couleur[v]  == 'Blanc':
-            couleur = pronfondeur_recursif(G,couleur,v,L,T,C, date, d, f);
+        if couleurs[v]  == 'Blanc':
+            DFI.append(v)
+            couleurs, date, DFI = pronfondeur_recursif(G, couleurs, v, L, T, backedges, date, d, f, DFI);
 
         if (len(G.vertices()) != len(L)): # G non connexe
             print "G is not connected."
             return Graph(0)
 
     G1 = Graph(0)
-    decomposition_en_chaine(T,C,visited,G1)
+    visited, chaines = decomposition_en_chaine(G, T, backedges, visited, DFI, chaines)
+    print "chaines : " + str(chaines)
 
     print "Exercice 1 :"
-    if len(G.vertices()) != countSublists(visited):
+    if len(G.vertices()) != len(visited):
         print "Not a 2-EDGE-CONNECTED."
         #show_2_edge_connected(G, visited)
         G1.show()
-    elif is_there_various_circles(T,visited):
+    elif is_there_various_circles(chaines):
         print "2-EDGE-CONNECTED BUT NOT 2-CONNECTED."
         #show_2_connected(G, visited)
     else:
         print "2-CONNECTED."
 
     print "\nExercice 2 : orientation fortement connexe."
-    Exercice2(T,C)
+    Exercice2(T)
 
-g = fig1
+g = fig2
 print "Graphe : "
 g.show()
 
