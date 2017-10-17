@@ -99,10 +99,19 @@ def is_there_various_circles(chaines):
             return True
     return False
 
-def Exercice2(T):
-    T2 = T
-    #T2.delete_edges(C)
-    T2.show()
+def Exercice2_arete_deconnectante(G, chaines):
+    opt_edges = G.edges()
+
+    for C in chaines:
+        for edge in C:
+            e = (edge[0], edge[1], None)
+
+            if e in opt_edges:
+                opt_edges.remove(e)
+            else:
+                opt_edges.remove((edge[1], edge[0], None))
+
+    return opt_edges
 
 def Schmidt(G):
     # Variable pour parcours pronfondeur
@@ -116,7 +125,7 @@ def Schmidt(G):
 
     # Variable pour decomposition en chaine
     backedges = list()
-    chaines = list()    # ensembles des chaines
+    chaines = list()    # ensembles des chaines (C1, ..., Ck)
     visited = list()    # ordre des sommets visités
 
     L.append(depart)
@@ -136,7 +145,6 @@ def Schmidt(G):
             print "G is not connected."
             return Graph(0)
 
-    G1 = Graph(0)
     visited, chaines = decomposition_en_chaine(G, T, backedges, visited, DFI, chaines)
     print "chaines : " + str(chaines)
 
@@ -144,7 +152,6 @@ def Schmidt(G):
     if len(G.vertices()) != len(visited):
         print "Not a 2-EDGE-CONNECTED."
         #show_2_edge_connected(G, visited)
-        G1.show()
     elif is_there_various_circles(chaines):
         print "2-EDGE-CONNECTED BUT NOT 2-CONNECTED."
         #show_2_connected(G, visited)
@@ -152,9 +159,14 @@ def Schmidt(G):
         print "2-CONNECTED."
 
     print "\nExercice 2 : orientation fortement connexe."
-    Exercice2(T)
+    deconnectantes = Exercice2_arete_deconnectante(G, chaines)
+    if len(deconnectantes) == 0:
+        print "Graphe fortement connexe : "
+        T.show()
+    else:
+         print "arete deconnectante : " + str(deconnectantes)
 
-g = fig2
+g = fig1
 print "Graphe : "
 g.show()
 
