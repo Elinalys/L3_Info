@@ -10,7 +10,7 @@ cylindre = Graph.cartesian_product(cycle,chemin);
 graph1 = Graph(12);
 graph1.add_edges([[0,1],[1,2],[3,4],[0,5],[1,3],[2,4],[5,6],[5,8],[6,7],[7,8],[1,9],[8,9],[9,11],[9,10]]);
 
-graph2 = DiGraph(11);
+graph2 = Graph(11);
 graph2.add_edges([[0,1],[2,1],[1,0],[0,2],[0,3],[3,10],[4,5],[5,4],[6,5],[6,4],[3,7],[7,8],[8,9],[9,7],[10,7],[5,10]]);
 
 TP = Graph(14)
@@ -99,6 +99,7 @@ def is_there_various_circles(chaines):
             return True
     return False
 
+# Supprime les arêtes présentes dans une chaines et retourne une liste d'arêtes (= les arêtes déconnanctes du graphe)
 def Exercice2_arete_deconnectante(G, chaines):
     opt_edges = G.edges()
 
