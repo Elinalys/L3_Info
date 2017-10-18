@@ -99,6 +99,34 @@ def is_there_various_circles(chaines):
             return True
     return False
 
+# Reponses exercice 1
+def Exercice1(G, visited, chaines, T):
+    # Affichage des résultats obtenus.
+
+    deconnectantes = Exercice2_arete_deconnectante(g, chaines)
+
+    print "Exercice 1 :"
+    if len(g.vertices()) != len(visited):
+        print "Not a 2-EDGE-CONNECTED."
+        print "Composantes 2-arêtes connexes : "
+        show_2_edge_connected(g, deconnectantes)
+    elif is_there_various_circles(chaines):
+        print "2-EDGE-CONNECTED BUT NOT 2-CONNECTED."
+        show_2_connected(g, visited, chaines)
+    else:
+        print "2-CONNECTED."
+
+    return deconnectantes
+
+# Reponses exercice 2
+def Exercice2(T, deconnectantes):
+    print "\nExercice 2 : orientation fortement connexe."
+    if len(deconnectantes) == 0:
+        print "Graphe fortement connexe : "
+        T.show()
+    else:
+         print "arete deconnectante : " + str(deconnectantes)
+
 # Supprime les arêtes présentes dans une chaines et retourne une liste d'arêtes (= les arêtes déconnanctes du graphe)
 def Exercice2_arete_deconnectante(G, chaines):
     opt_edges = G.edges()
@@ -114,6 +142,56 @@ def Exercice2_arete_deconnectante(G, chaines):
 
     return opt_edges
 
+def show_2_edge_connected(G, deconnectantes):
+    G1 = G
+    G1.delete_edges(deconnectantes)
+    G1.show()
+
+def show_2_connected(G, visited, chaines):
+    print "TODO : show_2_connected"
+    G1 = Graph(0)
+    nbCycles = 0
+
+    for chaine in chaines:
+        if is_cycle(chaine):             # Graphe non connexe
+            nbCycles = nbCycles+1
+            for i in chaine:
+                v0 = vertex_name(i[0], nbCycles)
+                v1 = vertex_name(i[1], nbCycles)
+
+                G1.add_vertex(v0)
+                G1.add_vertex(v1)
+
+                G1.add_edge([v0, v1])
+        else:
+            for i in chaine:
+                v0 = vertex_name(i[0])
+                v1 = vertex_name(i[1])
+
+                G1.add_vertex(v0)
+                G1.add_vertex(v1)
+
+                G1.add_edge([v0, v1])
+
+    G1.show()
+
+# vertex_name(2,2) return 2''
+def vertex_name(vertex, nb_cycles=1):
+    return str(vertex) + str(mult_text("'", nb_cycles-1))
+
+# mult_text("'", 5) return '''''
+def mult_text(text, n):
+    newText = ""
+    for i in range(0, n):
+        newText = newText + text
+    return newText
+
+def is_cycle(list):
+    if (list[0][0] == list[len(list)-1][1]):
+        return True
+    else:
+        return False
+
 def Schmidt(G):
     # Variable pour parcours pronfondeur
     depart = g.vertices()[0]
@@ -124,7 +202,7 @@ def Schmidt(G):
     DFI = list()      # Depth First Index
     date = 0
 
-    # Variable pour decomposition en chaine
+    # Variable pour decomposition en chaines
     backedges = list()
     chaines = list()    # ensembles des chaines (C1, ..., Ck)
     visited = list()    # ordre des sommets visités
@@ -144,31 +222,20 @@ def Schmidt(G):
 
         if (len(G.vertices()) != len(L)): # G non connexe
             print "G is not connected."
-            return Graph(0)
+            return [],[], DiGraph(0)
 
     visited, chaines = decomposition_en_chaine(G, T, backedges, visited, DFI, chaines)
     print "chaines : " + str(chaines)
+    return visited, chaines, T
 
-    print "Exercice 1 :"
-    if len(G.vertices()) != len(visited):
-        print "Not a 2-EDGE-CONNECTED."
-        #show_2_edge_connected(G, visited)
-    elif is_there_various_circles(chaines):
-        print "2-EDGE-CONNECTED BUT NOT 2-CONNECTED."
-        #show_2_connected(G, visited)
-    else:
-        print "2-CONNECTED."
-
-    print "\nExercice 2 : orientation fortement connexe."
-    deconnectantes = Exercice2_arete_deconnectante(G, chaines)
-    if len(deconnectantes) == 0:
-        print "Graphe fortement connexe : "
-        T.show()
-    else:
-         print "arete deconnectante : " + str(deconnectantes)
-
-g = fig1
+g = art
 print "Graphe : "
 g.show()
 
-Schmidt(g)
+# Calcul de l'algorithme de Schmidt, récupération de la décomposition en chaines.
+visited, chaines, T = Schmidt(g)
+
+if len(T.vertices()) != 0:
+    deconnectantes = Exercice1(g, visited, chaines, T) # Exercice 1
+
+    Exercice2(T, deconnectantes)                       # Exercice 2
