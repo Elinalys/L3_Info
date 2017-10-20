@@ -41,9 +41,9 @@
 % \tableofcontents
 
 \section*{Exercice 1}
-Calcul de calcul de \emph{2-connexité} dû à Schmidt. On a \verb|fig1| et \verb|fig2| les graphes correspondant aux figures 1 et 2 du sujet et \verb|art| le graphe correspondant à celui présenté dans l'article.
+Calcul de \emph{2-connexité} dû à Schmidt. On a \verb|fig1| et \verb|fig2| les graphes correspondant aux figures 1 et 2 du sujet et \verb|art| le graphe correspondant à celui présenté dans l'article.
 \begin{enumerate}
-\item Calculer les composantes \emph{2-connexes} d'un graphe. Ici, \verb|show_2_connected| prend en paramètre une liste \verb|chaines| sa décomposition en chaine.
+\item Calculer les composantes \emph{2-connexes} d'un graphe. Ici, \verb|show_2_connected| prend en paramètre une liste \verb|chaines| une décomposition en chaines.
 
 	\begin{minted}{python}
 def show_2_connected(chaines):
@@ -74,9 +74,9 @@ def show_2_connected(chaines):
     \end{minted}
 
     La fonction créée un graphe $G'$ (\verb|G1|) vide, et pour chaque arête présente dans chaque chaîne, elle ajoute les deux sommets, si non présent dans G' et ajoute ensuite une arête entre ces deux sommets.
-    Si une arête est présente dans une chaîne qui est un cycle et qui n'est pas le premier cycle, l'arête possède alors un nom composé de \textbf{'} (exemple: $4'$ pour le 2\ieme\ sommet nommé $4$) afin de la différencier du sommet présent dans le graphe composé des chemins.
+    Si un sommet est présent dans une chaîne qui est un cycle et qui n'est pas le premier cycle, le sommet possède alors un nom composé de \textbf{'} (exemple: $4'$ pour le 2\ieme\ sommet nommé $4$) afin de la différencier du sommet présent dans le graphe composé des chemins.
 
-\item Calculer les composantes \emph{2-arêtes connexes} d'un graphe.  Ici, \verb|show_2_edges_connected| prend en paramètre une un graphe \verb|G| et une liste \verb|deconnectantes|, sa liste des arêtes deconnectantes.
+\item Calculer les composantes \emph{2-arêtes connexes} d'un graphe.  Ici, \verb|show_2_edges_connected| prend en paramètre un graphe \verb|G| et une liste \verb|deconnectantes|, sa liste d'arêtes deconnectantes.
 	\begin{minted}{python}
 def show_2_edge_connected(G, deconnectantes):
     G1 = G
@@ -117,7 +117,7 @@ Or cela n'est possible que si l'arc $(u,v)$ appartient à au moins un circuit de
 
 \paragraph{Hypothèse :}Un graphe est fortement connexe si son graphe sous-jacent est 2-arête connexe. 
 
-\paragraph{Contre-exemple :} On prend un graphe orienté fortement connexe $G = (V, E), |E| = 3$ de la forme : 
+\paragraph{Contre-exemple :} On prend un graphe orienté fortement connexe $G = (V, E), |E| = 4$ de la forme : 
 %  insérer figure graphe orienté 
 \begin{figure}[h]
 \centering
@@ -127,12 +127,16 @@ Or cela n'est possible que si l'arc $(u,v)$ appartient à au moins un circuit de
 \Vertex{A}
 \Vertex[x=2,y=0]{B}
 \Vertex[x=4,y=0]{C}
+\Vertex[x=6,y=0]{D}
 \tikzset{EdgeStyle/.style={->}}
 \Edge[style={bend left}](B)(A)
 \Edge[style={bend left}](B)(C)
+\Edge[style={bend left}](C)(D)
 \tikzset{EdgeStyle/.style={<-}}
 \Edge[style={bend right}](B)(A)
 \Edge[style={bend right}](B)(C)
+\Edge[style={bend right}](C)(D)
+
 \end{tikzpicture}
 
 \caption{Graphe $G$}
@@ -147,7 +151,8 @@ Le graphe sous-jacent à $G$ appelé $G'$ est un chemin de taille 3. Or, chaque 
 \Vertex{A}
 \Vertex[x=2,y=0]{B}
 \Vertex[x=4,y=0]{C}
-\Edges(A,B,C)
+\Vertex[x=6,y=0]{D}
+\Edges(A,B,C,D)
 \end{tikzpicture}
 
 \caption{Graphe $G'$}
