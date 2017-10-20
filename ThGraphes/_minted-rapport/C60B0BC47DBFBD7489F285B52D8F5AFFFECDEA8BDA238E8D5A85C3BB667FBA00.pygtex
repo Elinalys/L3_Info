@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{show\PYGZus{}2\PYGZus{}edge\PYGZus{}connected}\PYG{p}{(}\PYG{n}{G}\PYG{p}{,} \PYG{n}{deconnectantes}\PYG{p}{):}
+    \PYG{n}{G1} \PYG{o}{=} \PYG{n}{G}
+    \PYG{n}{G1}\PYG{o}{.}\PYG{n}{delete\PYGZus{}edges}\PYG{p}{(}\PYG{n}{deconnectantes}\PYG{p}{)}
+    \PYG{n}{G1}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+\end{Verbatim}

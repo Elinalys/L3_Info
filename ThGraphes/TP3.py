@@ -28,7 +28,7 @@ art.add_edges([[0,1],[1,2],[2,3],[0,3],[0,2],[2,4],[4,5],[5,6],[6,7],[5,7],[4,8]
 no_con = Graph(5)    #no connectivity
 no_con.add_edges([[0,1],[1,2],[2,0],[3,4]])
 
-def pronfondeur_recursif(g, couleur, v, L, T, C, date, d, f, DFI):
+def pronfondeur_recursif(G, couleur, v, L, T, C, date, d, f, DFI):
     couleur[v] = 'Gris'
     date = date+1
     d[v] = date
@@ -36,7 +36,7 @@ def pronfondeur_recursif(g, couleur, v, L, T, C, date, d, f, DFI):
     if v not in L:
         L.append(v)
 
-    for voisin in g.neighbors(v):
+    for voisin in G.neighbors(v):
         # voisin déjà parcouru
         if couleur[voisin] == 'Noir':
             T.add_edges([[v, voisin, 1]])
@@ -47,7 +47,7 @@ def pronfondeur_recursif(g, couleur, v, L, T, C, date, d, f, DFI):
             T.add_edges([[voisin, v, 1]])
             DFI.append(voisin)
             couleur[voisin] = 'Gris'
-            couleur, date, DFI = pronfondeur_recursif(g, couleur, voisin, L,T,C, date, d, f, DFI)
+            couleur, date, DFI = pronfondeur_recursif(G, couleur, voisin, L,T,C, date, d, f, DFI)
 
     couleur[v] = 'Noir'
     date = date+1
@@ -103,16 +103,16 @@ def is_there_various_circles(chaines):
 def Exercice1(G, visited, chaines, T):
     # Affichage des résultats obtenus.
 
-    deconnectantes = Exercice2_arete_deconnectante(g, chaines)
+    deconnectantes = Exercice2_arete_deconnectante(G, chaines)
 
     print "Exercice 1 :"
-    if len(g.vertices()) != len(visited):
+    if len(G.vertices()) != len(visited):
         print "Not a 2-EDGE-CONNECTED."
         print "Composantes 2-arêtes connexes : "
-        show_2_edge_connected(g, deconnectantes)
+        show_2_edge_connected(G, deconnectantes)
     elif is_there_various_circles(chaines):
         print "2-EDGE-CONNECTED BUT NOT 2-CONNECTED."
-        show_2_connected(g, visited, chaines)
+        show_2_connected(chaines)
     else:
         print "2-CONNECTED."
 
@@ -147,13 +147,13 @@ def show_2_edge_connected(G, deconnectantes):
     G1.delete_edges(deconnectantes)
     G1.show()
 
-def show_2_connected(G, chaines):
-    print "TODO : show_2_connected"
+def show_2_connected(chaines):
     G1 = Graph(0)
     nbCycles = 0
 
     for chaine in chaines:
         if is_cycle(chaine):             # Graphe non connexe
+        
             nbCycles = nbCycles+1
             for i in chaine:
                 v0 = vertex_name(i[0], nbCycles)
@@ -194,7 +194,7 @@ def is_cycle(list):
 
 def Schmidt(G):
     # Variable pour parcours pronfondeur
-    depart = g.vertices()[0]
+    depart = G.vertices()[0]
     couleurs = list()
     L = list()        # ordre du parcours en profondeur
     d = list()        # dates de debut
@@ -228,14 +228,14 @@ def Schmidt(G):
     print "chaines : " + str(chaines)
     return visited, chaines, T
 
-g = art
+G = art
 print "Graphe : "
-g.show()
+G.show()
 
 # Calcul de l'algorithme de Schmidt, récupération de la décomposition en chaines.
-visited, chaines, T = Schmidt(g)
+visited, chaines, T = Schmidt(G)
 
 if len(T.vertices()) != 0:
-    deconnectantes = Exercice1(g, visited, chaines, T) # Exercice 1
+    deconnectantes = Exercice1(G, visited, chaines, T) # Exercice 1
 
     Exercice2(T, deconnectantes)                       # Exercice 2

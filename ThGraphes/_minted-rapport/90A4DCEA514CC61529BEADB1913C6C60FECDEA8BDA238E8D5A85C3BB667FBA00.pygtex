@@ -1,0 +1,27 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{show\PYGZus{}2\PYGZus{}connected}\PYG{p}{(}\PYG{n}{chaines}\PYG{p}{):}
+    \PYG{n}{G1} \PYG{o}{=} \PYG{n}{Graph}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{)}
+    \PYG{n}{nbCycles} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+    \PYG{k}{for} \PYG{n}{chaine} \PYG{o+ow}{in} \PYG{n}{chaines}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{is\PYGZus{}cycle}\PYG{p}{(}\PYG{n}{chaine}\PYG{p}{):}
+            \PYG{n}{nbCycles} \PYG{o}{=} \PYG{n}{nbCycles}\PYG{o}{+}\PYG{l+m+mi}{1}
+            \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{chaine}\PYG{p}{:}
+                \PYG{n}{v0} \PYG{o}{=} \PYG{n}{vertex\PYGZus{}name}\PYG{p}{(}\PYG{n}{i}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{nbCycles}\PYG{p}{)}
+                \PYG{n}{v1} \PYG{o}{=} \PYG{n}{vertex\PYGZus{}name}\PYG{p}{(}\PYG{n}{i}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{nbCycles}\PYG{p}{)}
+
+                \PYG{n}{G1}\PYG{o}{.}\PYG{n}{add\PYGZus{}vertex}\PYG{p}{(}\PYG{n}{v0}\PYG{p}{)}
+                \PYG{n}{G1}\PYG{o}{.}\PYG{n}{add\PYGZus{}vertex}\PYG{p}{(}\PYG{n}{v1}\PYG{p}{)}
+
+                \PYG{n}{G1}\PYG{o}{.}\PYG{n}{add\PYGZus{}edge}\PYG{p}{([}\PYG{n}{v0}\PYG{p}{,} \PYG{n}{v1}\PYG{p}{])}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{chaine}\PYG{p}{:}
+                \PYG{n}{v0} \PYG{o}{=} \PYG{n}{vertex\PYGZus{}name}\PYG{p}{(}\PYG{n}{i}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                \PYG{n}{v1} \PYG{o}{=} \PYG{n}{vertex\PYGZus{}name}\PYG{p}{(}\PYG{n}{i}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])}
+
+                \PYG{n}{G1}\PYG{o}{.}\PYG{n}{add\PYGZus{}vertex}\PYG{p}{(}\PYG{n}{v0}\PYG{p}{)}
+                \PYG{n}{G1}\PYG{o}{.}\PYG{n}{add\PYGZus{}vertex}\PYG{p}{(}\PYG{n}{v1}\PYG{p}{)}
+
+                \PYG{n}{G1}\PYG{o}{.}\PYG{n}{add\PYGZus{}edge}\PYG{p}{([}\PYG{n}{v0}\PYG{p}{,} \PYG{n}{v1}\PYG{p}{])}
+    \PYG{n}{G1}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+\end{Verbatim}

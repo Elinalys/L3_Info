@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{Exercice2}\PYG{p}{(}\PYG{n}{T}\PYG{p}{,} \PYG{n}{deconnectantes}\PYG{p}{):}
+    \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{Exercice 2 : orientation fortement connexe.\PYGZdq{}}
+    \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{deconnectantes}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+        \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}Graphe fortement connexe : \PYGZdq{}}
+        \PYG{n}{T}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+    \PYG{k}{else}\PYG{p}{:}
+        \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}arete deconnectante : \PYGZdq{}} \PYG{o}{+} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{deconnectantes}\PYG{p}{)}
+\end{Verbatim}

@@ -16,11 +16,9 @@
 \usepackage{xcolor}
 \usepackage{multicol}
 % \usepackage{pygmentize}
-
+\usepackage{tkz-graph}
 \usepackage{pgf,tikz}
 \usepackage{mathrsfs}
-\usetikzlibrary{arrows}
-\pagestyle{empty}\definecolor{wrwrwr}{rgb}{0.3803921568627451,0.3803921568627451,0.3803921568627451}\definecolor{rvwvcq}{rgb}{0.08235294117647059,0.396078431372549,0.7529411764705882}
 
 % \usemintedstyle{emacs}
 \newenvironment{Figure}
@@ -44,13 +42,65 @@
 
 \section*{Exercice 1}
 Calcul de calcul de \emph{2-connexité} dû à Schmidt. On a \verb|fig1| et \verb|fig2| les graphes correspondant aux figures 1 et 2 du sujet et \verb|art| le graphe correspondant à celui présenté dans l'article.
-\begin{itemize}
-\item Calculer les composantes \emph{2-connexes} d'un graphe
+\begin{enumerate}
+\item Calculer les composantes \emph{2-connexes} d'un graphe. Ici, \verb|show_2_connected| prend en paramètre une liste \verb|chaines| sa décomposition en chaine.
 
+	\begin{minted}{python}
+def show_2_connected(chaines):
+    G1 = Graph(0)
+    nbCycles = 0
 
-\item Calculer les composantes \emph{2-arêtes connexes} d'un graphe
-\end{itemize}
+    for chaine in chaines:
+        if is_cycle(chaine):
+            nbCycles = nbCycles+1
+            for i in chaine:
+                v0 = vertex_name(i[0], nbCycles)
+                v1 = vertex_name(i[1], nbCycles)
+
+                G1.add_vertex(v0)
+                G1.add_vertex(v1)
+
+                G1.add_edge([v0, v1])
+        else:
+            for i in chaine:
+                v0 = vertex_name(i[0])
+                v1 = vertex_name(i[1])
+
+                G1.add_vertex(v0)
+                G1.add_vertex(v1)
+
+                G1.add_edge([v0, v1])
+    G1.show()
+    \end{minted}
+
+    La fonction créée un graphe $G'$ (\verb|G1|) vide, et pour chaque arête présente dans chaque chaîne, elle ajoute les deux sommets, si non présent dans G' et ajoute ensuite une arête entre ces deux sommets.
+    Si une arête est présente dans une chaîne qui est un cycle et qui n'est pas le premier cycle, l'arête possède alors un nom composé de \textbf{'} (exemple: $4'$ pour le 2\ieme\ sommet nommé $4$) afin de la différencier du sommet présent dans le graphe composé des chemins.
+
+\item Calculer les composantes \emph{2-arêtes connexes} d'un graphe.  Ici, \verb|show_2_edges_connected| prend en paramètre une un graphe \verb|G| et une liste \verb|deconnectantes|, sa liste des arêtes deconnectantes.
+	\begin{minted}{python}
+def show_2_edge_connected(G, deconnectantes):
+    G1 = G
+    G1.delete_edges(deconnectantes)
+    G1.show()
+   	\end{minted}
+
+   	La fonction affiche un graphe $G'$ (\verb|G1|), une copie du graphe $G$ sans ses arêtes deconnectantes.
+\end{enumerate}
+
 \section*{Exercice 2}
+La fonction \verb|Exercice2| prend en paramètre \verb|T|, l'arbre de parcours de l'algorithme de Schmidt et \verb|deconnectantes| la liste des arêtes déconnectantes.
+
+\begin{minted}{python}
+def Exercice2(T, deconnectantes):
+    print "\nExercice 2 : orientation fortement connexe."
+    if len(deconnectantes) == 0:
+        print "Graphe fortement connexe : "
+        T.show()
+    else:
+        print "arete deconnectante : " + str(deconnectantes)
+\end{minted}
+
+S'il n'y pas d'arêtes déconnectantes on affichera l'arbre de parcours, sinon on affiche les arêtes déconnectantes.
 
 \section*{Exercice 3}
 
@@ -67,9 +117,43 @@ Or cela n'est possible que si l'arc $(u,v)$ appartient à au moins un circuit de
 
 \paragraph{Hypothèse :}Un graphe est fortement connexe si son graphe sous-jacent est 2-arête connexe. 
 
+\paragraph{Contre-exemple :} On prend un graphe orienté fortement connexe $G = (V, E), |E| = 3$ de la forme : 
+%  insérer figure graphe orienté 
+\begin{figure}[h]
+\centering
 
+\begin{tikzpicture}[scale=1.75]
+\GraphInit[vstyle=Normal]
+\Vertex{A}
+\Vertex[x=2,y=0]{B}
+\Vertex[x=4,y=0]{C}
+\tikzset{EdgeStyle/.style={->}}
+\Edge[style={bend left}](B)(A)
+\Edge[style={bend left}](B)(C)
+\tikzset{EdgeStyle/.style={<-}}
+\Edge[style={bend right}](B)(A)
+\Edge[style={bend right}](B)(C)
+\end{tikzpicture}
 
+\caption{Graphe $G$}
+\end{figure}
 
+Le graphe sous-jacent à $G$ appelé $G'$ est un chemin de taille 3. Or, chaque arête d'un chemin est une arête déconnectante. Donc $G'$ n'est pas 2-arête connexe.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.75]
+\GraphInit[vstyle=Normal]
+\Vertex{A}
+\Vertex[x=2,y=0]{B}
+\Vertex[x=4,y=0]{C}
+\Edges(A,B,C)
+\end{tikzpicture}
+
+\caption{Graphe $G'$}
+\end{figure}
+
+Nous pouvons donc conclure que l'hypothèse de départ est fausse.
 \end{document}
 
 
