@@ -147,7 +147,7 @@ def show_2_edge_connected(G, deconnectantes):
     G1.delete_edges(deconnectantes)
     G1.show()
 
-def show_2_connected(G, visited, chaines):
+def show_2_connected(G, chaines):
     print "TODO : show_2_connected"
     G1 = Graph(0)
     nbCycles = 0

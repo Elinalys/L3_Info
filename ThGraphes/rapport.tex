@@ -17,6 +17,11 @@
 \usepackage{multicol}
 % \usepackage{pygmentize}
 
+\usepackage{pgf,tikz}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+\pagestyle{empty}\definecolor{wrwrwr}{rgb}{0.3803921568627451,0.3803921568627451,0.3803921568627451}\definecolor{rvwvcq}{rgb}{0.08235294117647059,0.396078431372549,0.7529411764705882}
+
 % \usemintedstyle{emacs}
 \newenvironment{Figure}
   {\par\medskip\noindent\minipage{\linewidth}}
@@ -24,15 +29,69 @@
 
 \usepackage{caption}
 \author{Loris \textsc{Croce}\and Loïc \textsc{Castillo}}
-\title{\textbf{Rapport de TP Noté} \\\textsc{Orientation d'un graphe non orienté et d'un graphe fortement connexe}\\\emph{Université Clermont Auvergne, Licence Informatique 3\ieme{} année}}
+\title{
+	Rapport de T.P. Noté\\
+	Orientation d'un graphe non orienté et d'un graphe fortement connexe
+	% \\\normalsize{\emph{Université Clermont Auvergne, Licence Informatique 3\ieme{} année}}
+}
 \date{}
 % \subtitle{Université Blaise Pascal, Licence Informatique 2\ieme{} année}
 
 \begin{document}
 
 \maketitle
-\tableofcontents
+% \tableofcontents
+
+\section*{Exercice 1}
+Calcul de calcul de \emph{2-connexité} dû à Schmidt. On a \verb|fig1| et \verb|fig2| les graphes correspondant aux figures 1 et 2 du sujet et \verb|art| le graphe correspondant à celui présenté dans l'article.
+\begin{itemize}
+\item Calculer les composantes \emph{2-connexes} d'un graphe
+
+
+\item Calculer les composantes \emph{2-arêtes connexes} d'un graphe
+\end{itemize}
+\section*{Exercice 2}
+
+\section*{Exercice 3}
+
+\paragraph{Hypothèse :}Un graphe est fortement connexe si et seulement si chaque arc est présent dans au moins un circuit de $G$. Soit $G=(V,E)$ un graphe orienté et $u,v$ $\in E$.
+% prouver théorème 3, le 4 contre exemple
+\paragraph{Preuve par l'absurde :}On suppose qu'il existe un arc $(u,v)$ qui n'est présent dans aucun circuit de $G$. Et que $G$ est fortement connexe.
+Par définition si $G$ est fortement connexe, il est possible d'aller de $u$ à $v$ et de de $v$ à $u$.
+
+Or cela n'est possible que si l'arc $(u,v)$ appartient à au moins un circuit de $G$. Alors il y a contradiction et un graphe est fortement connexe si et seulement si chaque arc est présent dans au moins un circuit de $G$ 
+
+% prouver que si on peut aller de v à u et de u à v uv est dans un circuit
+
+\section*{Exercice 4}
+
+\paragraph{Hypothèse :}Un graphe est fortement connexe si son graphe sous-jacent est 2-arête connexe. 
+
 
 
 
 \end{document}
+
+
+% (1) S'il existe un circuit passant par tous les sommets de E, et x,y sont dans E, il suffit de suivre le circuit à partir de x pour finir par tomber sur y.
+
+% (2) Si (E,V) est fortement connexe, notons E={x1,...,xn}. Soit Ci un chemin reliant xi à xi+1 pour i≤n−1 et Cn un chemin reliant xn à x1. la concaténation de C1,...,Cn est un circuit parcourant E tout entier. 
+
+% \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
+% \clip(-10.39,-6.36) rectangle (10.39,6.36);
+% \draw [line width=2pt,color=wrwrwr] (-4.31,2.56)-- (-3.79,0.04);
+% \draw [line width=2pt,color=wrwrwr] (-1.33,1.4)-- (-3.79,0.04);
+% \draw [line width=2pt,color=wrwrwr] (-4.31,2.56)-- (-1.33,1.4);
+% \draw [line width=2pt,color=wrwrwr] (-1.19,2.98)-- (-1.33,1.4);
+% \draw [line width=2pt,color=wrwrwr] (-4.31,2.56)-- (-1.19,2.98);
+% \begin{scriptsize}\draw [fill=rvwvcq] (-4.31,2.56) circle (2.5pt);
+% \draw[color=rvwvcq] (-4.15,2.99) node {$A$};
+% \draw [fill=rvwvcq] (-1.19,2.98) circle (2.5pt);
+% \draw[color=rvwvcq] (-1.03,3.41) node {$B$};
+% \draw [fill=rvwvcq] (-1.33,1.4) circle (2.5pt);
+% \draw[color=rvwvcq] (-1.17,1.83) node {$C$};
+% \draw [fill=rvwvcq] (-3.79,0.04) circle (2.5pt);
+% \draw[color=rvwvcq] (-3.63,0.47) node {$D$};
+% \draw [fill=rvwvcq] (-1.01,-2.18) circle (2.5pt);
+% \draw[color=rvwvcq] (-0.85,-1.75) node {$E$};
+% \end{scriptsize}\end{tikzpicture}\end{document}
