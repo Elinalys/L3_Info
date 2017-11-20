@@ -1,0 +1,16 @@
+<meta charset="utf-8">
+<h1 id="théorie-de-lesimation-et-tests-dhypothèses">Théorie de l'esimation et Tests d'hypothèses :</h1>
+<h2 id="théorie-de-lestimation">Théorie de l'estimation</h2>
+<p>Dans la pratique on ne connait pas forcèment les valeurs de tous les paramètres du système étudié. On a parfois besoin d'estimer ces valeurs. On utilise alors un échantillon d'observation poiur déterminer l'estimation du paramètre étudié. On distingue deux types d'estimations : - l'estimation <em>ponctuelle</em> (pour estimer la meilleur valeur) - l'estimation <em>par intervalle</em> (pour détermier un intervalle contenant la vraie valeur des paramètres avec une certaine probabilité d'erreur)</p>
+<h3 id="estimation-ponctuelle">Estimation ponctuelle</h3>
+<p><strong>Définition :</strong> Un estimateur T (qui est une fonction des observations) T (<span class="math inline"><em>X</em><sub>1</sub>, …, <em>X</em><sub><em>n</em></sub></span>) où <span class="math inline">$X_n,\dots,\X_n$</span> sont des variables aléatoires <strong>indépendantes</strong> de même loi qu'une certaine variable aléatoire X dont la loi dépend d'un certain paramètre σ. T est dit sans biais si E(T) = σ Soit T un estimateur sans biais de σ. la variance de T mesure l'écart entre les valeurs de T et σ. En effet σ² = E(T²)-(E(T))² = E(T²)-σ <strong>Définition :</strong> Un estimateur T d'un pramètre σ est dit efficace s'il est sans biais et si</p>
+<p><br /><span class="math display">$$\sigma^2_T \be \sigma^2_{T'} \forall T'$$</span><br /> estimation sans biais de σ (estimation sans biais de variance minimum)</p>
+<p><em>Exemple :</em> Soit <span class="math inline"><em>X</em><sub>1</sub>, …, <em>X</em><sub><em>n</em></sub></span> un échantillon d'une variable aléatoire X dont l'espérence est p</p>
+<p>Soit <span class="math inline">$\bar{X}$</span> (...)</p>
+<p>Donc ${X_n} est une estimation sans biais de p</p>
+<p>(...)</p>
+<p><strong>Méthode de maximum de vraisemblance :</strong> C'est une méthode d'estimation ponctuelle qui permet de déterminer des estimateurs pour des paramètres vérifiant certaines propriétés. Soit <span class="math inline"><em>X</em><sub>1</sub>, …, <em>X</em><sub><em>n</em></sub></span> un échantillon de n observation indépendantes d'une variable aléatoire X dont la loi dépend d'un paramètre σ donc la densité de proba est <span class="math inline"><em>f</em>(<em>x</em>, <em>σ</em>)</span>.</p>
+<p><strong>Définition :</strong> On appelle fonction de vraisemblance associé à l'échantillon la fonction V(σ) définie par V(σ)=f(X_1,σ)...f(X_n,σ)</p>
+<p>On cherhce alors la valeur <span class="math inline">$\bar{\sigma}$</span> qui maximise V(σ)</p>
+<p><strong>Définition :</strong> <span class="math inline">$\bar{\sigma}$</span>est appelé l'estimateur du maximum de vraisemblance de σ (EMV)</p>
+<p><strong>Définition :</strong> Une fonction f(x) est dite <em>concave</em> si <span class="math inline">$\forall x, f(x)\be$</span> <strong>Propriété :</strong> Si V(σ) est concave, alors <span class="math inline">$\bar{\sigma}$</span> est la solution unique de dv/dσ = 0</p>
