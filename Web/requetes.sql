@@ -3,3 +3,18 @@ CREATE TABLE ELEMENT(ID INT PRIMARY KEY, TITRE VARCHAR(255), DESCRIPTION VARCHAR
 
 ALTER TABLE ELEMENT ADD CONSTRAINT ELEMENT_IDLISTE_PARENT
   FOREIGN KEY(IDLISTE) REFERENCES LISTE(ID) ON DELETE RESTRICT;
+
+ALTER TABLE LISTE ALTER COLUMN ID INT AUTO_INCREMENT;
+ALTER TABLE ELEMENT ALTER COLUMN ID INT AUTO_INCREMENT;
+
+INSERT INTO LISTE(TITRE, DESCRIPTION) VALUES ('Voiture', 'Différentes voitures');
+INSERT INTO LISTE(TITRE, DESCRIPTION) VALUES ('Prénoms', 'Les prénoms les plus tendances du mois de Novembre. Le 6ème va vous étonner !');
+
+INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Citroën Type A', 'Première voiture européenne produite en grande série à la chaîne, elle est commercialisée par Citroën entre juin 1919 et juillet 1921.', NOW(), NOW(), 1);
+INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Coccinelle', 'Un des premiers modèles de Volkswagen.', NOW(), NOW(), 1);
+INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Tesla Roadster', 'Première voiture de sport entièrement électrique et très performante.', NOW(), NOW(), 1);
+
+INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Steven', 'Toujours d actualité depuis la fin de la Seconde Guerre Mondiale.', NOW(), NOW(), 3);
+INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Priscilla', 'Grand retour de cette tendance.', NOW(), NOW(), 3);
+INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Kevin', 'Ce prénom n a jamais cessé d être d actualité.', NOW(), NOW(), 3);
+INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Dylan', 'D origine galloise, ce prénom signifie littéralement "Grande mer"', NOW(), NOW(), 3);
