@@ -2,7 +2,7 @@ package Controller;
 
 import java.util.List;
 
-import Modele.Dao;
+import Modele.DAO;
 import Modele.Metier.*;
 
 /*
@@ -22,9 +22,9 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		Dao.ping();
+		DAO.ping();
 		
-		List<Liste> listes = Dao.getCompleteListes();
+		List<Liste> listes = DAO.getCompleteListes();
 		for (Liste l : listes)
 		{
 			System.out.println(l);
