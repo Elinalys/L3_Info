@@ -1,8 +1,8 @@
 import java.util.Date;
 
 public class Element {
-	private final Date dateCreation;
-	private final Date dateModification;
+	private /*final*/ Date dateCreation;
+	private /*final*/ Date dateModification;
 	private String titre;
 	private String description;
 	private Liste MyList;
