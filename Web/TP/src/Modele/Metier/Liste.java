@@ -6,7 +6,7 @@ public class Liste
 {
 	private String titre;
 	private String description;
-	private List<Element> listeElements;
+	private List<Element> elements;
 
 	public Liste()
 	{
@@ -33,14 +33,14 @@ public class Liste
 		this.description = description;
 	}
 
-	public List<Element> getListeElement()
+	public List<Element> getElements()
 	{
-		return listeElements;
+		return elements;
 	}
 
 	public void setListeElement(List<Element> listeElment)
 	{
-		this.listeElements = listeElment;
+		this.elements = listeElment;
 	}
 
 	@Override
@@ -48,9 +48,9 @@ public class Liste
 	{
 		String resultat = this.getTitre() + " : " + this.getDescription();
 		
-		if (listeElements != null && listeElements.size() > 0)
+		if (elements != null && elements.size() > 0)
 		{
-			for (Element ele : listeElements)
+			for (Element ele : elements)
 			{
 				resultat += "\n\t" + ele.toString();
 			}

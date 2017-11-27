@@ -11,7 +11,7 @@ import org.sql2o.*;
 public class Dao
 {
 	private static final String databasePath = "jdbc:h2:~/";
-	private static final String databaseTable = "listes";
+	private static final String databaseTable = "Listes";
 	private static final String databaseId = "admin";
 	private static final String databasePwd = "password";
 	private static Sql2o sql2o = new Sql2o(databasePath + databaseTable, databaseId, databasePwd);
@@ -358,29 +358,13 @@ public class Dao
 	}
 }
 
-class DatabaseListe
+class DatabaseListe extends Liste
 {
-	private Liste liste;
 	private String ID;
 	
 	public DatabaseListe()
-	{
-		liste = new Liste();
-	}
-	
-	public Liste getListe()
-	{ return liste; }
-	
-	public String getTitre()
-	{ return liste.getTitre(); }
-	public void setTitre(String titre)
-	{ liste.setTitre(titre); }
-	
-	public String getDescription()
-	{ return liste.getDescription(); }
-	public void setDescription(String description)
-	{ liste.setDescription(description); }
-	
+	{ }
+
 	public String getID()
 	{ return ID; }
 	public void setID(String ID)
