@@ -3,5 +3,17 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="libs"/>
+	<classpathentry kind="lib" path="src/libs/freemarker.jar"/>
+	<classpathentry kind="lib" path="src/libs/h2-1.4.196.jar"/>
+	<classpathentry kind="lib" path="src/libs/jetty-http-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="src/libs/jetty-io-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="src/libs/jetty-server-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="src/libs/jetty-util-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="src/libs/jetty-webapp-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="src/libs/servlet-api-3.1.jar"/>
+	<classpathentry kind="lib" path="src/libs/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="src/libs/slf4j-simple-1.7.25.jar"/>
+	<classpathentry kind="lib" path="src/libs/spark-core-2.7.1.jar"/>
+	<classpathentry kind="lib" path="src/libs/sql2o.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

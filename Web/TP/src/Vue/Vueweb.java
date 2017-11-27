@@ -1,13 +1,11 @@
 package Vue;
 
-import Modele.Dao;
 import Modele.Metier.*;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -15,55 +13,87 @@ import java.util.Map;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import freemarker.template.TemplateExceptionHandler;
-import freemarker.template.Version;
 
-public class Vueweb {
-	public void afficher() {
-
-		Element test = Dao.getElements().get(0);
-		List<Liste> liste = Dao.getCompleteListes();
-		//List<Element> elements = Dao.getElementsParListe(liste.);
-		
-        Configuration cfg = new Configuration();
-
-        // Where do we load the templates from:
-        cfg.setClassForTemplateLoading(Vueweb.class, "templates");
-
-        // Some other recommended settings:
-        cfg.setIncompatibleImprovements(new Version(2, 3, 20));
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setLocale(Locale.FRANCE);
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-
-        // 2. Proccess template(s)
-        Map<String, Object> input = new HashMap<String, Object>();
-
-        input.put("title", test);
-        input.put("listes", liste);
-//        intput.put()
-
-
-        // 2.2. Get the template
-        Template template;
+public class Vueweb
+{
+	private static Configuration config;
+	
+	private static Configuration getConfig()
+	{
+		if (config == null)
+		{
+			Configuration cfg = new Configuration(Configuration.VERSION_2_3_27);
+	
+	        cfg.setClassForTemplateLoading(Vueweb.class, "templates");
+	        cfg.setDefaultEncoding("UTF-8");
+	        cfg.setLocale(Locale.FRANCE);
+	        
+	        config = cfg;
+		}
+        
+        return config;
+	}
+	
+	public static void creerFichier(Configuration config, String templateFile, String outputFile, Map<String, Object> inputs)
+	{
+		Template template;
         Writer fileWriter;
 
-        try {
-         template = cfg.getTemplate("complet.ftl");
-         
-        // 2.3. Generate the output
-
-        // Write output to the console
-        Writer consoleWriter = new OutputStreamWriter(System.out);
-        template.process(input, consoleWriter);
-
-        // For the sake of example, also write output into a file:
-        fileWriter = new FileWriter(new File("output.html"));
+        try
+        {
+			template = config.getTemplate(templateFile);
+			 
+			Writer consoleWriter = new OutputStreamWriter(System.out);
+			template.process(inputs, consoleWriter);
+			
+			fileWriter = new FileWriter(new File(outputFile));
+			
+			template.process(inputs, fileWriter);
+			
+			fileWriter.close();
+        }
+        catch(Exception ex)
+        {
+        	System.out.println(ex.getMessage());
+    	}
+	}
+	
+	public static void affichageListesCompletes(List<Liste> listes)
+	{		
+        Configuration config = getConfig();
+        String templateFile = "complet.ftl";
+        String outputFile = "output.html";
         
-        template.process(input, fileWriter);
-        
-        fileWriter.close();
-        }catch(Exception ex)
-        { System.out.println(ex.getMessage()); }
+        Map<String, Object> inputs = new HashMap<String, Object>();
+        inputs.put("listes", listes);
+        inputs.put("title", "Listes et éléments");
+
+        creerFichier(config, templateFile, outputFile, inputs);
+	}
+	
+	public static void affichageListe(Liste liste)
+	{
+		Configuration config = getConfig();
+        String templateFile = "liste.ftl";
+        String outputFile = "output.html";
+
+        Map<String, Object> inputs = new HashMap<String, Object>();
+        inputs.put("liste", liste);
+        inputs.put("title", "Liste " + liste.getTitre());
+
+        creerFichier(config, templateFile, outputFile, inputs);
+	}
+	
+	public static void affichageElement(Element element)
+	{
+		Configuration config = getConfig();
+        String templateFile = "element.ftl";
+        String outputFile = "output.html";
+
+        Map<String, Object> inputs = new HashMap<String, Object>();
+        inputs.put("element", element);
+        inputs.put("title", "Liste " + element.getTitre());
+
+        creerFichier(config, templateFile, outputFile, inputs);
 	}
 }

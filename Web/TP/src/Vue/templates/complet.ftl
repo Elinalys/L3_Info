@@ -1,10 +1,10 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>interface liste web</title>
+		<title>${title}</title>
 	</head>
 	<body>
-		<h1>Tous les élements de toutes les listes</h1>
+		<h1>Tous les éléments de toutes les listes</h1>
 		<ul>
 	    	<#list listes as liste>
 	      		<li>${liste_index + 1}
@@ -17,6 +17,6 @@
 	      			</ul>
 	 	  		</li>
 	    	</#list>
-	    </ul>
+		</ul>
 	</body>
 </html>

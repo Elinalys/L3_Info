@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>interface liste web</title>
+		<title>${title}</title>
 	</head>
 	<body>
 		<h1>Détail élement ${element.titre}</h1>

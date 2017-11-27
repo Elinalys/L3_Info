@@ -3,7 +3,6 @@ package Controller;
 import java.util.List;
 
 import Modele.Dao;
-import Modele.Metier.*;
 import Vue.Vueweb;
 
 /*
@@ -17,6 +16,9 @@ Infos :
 	- Pour importer des .jar :
 		- Clique droit sur le Java Projet dans le Package Explorer (ï¿½ gauche).
 		- Properties > Java Build Path > Add .jar(s)
+		
+Corriger :
+	- Les ftl ne sont pas en UTF-8 (où le probleme avec les accents) ;)
 */
 
 public class Main
@@ -25,17 +27,7 @@ public class Main
 	{
 		Dao.ping();
 		
-		Vueweb web = new Vueweb();
-		web.afficher();
-		
-		//List<Liste> listes = Dao.getCompleteListes();
-		/*for (Liste l : listes)
-		{
-			System.out.println(l);
-		}*/
-		
-		/*List<Element> elements = Dao.get();
-		for(Element ele : elements)
-			System.out.println(ele);*/
+		//Vueweb.affichageElement(Dao.getElements().get(0));
+		Vueweb.affichageListe(Dao.getListes().get(0));
 	}
 }
