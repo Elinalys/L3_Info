@@ -19,9 +19,24 @@
 		  <label for="NomListe">Nom de la liste :</label>
 		  <input id="PostNomListe" type="text" name="name">
 		  <label for="DescriptionListe">Description :</label>
-		  <input for="PostDescription">
+		  <input for="PostDescription" type="text" name="description>
 		  <input type="submit" value="Enregistrer">
 		</form>
 		<h2>Ajouter un élement</h2>
+		<!-- Formulaire simple qui enverra une requête POST -->
+		<form action="" method="post">
+			<label for="listeElement">
+			<SELECT name="nom" size="1">
+				<#list listes as liste>
+		      		<OPTION>${liste.titre}
+		    	</#list>
+			</SELECT>
+		  	<label for="">Nom de l'élément :</label>
+		  	<input id="PostNomElement" type="text" name="name">
+		  	<label for="DescriptionELement">Description :</label>
+		  	<input for="PostDescription" type="text" name="description">
+		  	<input type="submit" value="Enregistrer">
+		</form>
+		
 	</body>
 </html>
