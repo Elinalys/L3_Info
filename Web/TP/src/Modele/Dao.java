@@ -49,6 +49,26 @@ public class Dao
 		return listes;
 	}
 	
+	/*
+	* Tu fais comme la fonction completeListe pour obtenir tous les éléments
+	*/
+	public static Liste getListe(String nom)
+	{
+		final String query = "SELECT TITRE, DESCRIPTION FROM LISTE WHERE TITRE = :titre;";
+		Liste liste = null;
+		
+		try (Connection con = sql2o.open())
+		{
+			liste = con.createQuery(query).addParameter("titre", nom).executeAndFetchFirst(Liste.class);
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Erreur requete : " + ex.getMessage());
+		}
+		
+		return liste;
+	}
+	
 	public static List<Element> getElements()
 	{
 		final String query = "SELECT TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION FROM ELEMENT;";
@@ -64,6 +84,23 @@ public class Dao
 		}
 		
 		return elements;
+	}
+	
+	public static Element getElement(String nom)
+	{
+		final String query = "SELECT TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION FROM ELEMENT WHERE TITRE = :titre;";
+		Element element = new Element();
+		
+		try (Connection con = sql2o.open())
+		{
+			element = con.createQuery(query).addParameter("titre", nom).executeAndFetchFirst(Element.class);
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Erreur requete : " + ex.getMessage());
+		}
+		
+		return element;
 	}
 	
 	public static List<Element> getElementsParListe(Liste liste)

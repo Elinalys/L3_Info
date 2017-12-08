@@ -34,7 +34,7 @@ public class Vueweb
         return config;
 	}
 	
-	public static String creerFichier(Configuration config, String templateFile, String outputFile, Map<String, Object> inputs)
+	public static String completeTemplate(Configuration config, String templateFile, String outputFile, Map<String, Object> inputs)
 	{
 		Template template;
         StringWriter stringWriter = new StringWriter();
@@ -71,7 +71,7 @@ public class Vueweb
         inputs.put("listes", listes);
         inputs.put("title", "Listes et Ã©lÃ©ments");
 
-        return creerFichier(config, templateFile, outputFile, inputs);
+        return completeTemplate(config, templateFile, outputFile, inputs);
 	}
 	
 	public static String affichageListe(Liste liste)
@@ -84,7 +84,7 @@ public class Vueweb
         inputs.put("liste", liste);
         inputs.put("title", "Liste " + liste.getTitre());
 
-        return creerFichier(config, templateFile, outputFile, inputs);
+        return completeTemplate(config, templateFile, outputFile, inputs);
 	}
 	
 	public static String affichageElement(Element element)
@@ -95,9 +95,9 @@ public class Vueweb
 
         Map<String, Object> inputs = new HashMap<String, Object>();
         inputs.put("element", element);
-        inputs.put("title", "Liste " + element.getTitre());
+        inputs.put("title", "Élément " + element.getTitre());
 
-        return creerFichier(config, templateFile, outputFile, inputs);
+        return completeTemplate(config, templateFile, outputFile, inputs);
 	}
 	
 	public static String affichageListes(List<Liste> listes)
@@ -110,7 +110,7 @@ public class Vueweb
 		inputs.put("listes", listes);
 		inputs.put("title", "Listes");
 		
-		return creerFichier(config, templateFile, outputFile, inputs);
+		return completeTemplate(config, templateFile, outputFile, inputs);
 	}
 	
 	public static String affichageElements(List<Element> elements)
@@ -123,7 +123,7 @@ public class Vueweb
 		inputs.put("elements", elements);
 		inputs.put("title", "Elements");
 		
-		return creerFichier(config, templateFile, outputFile, inputs);
+		return completeTemplate(config, templateFile, outputFile, inputs);
 	}
 }
 	

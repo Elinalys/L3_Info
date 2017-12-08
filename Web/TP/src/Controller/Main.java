@@ -16,6 +16,8 @@ Infos :
 	- Pour importer des .jar :
 		- Clique droit sur le Java Projet dans le Package Explorer (Ã  gauche).
 		- Properties > Java Build Path > Add .jar(s)
+		- spark : http://127.0.0.1:4567/listes/
+		- h2 : http://192.168.1.21:8082/login.jsp
 		
 Corriger :
 	- Les ftl ne sont pas en UTF-8 (oÃ¹ le probleme avec les accents) ;)
@@ -25,7 +27,23 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		Dao.ping();
+		/*
+		*	v	Afficher Listes
+		*	v	Afficher Elements (Est-ce vraiment utile ?)
+		*
+		*	~	Afficher Liste
+		*	~	Afficher Element
+		*
+		*	x	Modifie Liste		[Update]
+		*	x	Modifie Element		[Update]
+		*	 
+		*	x	Supprime Liste		[Delete]
+		*	x	Supprime Element	[Delete]
+		*
+		*	x	Ajouter Element à une liste
+		*	x	Créer élément		[Post]
+		*	x	Créer élément		[Post]
+		*/
 		
 		get("/listes", (request, response) -> {
 	        response.status(200);
@@ -33,22 +51,28 @@ public class Main
 	        return Vueweb.affichageListes(Dao.getListes());
 	    });
 		
-		get("/liste:", (request, response) -> {
+		get("/liste/:nom", (request, response) -> {
 	        response.status(200);
 	        response.type("text/html");
-	        return Vueweb.affichageListes(Dao.getListes());
+	        return Vueweb.affichageListe(Dao.getListe(request.params(":nom")));
 	    });
 		
-		get("/listes", (request, response) -> {
+		get("/elements", (request, response) -> {
 	        response.status(200);
 	        response.type("text/html");
-	        return Vueweb.affichageListes(Dao.getListes());
+	        return Vueweb.affichageElements(Dao.getElements());
 	    });
 		
-		get("/element", (request, response) -> {
+		get("/element/:nom", (request, response) -> {
 	        response.status(200);
 	        response.type("text/html");
-	        return Vueweb.affichageListes(Dao.getListes());
+	        return Vueweb.affichageElement(Dao.getElement(request.params(":nom")));
+	    });
+		
+		delete("/element/:nom", (request, response) -> {
+	        response.status(200);
+	        Dao.supprimerElement(Dao.getElement(request.params(":nom")));
+	        return Vueweb.affichageElements(Dao.getElements());
 	    });
 	}
 }
