@@ -43,6 +43,21 @@ public class Main
 		*	x	Ajouter Element à une liste
 		*	x	Créer élément		[Post]
 		*	x	Créer élément		[Post]
+		*
+		* aide+
+		* get("/login", (request, response) -> {
+		    return new ModelAndView(new HashMap<>(), "templates/base.vtl");
+		}, new VelocityTemplateEngine());
+		
+		post("/login", (request, response) -> {
+		    String a, b, c;
+		    a = request.queryParams("txt_username");
+		    b = request.queryParams("txt_password");
+		    c = request.queryParams("txt_memberid");
+		    return String.join(" AND ", a, b, c);
+		});
+				*
+		*
 		*/
 		
 		get("/listes", (request, response) -> {
