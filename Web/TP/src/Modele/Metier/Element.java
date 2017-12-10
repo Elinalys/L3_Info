@@ -11,7 +11,7 @@ public class Element
 	private Date dateModification;	
 	private Liste MyList;
 	
-	// Méthodes
+	// MÃ©thodes
 	public Element()
 	{
 		super();
@@ -66,6 +66,6 @@ public class Element
 	@Override
 	public String toString()
 	{
-		return titre + " : " + description + " (Créé le " + dateCreation + ", derniere modification le " + dateModification + ").";
+		return titre + " : " + description + " (CrÃ©Ã© le " + dateCreation + ", derniere modification le " + dateModification + ").";
 	}
 }

@@ -14,13 +14,13 @@ BDD :
 Infos :
 	- NE PAS ETRE CONNECTER SUR NAVIGATEUR QUAND ON EXECUTE DES REQUETES AVEC L'APPLI!
 	- Pour importer des .jar :
-		- Clique droit sur le Java Projet dans le Package Explorer (Ã  gauche).
+		- Clique droit sur le Java Projet dans le Package Explorer (ÃƒÂ  gauche).
 		- Properties > Java Build Path > Add .jar(s)
 		- spark : http://127.0.0.1:4567/listes/
 		- h2 : http://192.168.1.21:8082/login.jsp
 		
 Corriger :
-	- Les ftl ne sont pas en UTF-8 (oÃ¹ le probleme avec les accents) ;)
+	- Les ftl ne sont pas en UTF-8 (oÃƒÂ¹ le probleme avec les accents) ;)
 */
 
 public class Main
@@ -40,9 +40,9 @@ public class Main
 		*	x	Supprime Liste		[Delete]
 		*	x	Supprime Element	[Delete]
 		*
-		*	x	Ajouter Element à une liste
-		*	x	Créer élément		[Post]
-		*	x	Créer élément		[Post]
+		*	x	Ajouter Element Ã  une liste
+		*	x	CrÃ©er Ã©lÃ©ment		[Post]
+		*	x	CrÃ©er Ã©lÃ©ment		[Post]
 		*
 		* aide+
 		* get("/login", (request, response) -> {

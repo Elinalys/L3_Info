@@ -50,7 +50,7 @@ public class Dao
 	}
 	
 	/*
-	* Tu fais comme la fonction completeListe pour obtenir tous les éléments
+	* Tu fais comme la fonction completeListe pour obtenir tous les Ã©lÃ©ments
 	*/
 	public static Liste getListe(String nom)
 	{

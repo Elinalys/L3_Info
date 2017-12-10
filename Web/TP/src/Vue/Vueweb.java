@@ -69,7 +69,7 @@ public class Vueweb
         
         Map<String, Object> inputs = new HashMap<String, Object>();
         inputs.put("listes", listes);
-        inputs.put("title", "Listes et éléments");
+        inputs.put("title", "Listes et Ã©lÃ©ments");
 
         return completeTemplate(config, templateFile, outputFile, inputs);
 	}
@@ -95,7 +95,7 @@ public class Vueweb
 
         Map<String, Object> inputs = new HashMap<String, Object>();
         inputs.put("element", element);
-        inputs.put("title", "�l�ment " + element.getTitre());
+        inputs.put("title", "Élément " + element.getTitre());
 
         return completeTemplate(config, templateFile, outputFile, inputs);
 	}
