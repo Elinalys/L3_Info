@@ -11,6 +11,6 @@
 		  <input for="PostDescription">
 		  <input type="submit" value="Enregistrer">
 		</form>
-	
+
 	</body>
 </html>

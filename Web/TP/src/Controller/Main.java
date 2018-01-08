@@ -59,7 +59,13 @@ public class Main
 				*
 		*
 		*/
-		
+
+		get("/", (request, response) -> {
+			response.status(200);
+			response.type("text/html");
+			return Vueweb.affichageListes(Dao.getListes());
+		});
+
 		get("/listes", (request, response) -> {
 	        response.status(200);
 	        response.type("text/html");

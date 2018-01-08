@@ -36,3 +36,9 @@ On cherhce alors la valeur $\bar{\sigma}$ qui maximise V(σ)
 **Définition :** Une fonction f(x) est dite *concave* si $\forall x, f(x)\be$
 **Propriété :** Si V(σ) est concave, alors $\bar{\sigma}$ est la solution unique de dv/dσ = 0
 
+(...)
+
+# Chaine de Markov
+
+**Parcours aléatoire :** Un processus aléatoire est une famille de variables aléatoires indexés par les élements d'un ensemble T. On note $(X_t)_{t\inT}$
+

@@ -7,7 +7,7 @@
 		<h1>Toutes les listes</h1>
 		<ul>
 	    	<#list listes as liste>
-	      		<li>${liste_index + 1}
+	      		<li>Liste ${liste_index + 1}
 	      			<h2>${liste.titre}</h2>
 	      			<p><em>${liste.description}</em><p>
 	 	  		</li>
@@ -19,7 +19,7 @@
 		  <label for="NomListe">Nom de la liste :</label>
 		  <input id="PostNomListe" type="text" name="name">
 		  <label for="DescriptionListe">Description :</label>
-		  <input for="PostDescription" type="text" name="description>
+		  <input for="PostDescription" type="text" name="description">
 		  <input type="submit" value="Enregistrer">
 		</form>
 		<h2>Ajouter un élement</h2>
