@@ -81,7 +81,9 @@ public class Main
 	 get("/liste/:nom", (request, response) -> {
 	        response.status(200);
 	        response.type("text/html");
-	        return Vueweb.affichageListe(Dao.getListe(request.params(":nom"))); // marche pas getListe.. puis getElementparListe ?
+	        Liste liste = new Liste();
+	        liste.setTitre(":nom");
+	        return Vueweb.affichageElements(Dao.getElementsParListe(liste)); // marche pas getListe.. puis getElementparListe ?
 	  });
 		
 		get("/elements", (request, response) -> {
@@ -124,15 +126,14 @@ public class Main
 
 		post("/creerElement", (request, reponse) -> {
 			Element element = new Element();
-			Liste liste = Dao.getListe("titreMaListe");
+			Liste liste = Dao.getListe(request.queryParams("titreMaListe"));
 			element.setTitre(request.queryParams("titreElement"));
 			element.setDescription(request.queryParams("descriptionElement"));
 			element.setMyList(Dao.getListe("titreMaListe"));
-			System.out.println("Debug " + Dao.getListe("titreMaListe"));
+			// System.out.println("Debug " + Dao.getListe(request.queryParams("titreMaListe")));
 			Dao.creerElement(element,Dao.getIDListe(liste));
 			return Vueweb.affichageListes(Dao.getListes());
-		}); // marche pas pour l'instant parce que getLIste null
-
+		}); 
 	}
 
 }

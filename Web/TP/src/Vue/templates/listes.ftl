@@ -37,16 +37,16 @@
 		<!-- Formulaire simple qui enverra une requête POST -->
 		<form action="/creerElement" method="post">
 			<label for="listeElement">Nom de la liste</label>
-			<SELECT size="1">
+			<select id="titreMaListe" name="titreMaListe" size="1">
 				<#list listes as liste>
-		      		<OPTION name="titreMaListe">${liste.titre}
-		    	</#list>
-			</SELECT>
-		  	<label for="">Nom de l'élément :</label>
-		  	<input id="PostNomElement" type="text" name="titreElement">
-		  	<label for="DescriptionELement">Description :</label>
-		  	<input for="PostDescription" type="text" name="descriptionElement">
-		  	<input type="submit" value="Enregistrer">
+		      <option value="${liste.titre}">${liste.titre}</option>
+		    </#list>
+			</select>
+	  	<label for="NomElement">Nom de l'élément :</label>
+	  	<input id="titreElement" type="text" name="titreElement">
+	  	<label for="DescriptionELement">Description :</label>
+	  	<input id="descriptionElement" type="text" name="descriptionElement">
+	  	<input type="submit" value="Enregistrer">
 		</form>
 		
 	</body>
