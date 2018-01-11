@@ -86,7 +86,7 @@ public class Dao
 		return elements;
 	}
 	
-	public static Element getElement(String nom)
+	public static Element getElement(String nom) // pas ouf
 	{
 		final String query = "SELECT TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION FROM ELEMENT WHERE TITRE = :titre;";
 		Element element = new Element();
@@ -121,7 +121,7 @@ public class Dao
 		
 		return elements;
 	}
-	
+
 	public static Integer getIDListe(Liste liste)
 	{
 		final String query = "SELECT ID FROM LISTE WHERE TITRE = :titre AND DESCRIPTION = :description;";
@@ -338,13 +338,15 @@ public class Dao
 			System.out.println("Erreur requete : " + ex.getMessage());
 		}
 	}
-	
+
+
 	public static int creerElement(Element element, int IDListe)
 	{
+		System.out.println(element);
 		final String query = "INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES (:titre, :description, NOW(), NOW(), :IDListe);";
 		int IDElement = 0;
 		
-		System.out.println(element.getTitre());
+		// System.out.println(element.getTitre());
 		
 		try (Connection con = sql2o.open())
 		{
@@ -353,7 +355,7 @@ public class Dao
 		}
 		catch(Exception ex)
 		{
-			System.out.println("Erreur requete : " + ex.getMessage());
+			System.out.println("Erreur requete1 : " + ex.getMessage());
 		}
 		
 		return IDElement;

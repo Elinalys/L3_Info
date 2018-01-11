@@ -2,6 +2,7 @@
 
 ## Plus important 
 
+- /!\ creer toutes le composantes pour afficher les elements d'une liste donnée --> `getElementParListe()` dans le dao ?
 - [ ] faire une page d'accueil où l'on peut :
 	- [ ] ajouter des élements à une liste
 	- [ ] ajouter des listes
@@ -16,3 +17,8 @@
 - [ ] gestion des tags 
 - [ ] *ajouter du css etc.*
 
+
+
+- pour les posts : Du coup utiliser objet métiers en en créant des temporaires dans les requetes sparrk qui prennent en val d'attribut les params du formulaire.
+
+- pour les listes et élements on recup la liste et on stocke son id qui est utilisée sur les elements ensuite
