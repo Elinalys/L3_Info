@@ -63,29 +63,31 @@ public class Vueweb
 	
 	public static String affichageListesCompletes(List<Liste> listes)
 	{		
-        Configuration config = getConfig();
-        String templateFile = "complet.ftl";
-        String outputFile = "complet.html";
-        
-        Map<String, Object> inputs = new HashMap<String, Object>();
-        inputs.put("listes", listes);
-        inputs.put("title", "Listes et Ã©lÃ©ments");
+    Configuration config = getConfig();
+    String templateFile = "complet.ftl";
+    String outputFile = "complet.html";
+    
+    Map<String, Object> inputs = new HashMap<String, Object>();
+    inputs.put("listes", listes);
+    inputs.put("title", "Listes et éléments");
 
-        return completeTemplate(config, templateFile, outputFile, inputs);
+    return completeTemplate(config, templateFile, outputFile, inputs);
 	}
 	
 	public static String affichageListe(Liste liste)
 	{
-		Configuration config = getConfig();
-        String templateFile = "liste.ftl";
-        String outputFile = "liste.html";
+	Configuration config = getConfig();
+    String templateFile = "liste.ftl";
+    String outputFile = "liste.html";
 
-        Map<String, Object> inputs = new HashMap<String, Object>();
-        inputs.put("liste", liste);
-        inputs.put("title", "Liste " + liste.getTitre());
+    Map<String, Object> inputs = new HashMap<String, Object>();
+    inputs.put("liste", liste);
+    inputs.put("title", "Liste " + liste.getTitre());
+    //inputs.put("element", element);
+    // inputs.put()
 
-        return completeTemplate(config, templateFile, outputFile, inputs);
-	}
+    return completeTemplate(config, templateFile, outputFile, inputs);
+}
 	
 	public static String affichageElement(Element element)
 	{

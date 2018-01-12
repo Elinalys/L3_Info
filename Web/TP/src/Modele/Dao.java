@@ -68,6 +68,17 @@ public class Dao
 		
 		return liste;
 	}
+
+	// public static Liste getCompleteListe(String nom) 
+	// {
+	// 	final String queryDatabaseListe = "SELECT :titre FROM LISTE;";
+	// 	final String queryElements = "SELECT TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION FROM ELEMENT WHERE IDLISTE = :IDListe;";
+
+	// 	Liste liste = null;
+
+
+	// 	return liste
+	// }
 	
 	public static List<Element> getElements()
 	{

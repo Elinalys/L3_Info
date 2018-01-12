@@ -24,13 +24,14 @@
 				</tr>
 			</#list>
 		</table>
+		<p><a href="/complet">Tous les éléments de toutes les listes</a>
 		<h2>Créer une nouvelle liste</h2>
 		<!-- Formulaire simple qui enverra une requête POST -->
 		<form action="/creerListe" method="post">
-		  <label for="NomListe">Nom de la liste :</label>
-		  <input id="PostNomListe" type="text" name="titreListe">
-		  <label for="DescriptionListe">Description :</label>
-		  <input for="PostDescriptionListe" type="text" name="descriptionListe">
+		  <label for="nomListe">Nom de la liste :</label>
+		  <input id="postNomListe" type="text" name="titreListe">
+		  <label for="descriptionListe">Description :</label>
+		  <input for="postDescriptionListe" type="text" name="descriptionListe">
 		  <input type="submit" value="Enregistrer">
 		</form>
 		<h2>Ajouter un élement</h2>
@@ -44,10 +45,37 @@
 			</select>
 	  	<label for="NomElement">Nom de l'élément :</label>
 	  	<input id="titreElement" type="text" name="titreElement">
-	  	<label for="DescriptionELement">Description :</label>
+	  	<label for="descriptionELement">Description :</label>
 	  	<input id="descriptionElement" type="text" name="descriptionElement">
 	  	<input type="submit" value="Enregistrer">
 		</form>
-		
+		<h2>Supprimer une liste</h2>
+		<form action="/supprimerListe" method="delete">
+			<label for="nomListe">Nom de la liste</label>
+			<select id="titreMaListe" name="titreMaListe" size="1">
+				<#list listes as liste>
+		      <option value="${liste.titre}">${liste.titre}</option>
+		    </#list>
+			</select>
+			<input type="submit" value="Supprimer">
+		</form>
+		<#-- <h2>Supprimer un élement</h2>
+		<form action="/supprimerElement" method="delete">
+			<select id="titreMaListe" name="titreMaListe" size="1">
+			<label for="nomListe">Nom de la liste</label>
+				<#list listes as liste>
+		      <option value="${liste.titre}">${liste.titre}</option>
+		    </#list>
+			</select>
+			<label for="NomElement">Nom de l'élément</label>
+			<select id="titreMonElement" name="titreMonElement" size="1">
+				<#list listes as liste>
+				  <#list liste.elements as element>
+  					<option value=${element.titre}>${element.titre}</option>
+  				</#list>
+		    </#list>
+			</select>
+			<input type="submit" name="Supprimer">
+		</form> à remettre ailleurs quand listeElements sera bon -->
 	</body>
 </html>

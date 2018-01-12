@@ -71,20 +71,21 @@ public class Main
 	        response.status(200);
 	        response.type("text/html");
 	        return Vueweb.affichageListes(Dao.getListes());
-	    });
+	  });
 		
 		// get("/liste/:nom", (request, response) -> {
 	 //        response.status(200);
 	 //        response.type("text/html");
 	 //        return Vueweb.affichageListe(Dao.getElementsParListe(request.params(":nom"))); // marche pas getListe..
 	 //    });
-	 get("/liste/:nom", (request, response) -> {
-	        response.status(200);
-	        response.type("text/html");
-	        Liste liste = new Liste();
-	        liste.setTitre(":nom");
-	        return Vueweb.affichageElements(Dao.getElementsParListe(liste)); // marche pas getListe.. puis getElementparListe ?
-	  });
+
+		// get("/liste/:nom", (request, response) -> {
+		// 	response.status(200);
+		// 	response.type("text/html");
+		// 	Liste liste = new Liste();
+		// 	liste.setTitre(":nom");
+		// 	return Vueweb.affichageListe(Dao.getElementsParListe(liste)); // marche pas getListe.. puis getElementparListe ?
+		// });
 		
 		get("/elements", (request, response) -> {
 	        response.status(200);
@@ -98,17 +99,19 @@ public class Main
 	        return Vueweb.affichageElement(Dao.getElement(request.params(":nom")));
 	    });
 		
-		delete("/element/:nom", (request, response) -> {
-	        response.status(200);
-	        Dao.supprimerElement(Dao.getElement(request.params(":nom")));
-	        return Vueweb.affichageElements(Dao.getElements());
-	    });
+		// delete("/element/:nom", (request, response) -> {
+	 //        response.status(200);
+	 //        Dao.supprimerElement(Dao.getElement(request.params(":nom")));
+	 //        return Vueweb.affichageElements(Dao.getElements());
+	 //    });
 
 		delete("/supprimerListe", (request, response) -> {
-					response.status(200);
-					Dao.supprimerListe(Dao.getListe("listeASupprimer"));
-					return Vueweb.affichageListes(Dao.getListes());
-		}); // ajouter formulaire qui va bien idem pour element
+			System.out.println(request.body()); // request body sent by the client);
+			Liste liste = Dao.getListe(request.queryParams("titreMaListe"));
+			response.status(200);
+			Dao.supprimerListe(liste);
+			return Vueweb.affichageListes(Dao.getListes());
+		});
 
 		get("/complet", (request, reponse) -> {
 			reponse.status(200);
