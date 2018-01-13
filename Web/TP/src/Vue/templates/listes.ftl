@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -21,6 +22,7 @@
 					<td>${liste_index + 1}</td>
 					<td><a href="liste/${liste.titre}">${liste.titre}</a></td> <!-- n'affiche pas les élements... -->
 					<td><em>${liste.description}</em></td>
+					<td><a href="/supprimerListe/${liste.titre}">supprimer</a></td>
 				</tr>
 			</#list>
 		</table>
@@ -50,7 +52,7 @@
 	  	<input type="submit" value="Enregistrer">
 		</form>
 		<h2>Supprimer une liste</h2>
-		<form action="/supprimerListe" method="delete">
+		<form action="/supprimerListe" method="post">
 			<label for="nomListe">Nom de la liste</label>
 			<select id="titreMaListe" name="titreMaListe" size="1">
 				<#list listes as liste>

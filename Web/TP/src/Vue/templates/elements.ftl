@@ -4,7 +4,7 @@
 		<title>${title}</title>
 	</head>
 	<body>
-		<h1>Tous les éléments</h1>
+		<h1>Tous les éléments </h1>
 		<ul>
 			<#list elements as element>
 				<li>${element.titre}</li>

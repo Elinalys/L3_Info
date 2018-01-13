@@ -79,13 +79,12 @@ public class Main
 	 //        return Vueweb.affichageListe(Dao.getElementsParListe(request.params(":nom"))); // marche pas getListe..
 	 //    });
 
-		// get("/liste/:nom", (request, response) -> {
-		// 	response.status(200);
-		// 	response.type("text/html");
-		// 	Liste liste = new Liste();
-		// 	liste.setTitre(":nom");
-		// 	return Vueweb.affichageListe(Dao.getElementsParListe(liste)); // marche pas getListe.. puis getElementparListe ?
-		// });
+		get("/liste/:nom", (request, response) -> {
+			response.status(200);
+			response.type("text/html");
+			Liste liste = Dao.getListe(":nom");
+			return Vueweb.affichageListeDetail(liste ,Dao.getElementsParListe(liste)); // marche pas getListe.. puis getElementparListe ?
+		});
 		
 		get("/elements", (request, response) -> {
 	        response.status(200);
@@ -105,21 +104,29 @@ public class Main
 	 //        return Vueweb.affichageElements(Dao.getElements());
 	 //    });
 
-		delete("/supprimerListe", (request, response) -> {
-			System.out.println(request.body()); // request body sent by the client);
-			Liste liste = Dao.getListe(request.queryParams("titreMaListe"));
+		delete("/supprimerListe/:nom", (request, response) -> { // delete marche pas
 			response.status(200);
+			response.type("text/html");
+			Liste liste = Dao.getListe(request.params(":nom"));
 			Dao.supprimerListe(liste);
 			return Vueweb.affichageListes(Dao.getListes());
 		});
 
-		get("/complet", (request, reponse) -> {
-			reponse.status(200);
-			reponse.type("text/html");
+		delete("/supprimerListe", (request, response) -> { // delete marche pas
+			response.status(200);
+			response.type("text/html");
+			Liste liste = Dao.getListe(request.queryParams("titreMaListe"));
+			Dao.supprimerListe(liste);
+			return Vueweb.affichageListes(Dao.getListes());
+		}); // marche pas essayer de faire un <a href=""> en delete sinon JS
+
+		get("/complet", (request, response) -> {
+			response.status(200);
+			response.type("text/html");
 			return Vueweb.affichageListesCompletes(Dao.getCompleteListes());
 		});
 
-		post("/creerListe", (request, reponse) -> {
+		post("/creerListe", (request, response) -> {
 			Liste liste = new Liste();
 			liste.setTitre(request.queryParams("titreListe"));
 			liste.setDescription(request.queryParams("descriptionListe"));

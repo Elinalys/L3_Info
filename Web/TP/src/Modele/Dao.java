@@ -289,6 +289,8 @@ public class Dao
 	public static void supprimerListe(Liste liste)
 	{
 		final String query = "DELETE FROM LISTE WHERE TITRE = :titre AND DESCRIPTION = :description;";
+		System.out.println("titre : " + liste.getTitre());
+		System.out.println("description : " + liste.getDescription());
 		
 		try (Connection con = sql2o.open())
 		{
