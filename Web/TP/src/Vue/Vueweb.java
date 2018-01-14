@@ -63,15 +63,28 @@ public class Vueweb
 	
 	public static String affichageListesCompletes(List<Liste> listes)
 	{		
-    Configuration config = getConfig();
-    String templateFile = "complet.ftl";
-    String outputFile = "complet.html";
-    
-    Map<String, Object> inputs = new HashMap<String, Object>();
-    inputs.put("listes", listes);
-    inputs.put("title", "Listes et éléments");
+	    Configuration config = getConfig();
+	    String templateFile = "complet.ftl";
+	    String outputFile = "complet.html";
+	    
+	    Map<String, Object> inputs = new HashMap<String, Object>();
+	    inputs.put("listes", listes);
+	    inputs.put("title", "Listes et éléments");
 
-    return completeTemplate(config, templateFile, outputFile, inputs);
+	    return completeTemplate(config, templateFile, outputFile, inputs);
+	}
+
+	public static String affichageListeDetail(Liste liste, List<Element> elements) {
+		Configuration config = getConfig();
+		String templateFile = "listeDetail.ftl";
+		String outputFile = "listeDetail.html";
+		Map<String, Object> inputs = new HashMap<String, Object>();
+		inputs.put("liste", liste);
+		inputs.put("title", "Liste " + liste.getTitre());
+		inputs.put("description", liste.getDescription());
+		inputs.put("elements", elements);
+		
+		return completeTemplate(config, templateFile, outputFile, inputs);
 	}
 	
 	public static String affichageListe(Liste liste)
@@ -83,8 +96,6 @@ public class Vueweb
     Map<String, Object> inputs = new HashMap<String, Object>();
     inputs.put("liste", liste);
     inputs.put("title", "Liste " + liste.getTitre());
-    //inputs.put("element", element);
-    // inputs.put()
 
     return completeTemplate(config, templateFile, outputFile, inputs);
 }
@@ -128,19 +139,5 @@ public class Vueweb
 		return completeTemplate(config, templateFile, outputFile, inputs);
 	}
 
-	public static String affichageListeDetail(Liste liste, List<Element> elements) {
-		Configuration config = getConfig();
-		String templateFile = "listeDetail.ftl";
-		String outputFile = "listeDetail.html";
-
-		Map<String, Object> inputs = new HashMap<String, Object>();
-		inputs.put("elements", elements);
-		inputs.put("description", elements);
-		inputs.put("liste", liste);
-		//inputs.put("title", "Liste " + liste.getTitre());
-		inputs.put("description", "Liste " + liste.getDescription());
-
-		return completeTemplate(config, templateFile, outputFile, inputs);
-	}
 }
 	

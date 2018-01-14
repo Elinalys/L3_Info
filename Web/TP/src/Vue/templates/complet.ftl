@@ -4,6 +4,7 @@
 		<title>${title}</title>
 	</head>
 	<body>
+		<p><a href="/">Accueil</a></p>
 		<h1>Tous les éléments de toutes les listes</h1>
 		<#list listes as liste>
 	    <section>
@@ -11,10 +12,10 @@
   			<p><em>${liste.description}</em><p>
   			<ul>
   				<#list liste.elements as element>
-  					<li>${element.titre}</li>
+  					<li><strong>${element.titre}</strong>, <em>${element.description}</em></li>
   				</#list>
   			</ul>
 	 	  </section>
 	  </#list>
 	</body>
-</html>
+</html>,

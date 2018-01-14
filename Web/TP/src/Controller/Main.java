@@ -82,8 +82,10 @@ public class Main
 		get("/liste/:nom", (request, response) -> {
 			response.status(200);
 			response.type("text/html");
-			Liste liste = Dao.getListe(":nom");
-			return Vueweb.affichageListeDetail(liste ,Dao.getElementsParListe(liste)); // marche pas getListe.. puis getElementparListe ?
+			Liste liste = Dao.getListe(request.params(":nom"));
+			//System.out.println(Dao.getElementsParListe(liste));
+			//System.out.println(liste.getElements().size());
+			return Vueweb.affichageListeDetail(liste ,Dao.getElementsParListe(liste));
 		});
 		
 		get("/elements", (request, response) -> {
@@ -104,21 +106,24 @@ public class Main
 	 //        return Vueweb.affichageElements(Dao.getElements());
 	 //    });
 
-		delete("/supprimerListe/:nom", (request, response) -> { // delete marche pas
+		get("/supprimerListe/:nom", (request, response) -> { 
 			response.status(200);
 			response.type("text/html");
 			Liste liste = Dao.getListe(request.params(":nom"));
+			for (Element elt : Dao.getElementsParListe(liste)) {
+				Dao.supprimerElement(elt);
+			}
 			Dao.supprimerListe(liste);
 			return Vueweb.affichageListes(Dao.getListes());
 		});
-
-		delete("/supprimerListe", (request, response) -> { // delete marche pas
+		get("/supprimerElement/:nom", (request, response) -> { // delete marche pas
 			response.status(200);
 			response.type("text/html");
-			Liste liste = Dao.getListe(request.queryParams("titreMaListe"));
-			Dao.supprimerListe(liste);
-			return Vueweb.affichageListes(Dao.getListes());
-		}); // marche pas essayer de faire un <a href=""> en delete sinon JS
+			Element element = Dao.getElement(request.params(":nom"));
+			Liste liste = element.getMyList();
+			Dao.supprimerElement(element);
+			return Vueweb.affichageListeDetail(liste ,Dao.getElementsParListe(liste));
+		});
 
 		get("/complet", (request, response) -> {
 			response.status(200);

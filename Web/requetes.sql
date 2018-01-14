@@ -14,7 +14,7 @@ INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE)
 INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Coccinelle', 'Un des premiers modèles de Volkswagen.', NOW(), NOW(), 1);
 INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Tesla Roadster', 'Première voiture de sport entièrement électrique et très performante.', NOW(), NOW(), 1);
 
-INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Steven', 'Toujours d actualité depuis la fin de la Seconde Guerre Mondiale.', NOW(), NOW(), 3);
-INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Priscilla', 'Grand retour de cette tendance.', NOW(), NOW(), 3);
-INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Kevin', 'Ce prénom n a jamais cessé d être d actualité.', NOW(), NOW(), 3);
-INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Dylan', 'D origine galloise, ce prénom signifie littéralement "Grande mer"', NOW(), NOW(), 3);
+INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Steven', 'Toujours d actualité depuis la fin de la Seconde Guerre Mondiale.', NOW(), NOW(), 2);
+INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Priscilla', 'Grand retour de cette tendance.', NOW(), NOW(), 2);
+INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Kevin', 'Ce prénom n a jamais cessé d être d actualité.', NOW(), NOW(), 2);
+INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES ('Dylan', 'D origine galloise, ce prénom signifie littéralement "Grande mer"', NOW(), NOW(), 2);
