@@ -2,6 +2,9 @@ package Controller;
 
 import static spark.Spark.*;
 
+import java.awt.Desktop;
+import java.net.URL;
+
 import Modele.Dao;
 import Vue.Vueweb;
 import Modele.Metier.*;
@@ -117,7 +120,11 @@ public class Main
 			Dao.creerElement(element,Dao.getIDListe(liste));
 			response.redirect("/");
 			return Vueweb.affichageListes(Dao.getListes());
-		}); 
+		});
+
+		try {
+			Desktop.getDesktop().browse(new URL("http://localhost:4567").toURI());
+		} catch (Exception e) {}
 	}
 
 }

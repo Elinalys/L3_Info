@@ -22,7 +22,7 @@
 			</#list>
 		</table>
 		<p><a href="/complet">Tous les éléments de toutes les listes</a></h2b>
-		<h2>Créer une nouvelle liste</p>
+		<h2>Créer une nouvelle liste</h2>
 		<form action="/creerListe" method="post">
 			<label for="nomListe">Nom de la liste :</label>
 	  		<input id="postNomListe" type="text" name="titreListe">
