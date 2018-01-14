@@ -35,13 +35,6 @@ public class Main
 			return Vueweb.affichageListes(Dao.getListes());
 		});
 
-		// obsolète
-		get("/listes", (request, response) -> {
-	        response.status(200);
-	        response.type("text/html");
-	        return Vueweb.affichageListes(Dao.getListes());
-	  	});
-
 		get("/liste/:nom", (request, response) -> {
 			response.status(200);
 			response.type("text/html");
