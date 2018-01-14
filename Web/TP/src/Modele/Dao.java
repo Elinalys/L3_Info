@@ -119,7 +119,6 @@ public class Dao
 		final String query = "SELECT TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION FROM ELEMENT WHERE IDLISTE = :IDListe;";
 		int IDListe = Dao.getIDListe(liste);
 		List<Element> elements = new ArrayList<Element>();
-		//System.out.println(IDListe);
 		
 		try (Connection con = sql2o.open())
 		{
@@ -288,8 +287,6 @@ public class Dao
 	public static void supprimerListe(Liste liste)
 	{
 		final String query = "DELETE FROM LISTE WHERE TITRE = :titre AND DESCRIPTION = :description;";
-		/*System.out.println("titre : " + liste.getTitre());
-		System.out.println("description : " + liste.getDescription());*/
 		
 		try (Connection con = sql2o.open())
 		{
@@ -336,7 +333,7 @@ public class Dao
 		
 		return updatedRows;
 	}
-	
+
 	public static void creerListe(Liste liste)
 	{
 		final String query = "INSERT INTO LISTE(TITRE, DESCRIPTION) VALUES (:titre, :description);";
@@ -354,12 +351,9 @@ public class Dao
 
 	public static int creerElement(Element element, int IDListe)
 	{
-		System.out.println(element);
 		final String query = "INSERT INTO ELEMENT(TITRE, DESCRIPTION, DATECREATION, DATEMODIFICATION, IDLISTE) VALUES (:titre, :description, NOW(), NOW(), :IDListe);";
 		int IDElement = 0;
-		
-		// System.out.println(element.getTitre());
-		
+				
 		try (Connection con = sql2o.open())
 		{
 			IDElement = (int)(con.createQuery(query, true).addParameter("titre", element.getTitre()).addParameter("description", element.getDescription())
@@ -367,7 +361,7 @@ public class Dao
 		}
 		catch(Exception ex)
 		{
-			System.out.println("Erreur requete1 : " + ex.getMessage());
+			System.out.println("Erreur requete : " + ex.getMessage());
 		}
 		
 		return IDElement;
