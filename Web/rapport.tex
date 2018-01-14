@@ -1,10 +1,10 @@
-\documentclass[11pt, a4paper]{article}
+\documentclass[12pt, a4paper]{article}
 \usepackage{lmodern}
 \usepackage[utf8]{inputenc}
 % \usepackage{fontspec}
 \usepackage{amssymb,amsmath}
 \usepackage[T1]{fontenc}
-\usepackage[scale=0.7]{geometry} 
+\usepackage[scale=0.8]{geometry} 
 \usepackage[french]{babel}% pour un document en français.
 \usepackage{minted}
 \usepackage{graphicx}
@@ -17,6 +17,8 @@
 
 \maketitle
 
+\paragraph{Base de donnée} Il est possible d'initialiser une base de donnée de test via le fichier \verb|requetes.sql|
+
 \section{Conception}
 
 \begin{figure}[!h]
@@ -26,10 +28,26 @@
 
 \paragraph{Ressources} On interagira avec des listes et des éléments qui pourront être affichés (un élément affiché dans une liste), ajoutés, supprimés et modifiés.
 
-\paragraph{Espaces de noms} Pour l'affichage seules les listes auront une URL de la forme : \texttt{/liste/\emph{nomDeLaListe}}
+\paragraph{Espaces de noms}
+\begin{itemize}
+\item  Pour l'affichage seules les listes auront une URL de la forme : \texttt{/liste/\emph{nomDeLaListe}}.
+\item Pour supprimer une ressource de type :
+	\begin{itemize} 
+	\item liste, l'URL sera de la forme : \texttt{/supprimerListe/\emph{nomDeLaListe}}
+	\item élément : \texttt{/supprimerElement/\emph{nomDeLaListe}/\emph{nomDeL'Element}}
+	\end{itemize}
+\item Pour créer une ressource de type :
+	\begin{itemize} 
+	\item liste, l'URL sera de la forme : \texttt{/creerListe}
+	\item élément : \texttt{/creerElement}
+	\end{itemize}
+\item Pour modifier une ressource de type :
+	\begin{itemize} 
+	\item liste, l'URL sera de la forme : \texttt{/modifierListe}
+	\item élément : \texttt{/\emph{nomDeLaListe}/modifierElement}
+	\end{itemize}
 
-
-
+\end{itemize}
 
 \section{Modèle et accès au données}
 
@@ -48,7 +66,7 @@ Via FreeMarker, nous avons créé 3 templates :
 
 \section{Interactions}
 
-Pour la gestion des interactions par le contrôleur avec Spark nous n'avons utilisé que deux méthodes HTTP : GET et POST. En effet, la gestion de méthodes telles que DELETE ou PATCH ne s'est pas révelée assez pertinente en raison de leur plus complexe mise en place. On a donc un ensemble de \emph{routes} de types \verb|get| pour récupérer du contenu ou supprimer des élements (on affiche la liste en enlevant l'élement voulu). Ainsi qu'un ensemble de \emph{routes} \verb|post| pour créer ou modifier du contenu.
+Pour la gestion des interactions par le contrôleur avec Spark nous n'avons utilisé que deux méthodes HTTP : GET et POST. En effet, la gestion de méthodes telles que DELETE ou PATCH ne s'est pas révelée assez pertinente en raison de leur plus complexe mise en place car les formulaires HTML ne gèrent pas les autres types de requêtes. On a donc un ensemble de \emph{routes} de types \verb|get| pour récupérer du contenu ou supprimer des élements (on affiche la liste en enlevant l'élement voulu). Ainsi qu'un ensemble de \emph{routes} \verb|post| pour créer ou modifier du contenu.
 
 \section{Ajout de fonctionnalités}
 
@@ -61,9 +79,7 @@ En Java, cela se matérialiserait par l'ajout d'une List de Liste dans la classe
 \paragraph{Élément appartenant à plusieurs listes}
 Dans la BDD, il faudrait créer une table de liaison, qui lirait deux listes. On pourrait l'appeler \verb|ListJunction|, et serait composer de deux id de Liste. L'ajout de ces deux id donneraient la clé primaire de l'élément.
 
-\paragraph{Étiquette} En Java : \verb|List<String>| dans chaque élément correspond aux tags.
-En BDD : Ajout d'une table \verb|Tag [ id : long (PRIMARY KEY), text : varchar]|.
-Ajout d'une table pour unir un Tag à un Element. Cette table contiendrait en attribut l'id d'un tag et d'un element, et sa clé primaire serait la concaténation des deux.
+\paragraph{Étiquette} L'ajout de tags sera plus complexe que le reste. Cela nécessitera deux tables dans la Base de Données. Une première pour gérer les tags, avec un id et un varchar, contenant le texte du tag correspondant. Et une seconde table pour faire la liaison entre un élément et un tag. Celle-ci contiendra deux clés étrangères : Celle du tag et celle d'un élément. La concaténation de ces deux attributs donnera la clé primaire. En Java, il suffira simplement d'ajouter une liste de String à chaque élément. Celle-ci sera vide pour les elements n'ayant pas encore été taggé.
 
 
 \end{document}
