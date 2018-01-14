@@ -114,14 +114,16 @@ public class Main
 				Dao.supprimerElement(elt);
 			}
 			Dao.supprimerListe(liste);
+			response.redirect("/");
 			return Vueweb.affichageListes(Dao.getListes());
 		});
-		get("/supprimerElement/:nom", (request, response) -> { // delete marche pas
+		get("/supprimerElement/:liste/:nom", (request, response) -> { // delete marche pas
 			response.status(200);
 			response.type("text/html");
 			Element element = Dao.getElement(request.params(":nom"));
-			Liste liste = element.getMyList();
+			Liste liste = Dao.getListe(request.params(":liste"));
 			Dao.supprimerElement(element);
+			response.redirect("/liste/"+ request.params(":liste"));
 			return Vueweb.affichageListeDetail(liste ,Dao.getElementsParListe(liste));
 		});
 
@@ -136,10 +138,11 @@ public class Main
 			liste.setTitre(request.queryParams("titreListe"));
 			liste.setDescription(request.queryParams("descriptionListe"));
 			Dao.creerListe(liste);
+			response.redirect("/");
 			return Vueweb.affichageListes(Dao.getListes());
 		});
 
-		post("/creerElement", (request, reponse) -> {
+		post("/creerElement", (request, response) -> {
 			Element element = new Element();
 			Liste liste = Dao.getListe(request.queryParams("titreMaListe"));
 			element.setTitre(request.queryParams("titreElement"));
@@ -147,6 +150,7 @@ public class Main
 			element.setMyList(Dao.getListe("titreMaListe"));
 			// System.out.println("Debug " + Dao.getListe(request.queryParams("titreMaListe")));
 			Dao.creerElement(element,Dao.getIDListe(liste));
+			response.redirect("/");
 			return Vueweb.affichageListes(Dao.getListes());
 		}); 
 	}
