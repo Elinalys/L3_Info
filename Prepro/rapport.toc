@@ -1,7 +1,15 @@
 \select@language {french}
 \contentsline {chapter}{\numberline {1}Pr\IeC {\'e}sentation du m\IeC {\'e}tier}{2}{chapter.1}
-\contentsline {section}{\numberline {1.1}Comp\IeC {\'e}tences requises}{2}{section.1.1}
-\contentsline {section}{\numberline {1.2}Types de t\IeC {\^a}ches \IeC {\`a} r\IeC {\'e}aliser}{2}{section.1.2}
-\contentsline {section}{\numberline {1.3}Lien avec les modules}{2}{section.1.3}
-\contentsline {chapter}{\numberline {2}Outils}{3}{chapter.2}
-\contentsline {chapter}{\numberline {3}Journ\IeC {\'e}e des m\IeC {\'e}tiers}{4}{chapter.3}
+\contentsline {section}{\numberline {1.1}Pr\IeC {\'e}requis}{2}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}Formation}{2}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}Comp\IeC {\'e}tences}{3}{subsection.1.1.2}
+\contentsline {section}{\numberline {1.2}Types de t\IeC {\^a}ches \IeC {\`a} r\IeC {\'e}aliser}{3}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Enseignement}{3}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Recherche}{3}{subsection.1.2.2}
+\contentsline {section}{\numberline {1.3}Lien avec les modules}{3}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Comp\IeC {\'e}tences pratiques}{3}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}Comp\IeC {\'e}tences th\IeC {\'e}oriques}{3}{subsection.1.3.2}
+\contentsline {chapter}{\numberline {2}Outils}{4}{chapter.2}
+\contentsline {section}{\numberline {2.1}Litt\IeC {\'e}rature scientifique}{4}{section.2.1}
+\contentsline {section}{\numberline {2.2}Autre}{4}{section.2.2}
+\contentsline {chapter}{\numberline {3}Journ\IeC {\'e}e des m\IeC {\'e}tiers}{5}{chapter.3}
