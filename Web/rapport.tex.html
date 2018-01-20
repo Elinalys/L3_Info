@@ -1,0 +1,89 @@
+<!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><b><font color="#0000FF">\documentclass</font></b><font color="#993399">[12pt, a4paper]</font><font color="#009900">{article}</font>
+<b><font color="#0000FF">\usepackage</font></b><font color="#009900">{lmodern}</font>
+<b><font color="#0000FF">\usepackage</font></b><font color="#993399">[utf8]</font><font color="#009900">{inputenc}</font>
+<i><font color="#9A1900">% \usepackage{fontspec}</font></i>
+<b><font color="#0000FF">\usepackage</font></b><font color="#009900">{amssymb,amsmath}</font>
+<b><font color="#0000FF">\usepackage</font></b><font color="#993399">[T1]</font><font color="#009900">{fontenc}</font>
+<b><font color="#0000FF">\usepackage</font></b><font color="#993399">[scale=0.8]</font><font color="#009900">{geometry}</font> 
+<b><font color="#0000FF">\usepackage</font></b><font color="#993399">[french]</font><font color="#009900">{babel}</font><i><font color="#9A1900">% pour un document en français.</font></i>
+<b><font color="#0000FF">\usepackage</font></b><font color="#009900">{minted}</font>
+<b><font color="#0000FF">\usepackage</font></b><font color="#009900">{graphicx}</font>
+<b><font color="#0000FF">\usepackage</font></b><font color="#993399">[colorlinks=true, linkcolor=blue]</font><font color="#009900">{hyperref}</font>
+<b><font color="#0000FF">\date</font></b><font color="#009900">{}</font>
+<b><font color="#0000FF">\title</font></b><font color="#009900">{Rapport de TP de Technologie Web Serveur}</font>
+<b><font color="#0000FF">\author</font></b><font color="#009900">{Loïc \textsc{Castillo} Loris \textsc{Croce}}</font>
+
+<b><font color="#0000FF">\begin</font></b><font color="#009900">{document}</font>
+
+<b><font color="#0000FF">\maketitle</font></b>
+
+<b><font color="#0000FF">\paragraph</font></b><font color="#009900">{Base de donnée}</font> Il est possible d'initialiser une base de donnée de test via le fichier <b><font color="#0000FF">\verb</font></b>|requetes.sql|
+
+<b><font color="#0000FF">\section</font></b><font color="#009900">{Conception}</font>
+
+<b><font color="#0000FF">\begin</font></b><font color="#009900">{figure}</font><font color="#993399">[!h]</font>
+   <b><font color="#0000FF">\includegraphics</font></b><font color="#993399">[width=15cm]</font><font color="#009900">{donnees.png}</font>
+   <b><font color="#0000FF">\caption</font></b><font color="#009900">{Modèle de données}</font>
+<b><font color="#0000FF">\end</font></b><font color="#009900">{figure}</font>
+
+<b><font color="#0000FF">\paragraph</font></b><font color="#009900">{Ressources}</font> On interagira avec des listes et des éléments qui pourront être affichés (un élément affiché dans une liste), ajoutés, supprimés et modifiés.
+
+<b><font color="#0000FF">\paragraph</font></b><font color="#009900">{Espaces de noms}</font>
+<b><font color="#0000FF">\begin</font></b><font color="#009900">{itemize}</font>
+<b><font color="#0000FF">\item</font></b>  Pour l'affichage seules les listes auront une URL de la forme : <b><font color="#0000FF">\texttt</font></b><font color="#33CC00">{/liste/\emph{nomDeLaListe}}</font>.
+<b><font color="#0000FF">\item</font></b> Pour supprimer une ressource de type :
+	<b><font color="#0000FF">\begin</font></b><font color="#009900">{itemize}</font> 
+	<b><font color="#0000FF">\item</font></b> liste, l'URL sera de la forme : <b><font color="#0000FF">\texttt</font></b><font color="#33CC00">{/supprimerListe/\emph{nomDeLaListe}}</font>
+	<b><font color="#0000FF">\item</font></b> élément : <b><font color="#0000FF">\texttt</font></b><font color="#33CC00">{/supprimerElement/\emph{nomDeLaListe}/\emph{nomDeL'Element}}</font>
+	<b><font color="#0000FF">\end</font></b><font color="#009900">{itemize}</font>
+<b><font color="#0000FF">\item</font></b> Pour créer une ressource de type :
+	<b><font color="#0000FF">\begin</font></b><font color="#009900">{itemize}</font> 
+	<b><font color="#0000FF">\item</font></b> liste, l'URL sera de la forme : <b><font color="#0000FF">\texttt</font></b><font color="#33CC00">{/creerListe}</font>
+	<b><font color="#0000FF">\item</font></b> élément : <b><font color="#0000FF">\texttt</font></b><font color="#33CC00">{/creerElement}</font>
+	<b><font color="#0000FF">\end</font></b><font color="#009900">{itemize}</font>
+<b><font color="#0000FF">\item</font></b> Pour modifier une ressource de type :
+	<b><font color="#0000FF">\begin</font></b><font color="#009900">{itemize}</font> 
+	<b><font color="#0000FF">\item</font></b> liste, l'URL sera de la forme : <b><font color="#0000FF">\texttt</font></b><font color="#33CC00">{/modifierListe}</font>
+	<b><font color="#0000FF">\item</font></b> élément : <b><font color="#0000FF">\texttt</font></b><font color="#33CC00">{/\emph{nomDeLaListe}/modifierElement}</font>
+	<b><font color="#0000FF">\end</font></b><font color="#009900">{itemize}</font>
+
+<b><font color="#0000FF">\end</font></b><font color="#009900">{itemize}</font>
+
+<b><font color="#0000FF">\section</font></b><font color="#009900">{Modèle et accès au données}</font>
+
+Nous avons donc deux classes métiers pour le modèle : <b><font color="#0000FF">\verb</font></b>|Element| et <b><font color="#0000FF">\verb</font></b>|Liste| définissant les deux objets manipulés.<font color="#990000">\\</font> 
+
+Étant donné que le nombre d'appels à la base de données ne sera pas très élevé, nous avons décidé que notre DAO serait une classe statique. Les informations pour se connecter à la base de données sont stockées dans les variables de la classe. Chaque fonction retourne des objets métiers et est utilisée pour une tâche précise (ex: récupérer toutes les listes, les éléments, un élément particulier, les éléments en fonction de leur liste<b><font color="#0000FF">\dots</font></b>). Chaque appel de fonction doit recréer une connexion à la base de données.
+
+<b><font color="#0000FF">\section</font></b><font color="#009900">{Représentations}</font>
+
+Via FreeMarker, nous avons créé 3 templates :
+<b><font color="#0000FF">\begin</font></b><font color="#009900">{itemize}</font>
+	<b><font color="#0000FF">\item</font></b> <b><font color="#0000FF">\verb</font></b>|complet.ftl|, qui affiche tous les éléments de toutes les listes.
+	<b><font color="#0000FF">\item</font></b> <b><font color="#0000FF">\verb</font></b>|listeDetail.ftl|, qui affiche une liste donnée et tous ses éléments. Elle permet de supprimer ou de modifier des éléments.
+	<b><font color="#0000FF">\item</font></b> <b><font color="#0000FF">\verb</font></b>|listes.ftl|, qui fait office de page <font color="#FF0000">``d'accueil''</font> en affichat un tableau des listes. Elle permet également de d'ajouter, modifier ou supprimer des listes, ajouter des éléments.
+<b><font color="#0000FF">\end</font></b><font color="#009900">{itemize}</font>
+
+<b><font color="#0000FF">\section</font></b><font color="#009900">{Interactions}</font>
+
+Pour la gestion des interactions par le contrôleur avec Spark nous n'avons utilisé que deux méthodes HTTP : GET et POST. En effet, la gestion de méthodes telles que DELETE ou PATCH ne s'est pas révelée assez pertinente en raison de leur plus complexe mise en place car les formulaires HTML ne gèrent pas les autres types de requêtes. On a donc un ensemble de <b><font color="#0000FF">\emph</font></b><font color="#009900">{routes}</font> de types <b><font color="#0000FF">\verb</font></b>|get| pour récupérer du contenu ou supprimer des élements (on affiche la liste en enlevant l'élement voulu). Ainsi qu'un ensemble de <b><font color="#0000FF">\emph</font></b><font color="#009900">{routes}</font> <b><font color="#0000FF">\verb</font></b>|post| pour créer ou modifier du contenu.
+
+<b><font color="#0000FF">\section</font></b><font color="#009900">{Ajout de fonctionnalités}</font>
+
+<b><font color="#0000FF">\paragraph</font></b><font color="#009900">{Statut optionnel}</font> Il suffit d'ajouter une table <b><font color="#0000FF">\verb</font></b>|Etat| dans la base de données, contenant un id et un varchar, qui contiendrait 3 tuples, dont la valeur des varchar serait : soit <b><font color="#0000FF">\emph</font></b><font color="#009900">{à faire}</font>, <b><font color="#0000FF">\emph</font></b><font color="#009900">{fait}</font> ou <b><font color="#0000FF">\emph</font></b><font color="#009900">{supprimé}</font>.
+
+<b><font color="#0000FF">\paragraph</font></b><font color="#009900">{Sous-listes}</font>
+Dans la BDD, la table <b><font color="#0000FF">\verb</font></b>|Liste|, aurait une colonne <b><font color="#0000FF">\verb</font></b>|Upper|, qui contiendrait l'ID d'une autre liste, ou serait NULL.
+En Java, cela se matérialiserait par l'ajout d'une List de Liste dans la classe Liste. Celle-ci serait vide si l'attribut est NULL dans la BDD.
+
+<b><font color="#0000FF">\paragraph</font></b><font color="#009900">{Élément appartenant à plusieurs listes}</font>
+Dans la BDD, il faudrait créer une table de liaison, qui lirait deux listes. On pourrait l'appeler <b><font color="#0000FF">\verb</font></b>|ListJunction|, et serait composer de deux id de Liste. L'ajout de ces deux id donneraient la clé primaire de l'élément.
+
+<b><font color="#0000FF">\paragraph</font></b><font color="#009900">{Étiquette}</font> L'ajout de tags sera plus complexe que le reste. Cela nécessitera deux tables dans la Base de Données. Une première pour gérer les tags, avec un id et un varchar, contenant le texte du tag correspondant. Et une seconde table pour faire la liaison entre un élément et un tag. Celle-ci contiendra deux clés étrangères : Celle du tag et celle d'un élément. La concaténation de ces deux attributs donnera la clé primaire. En Java, il suffira simplement d'ajouter une liste de String à chaque élément. Celle-ci sera vide pour les elements n'ayant pas encore été taggé.
+
+
+<b><font color="#0000FF">\end</font></b><font color="#009900">{document}</font></tt></pre>

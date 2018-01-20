@@ -22,21 +22,36 @@ Ce rapport sera à rendre au format PDF pour la fin de la semaine 3 (soit le 21 
 
 ## Présentation du métier
 
-ptit préambule
+<!-- Pédagogie, esprit critique, curiosité, expression écrite orale, anglais, adaptation - Doctorat etc. -->
 
-### Compétences requises
+### Prérequis
 
-Pédagogie, esprit critique, curiosité, expression écrite orale, anglais, adaptation
+#### Formation
+
+
+#### Compétences
+
+Il est nécessaire pour exercer ce métier d’avoir une très bonne expression écrite et orale, une bonne connaissance de l’anglais ou encore de savoir travailler en groupe. Cependant ce ne sont pas les seuls critères, une veille constante des nouvelles technologies est nécessaire pour ne pas reproduire ce qui a déjà été fait ainsi qu’une bonne méthodologie de recherche pour un travail le plus efficace possible. En effet il faut procéder à une formation perpétuelle en se documentant beaucoup sur le travail d’autres chercheurs, cela est d’autant plus vrai en informatique, où les progrès techniques sont extrêmement rapides.
+
 
 ### Types de tâches à réaliser
 
-Cours, publications, documentation, encadrement
+<!-- Cours, publications, documentation, encadrement -->
+
+#### Enseignement
+
+#### Recherche
+
 
 ### Lien avec les modules
 
-oulah
+<!-- savoir travailler en autonomie -> Les TP, bosser chez soi. Publications -> rapport à rendre, bases théoriques indispensables -> algorithmique, théorie des graphes, mathématiques etc. -->
+
+
 
 ## Outils (wtf)
+
+<!-- Revues scientifiques, ressources en ligne, suivant discipline (logiciel de calucl), IDE, papier/crayon, supercalculateur -->
 
 ## Compte rendu jounrée des métiers
 
