@@ -56,6 +56,11 @@ Il est nécessaire pour exercer ce métier d’avoir une très bonne expression 
 
 ## Outils (wtf)
 
+
+HAL (limos)
+https://hal.archives-ouvertes.fr/search/index/q/%2A/domain_t/info/level0_domain_s/info/
+
+
 <!-- Revues scientifiques, ressources en ligne, suivant discipline (logiciel de calucl), IDE, papier/crayon, supercalculateur -->
 
 ## Compte rendu jounrée des métiers
