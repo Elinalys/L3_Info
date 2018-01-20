@@ -61,6 +61,8 @@ Avant même d'obtenir le diplôme doctoral, un doctorant peut commencer à donne
 ## Outils (wtf)
 
 <!-- Revues scientifiques, ressources en ligne, suivant discipline (logiciel de calucl), IDE, papier/crayon, supercalculateur -->
+HAL (limos)
+https://hal.archives-ouvertes.fr/search/index/q/%2A/domain_t/info/level0_domain_s/info/
 
 ## Compte rendu jounrée des métiers
 
