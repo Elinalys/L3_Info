@@ -28,6 +28,11 @@ Ce rapport sera à rendre au format PDF pour la fin de la semaine 3 (soit le 21 
 
 #### Formation
 
+Afin d'être nommé à la place d'enseignement-chercheur dans une université publique, il est nécessaire d'obtenir un doctorat. Pour l'obtenir, le cursus classique est le suite d'études universitaire LMD (Licence / Master / Doctorat). Il est parfaitement possible d'obtenir le doctorat sans suivre ce cursus, bon nombre de chercheurs ont fait une commencer par une école préparatoire, puis ont continué sur une école d'ingénieur avant de revenir sur le cheminement classique.
+
+La faculté n’est donc pas le seul parcours pour devenir chercheur, en France nous avons notamment la possibilité de pratiquer le métier en entreprise après un Master sans forcément avoir besoin d’un doctorat.
+
+[Ajouter l'image]
 
 #### Compétences
 
