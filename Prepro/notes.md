@@ -66,11 +66,17 @@ https://hal.archives-ouvertes.fr/search/index/q/%2A/domain_t/info/level0_domain_
 
 ## Compte rendu jounrée des métiers
 
-Lors de cette jounée des métiers, 7 entreprises sont venus nous présenter leur travail et leur fonctionnement, puis 3 étudiants sont venus partager leur expérience dans le monde dans le monde de la Recherche.
+Lors de cette jounée des métiers, 7 entreprises sont venus nous présenter leur travail et leur fonctionnement, puis 4 étudiants sont venus partager leur expérience dans le monde dans le monde de la Recherche.
 
 STERIA-SOPRA / CGI / ATOS / 
 
 Le 4ème intervenant, Julien PONGE, est maître de conférence à l'INSA Lyon tout en étant développeur au sein de l'entreprise Red Hat. Monsieur PONGE a obtenu une licence et un master à l'Université Blaise Pascal, puis un doctorat à l'Université de Grenoble. Après avoir pratiqué le rôle d'enseignant-chercheur, il s'est rapproché du domaine privé afin d'obtenir une nouvelle expérience, tout en continuant d'enseigner à l'INSA. A Red Hat il travaille sur Vert.x, un framework Java basé sur les évènements, permettant d'obtenir une augmentation des performances.
 
+Braincube / Société Général (Auditeur des systèmes d'Informations, bénévolat en entreprise lol) / BUSI
+
+Après ce cycle de conférences, 4 sont venus présenter leur projet de recherche.
+L'un d'eux, après avoir fait une école Polytechnique suivi d'un Master, effectue sa thèse au sein de Michelin, en tant que salarié. Elle travaille sur l'analyse de données télémétriques afin de pouvoir anticiper l'usure des pneus. Étant donné que cette chercheuse est salariée de Michelin, le résultat de ses travaux doivent permettre à Michelin de dégager une valeur ajoutée. C'est donc de la Recherche Opérationelle.
+
+Un autre étudiant travaille sur l'analyse du comportement des vaches, lors de leur repos, ou de leur période d'alimentation, afin de détecter à l'avance si elles vont être malades.
 
 bosser à l'étranger, parler anglais blablabla
