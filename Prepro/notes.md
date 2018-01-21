@@ -92,7 +92,7 @@ https://hal.archives-ouvertes.fr/search/index/q/%2A/domain_t/info/level0_domain_
 
 Lors de cette jounée des métiers, 7 entreprises sont venus nous présenter leur travail et leur fonctionnement, puis 4 étudiants sont venus partager leur expérience dans le monde dans le monde de la Recherche.
 
-STERIA-SOPRA / CGI / ATOS / 
+Les 3 premières entreprises furent STERIA-SOPRA, CGI (Conseil, Intégration et Outsourcing) et ATOS. Celles-ci ont présenté les méthodes de travail de leurs entreprises, elles ont insisté sur le fait que le travail devait être effectué en équipe, la pratique de l'anglais orale étant un point important car les projets peuvent être internationaux. Par ailleurs, ces entreprises ont bien appuyé sur le fait que un développeur ne passerait pas tout son temps à coder, mais que la phase d'analyse en amont était aussi très importante.
 
 Le 4ème intervenant, Julien PONGE, est maître de conférence à l'INSA Lyon tout en étant développeur au sein de l'entreprise Red Hat. Monsieur PONGE a obtenu une licence et un master à l'Université Blaise Pascal, puis un doctorat à l'Université de Grenoble. Après avoir pratiqué le rôle d'enseignant-chercheur, il s'est rapproché du domaine privé afin d'obtenir une nouvelle expérience, tout en continuant d'enseigner à l'INSA. A Red Hat il travaille sur Vert.x, un framework Java basé sur les évènements, permettant d'obtenir une augmentation des performances.
 
