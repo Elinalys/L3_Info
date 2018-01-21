@@ -66,6 +66,10 @@ https://hal.archives-ouvertes.fr/search/index/q/%2A/domain_t/info/level0_domain_
 
 ## Compte rendu jounrée des métiers
 
-Le matin les grosses esn qui sous traitent des apps de gestion pour des boites qui veulent recruter de la main d'oeuvre #startupnation #vivelexploitation. Intérêt limité
+Lors de cette jounée des métiers, 7 entreprises sont venus nous présenter leur travail et leur fonctionnement, puis 3 étudiants sont venus partager leur expérience dans le monde dans le monde de la Recherche.
+
+STERIA-SOPRA / CGI / ATOS / 
+
+Le 4ème intervenant, Julien PONGE, est maître de conférence à l'INSA Lyon tout en étant développeur au sein de l'entreprise Red Hat. Monsieur PONGE a obtenu une licence et un master à l'Université Blaise Pascal, puis un doctorat à l'Université de Grenoble. Après avoir pratiqué le rôle d'enseignant-chercheur, il s'est rapproché du domaine privé afin d'obtenir une nouvelle expérience, tout en continuant d'enseigner à l'INSA.
 
 bosser à l'étranger, parler anglais blablabla
