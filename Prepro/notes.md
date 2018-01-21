@@ -70,6 +70,7 @@ Lors de cette jounée des métiers, 7 entreprises sont venus nous présenter leu
 
 STERIA-SOPRA / CGI / ATOS / 
 
-Le 4ème intervenant, Julien PONGE, est maître de conférence à l'INSA Lyon tout en étant développeur au sein de l'entreprise Red Hat. Monsieur PONGE a obtenu une licence et un master à l'Université Blaise Pascal, puis un doctorat à l'Université de Grenoble. Après avoir pratiqué le rôle d'enseignant-chercheur, il s'est rapproché du domaine privé afin d'obtenir une nouvelle expérience, tout en continuant d'enseigner à l'INSA.
+Le 4ème intervenant, Julien PONGE, est maître de conférence à l'INSA Lyon tout en étant développeur au sein de l'entreprise Red Hat. Monsieur PONGE a obtenu une licence et un master à l'Université Blaise Pascal, puis un doctorat à l'Université de Grenoble. Après avoir pratiqué le rôle d'enseignant-chercheur, il s'est rapproché du domaine privé afin d'obtenir une nouvelle expérience, tout en continuant d'enseigner à l'INSA. A Red Hat il travaille sur Vert.x, un framework Java basé sur les évènements, permettant d'obtenir une augmentation des performances.
+
 
 bosser à l'étranger, parler anglais blablabla
