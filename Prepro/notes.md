@@ -30,13 +30,16 @@ Ce rapport sera à rendre au format PDF pour la fin de la semaine 3 (soit le 21 
 
 Afin d'être nommé à la place d'enseignement-chercheur dans une université publique, il est nécessaire d'obtenir un doctorat. Pour l'obtenir, le cursus classique est le suite d'études universitaire LMD (Licence / Master / Doctorat). Il est parfaitement possible d'obtenir le doctorat sans suivre ce cursus, bon nombre de chercheurs ont fait une commencer par une école préparatoire, puis ont continué sur une école d'ingénieur avant de revenir sur le cheminement classique.
 
-La faculté n’est donc pas le seul parcours pour devenir chercheur, en France nous avons notamment la possibilité de pratiquer le métier en entreprise après un Master sans forcément avoir besoin d’un doctorat.
 
 [Ajouter l'image]
+
+Suite à cela, pour prétendre effectuer une candidature à un poste, il est nécessaire d'obtenir une accréditation de maitre de conférences qui est valable 4 ans.
+Outre l'université, on notera qu'il est également possible d'officier en entreprise dans les départements\ \emph{“Recherche \& Développement”}.
 
 #### Compétences
 
 Il est nécessaire pour exercer ce métier d’avoir une très bonne expression écrite et orale, une bonne connaissance de l’anglais ou encore de savoir travailler en groupe. Cependant ce ne sont pas les seuls critères, une veille constante des nouvelles technologies est nécessaire pour ne pas reproduire ce qui a déjà été fait ainsi qu’une bonne méthodologie de recherche pour un travail le plus efficace possible. En effet il faut procéder à une formation perpétuelle en se documentant beaucoup sur le travail d’autres chercheurs, cela est d’autant plus vrai en informatique, où les progrès techniques sont extrêmement rapides.
+Savoir entretenir sa curiosité et son esprit critique sont des compétences importantes dans la profession.
 
 
 ### Types de tâches à réaliser
@@ -47,6 +50,11 @@ Les tâches d'un enseignant-chercheur sont divisés en deux catégories. Nous al
 #### Enseignement
 
 Avant même d'obtenir le diplôme doctoral, un doctorant peut commencer à donner des cours, sous les instructions d'un directeur de thèse.
+Dans le domaine de l'informatique, les cours dispensés peuvent prendre la forme de Cours magistraux et de travaux dirigés ou pratiques. 
+
+
+Dans certains cas l'enseignement peut être dispensé par un intervenant (extérieur ou intérieur à la structure).
+
 
 
 #### Recherche
@@ -54,7 +62,23 @@ Avant même d'obtenir le diplôme doctoral, un doctorant peut commencer à donne
 
 ### Lien avec les modules
 
+Le cursus universitaire fournit un certain nombre de d'élements en lien avec le métier d'enseignant chercheur. D'une part sur les compétences pratiques qu'il fait mobiliser et d'une autre part sur les savoir théoriques qu'il inculque.
+
 <!-- savoir travailler en autonomie -> Les TP, bosser chez soi. Publications -> rapport à rendre, bases théoriques indispensables -> algorithmique, théorie des graphes, mathématiques etc. -->
+
+#### Compétences Techniques
+
+Le travail exigé dans un cursus universitaire se rapproche de l'activité d'enseignement/recherche. En effet, les travaux à rendre nécessitent de savoir travailler en autonomie et/ou en équipe.
+Le mode d'enseignement favorise l'approfondissement de ce qui est enseigné en cours et force à développer son esprit critique et sa faculté à rechercher des informations.
+
+On pourra aussi faire le lien entre les travaux à rendre à l'écrit ou à présenter à l'oral qui font écho à ce qui est réalisé dans le quotiden de la recherche.
+
+#### Compétences Théoriques
+
+D'un point de vue plus scolaire, l'ensemble des modules enseignés font écho savoir nécessaire pour un chercheur en informatique.
+
+Le cursus de licence fournit une base dans l'ensemble des champs étudiés en informatique, comme les bases de données, le génie logiciel, l'algorithmique, la théorie des graphes\dots
+En master une spécialisation s'effectue et peut eventuellement permettre de déboucher sur un sujet de thèse.
 
 
 
