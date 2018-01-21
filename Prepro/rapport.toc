@@ -17,5 +17,8 @@
 \contentsline {chapter}{\numberline {3}Journ\IeC {\'e}e des m\IeC {\'e}tiers}{8}{chapter.3}
 \contentsline {section}{\numberline {3.1}Matin\IeC {\'e}e}{8}{section.3.1}
 \contentsline {section}{\numberline {3.2}Apr\IeC {\`e}s-midi}{9}{section.3.2}
-\contentsline {paragraph}{Julien Ponge}{9}{section*.2}
-\contentsline {paragraph}{Valerian Callens}{9}{section*.3}
+\contentsline {subsection}{\numberline {3.2.1}Conf\IeC {\'e}rences}{9}{subsection.3.2.1}
+\contentsline {subsubsection}{Julien Ponge}{9}{section*.2}
+\contentsline {subsubsection}{Valerian Callens}{9}{section*.3}
+\contentsline {subsubsection}{Frederic Andr\IeC {\`e}s}{9}{section*.4}
+\contentsline {subsection}{\numberline {3.2.2}Doctorants}{9}{subsection.3.2.2}
