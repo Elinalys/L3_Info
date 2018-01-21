@@ -96,7 +96,9 @@ Les 3 premières entreprises furent STERIA-SOPRA, CGI (Conseil, Intégration et 
 
 Le 4ème intervenant, Julien PONGE, est maître de conférence à l'INSA Lyon tout en étant développeur au sein de l'entreprise Red Hat. Monsieur PONGE a obtenu une licence et un master à l'Université Blaise Pascal, puis un doctorat à l'Université de Grenoble. Après avoir pratiqué le rôle d'enseignant-chercheur, il s'est rapproché du domaine privé afin d'obtenir une nouvelle expérience, tout en continuant d'enseigner à l'INSA. A Red Hat il travaille sur Vert.x, un framework Java basé sur les évènements, permettant d'obtenir une augmentation des performances.
 
-Société Général (Auditeur des systèmes d'Informations, bénévolat en entreprise lol) / Dominique Andrès
+Ensuite, Valerian Callens, Auditeur des Systèmes d'Informations à la Société Générale nous a présenté son parcours et son métier depuis son lieu de travail en Roumanie. Avant de commencer sa carrière, Mr. Callens avait fait un V.I.E. (Volontariat International en Entreprise) de deux ans au sein de la Société Générale, cela lui a permit de découvrir la Roumanie, acquérir et de l'expérience et vérifier que ce métier lui correspondait bien. Son métier consiste à observer les risques et faire des contrôles, afin de protéger des systèmes d'informations dont il a la charge.
+
+Enfin, Frederic Andrès  JAPON
 
 Après ce cycle de conférences, 4 sont venus présenter leur projet de recherche.
 L'un d'eux, après avoir fait une école Polytechnique suivi d'un Master, effectue sa thèse au sein de Michelin, en tant que salarié. Elle travaille sur l'analyse de données télémétriques afin de pouvoir anticiper l'usure des pneus. Étant donné que cette chercheuse est salariée de Michelin, le résultat de ses travaux doivent permettre à Michelin de dégager une valeur ajoutée. C'est donc de la Recherche Opérationelle.
