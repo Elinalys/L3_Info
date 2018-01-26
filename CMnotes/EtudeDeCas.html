@@ -1044,4 +1044,84 @@ Output : Un placement de n "reines" sur l'échiquier (marquage de n cases)
         Ak, k = 1..K
         Bk, k = 1..K
         Ci, i = 1..N
-</code></pre></article></body></html>
+</code></pre>
+<p><strong>Ce qu&rsquo;il faut savoir</strong> :<br />
+    * Les modèles linéaires → Beaucoup d&rsquo;effort des editeurs de logiciels<br />
+        - Bibliothèque dédiées IBM (OSL, CPLEX), XPRESS, GUROBI<br />
+        - Bibliothèques de calcul généraliste MATLAB, SAS, &hellip;<br />
+        - Logiciels de gestion d&rsquo;entreprises : SAP<br />
+        - Langages : CHIP, Prolog, CP-optimizer<br />
+    * Ces bibliothèques peuvent traiter des modèles avec =&gt; 10^5 variables ou contraintes<br />
+    * Rôle renctral en Algo car Beaucoup de Problèmes pratiques peuent être exprimés via ce formalisme</p>
+<h5 id="le-cas-des-n-reines"><a name="user-content-le-cas-des-n-reines" href="#le-cas-des-n-reines" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Le cas des n reines</h5>
+<p>Vecteurs inconnu </p>
+<p>Z indexe sur les cases de l&rsquo;echiquier</p>
+<p>Z=(Zi,j , i = 1..N, j = 1..N) Entier scrictement entre 0 et 1 (exclues)&hellip;</p>
+<p>Sémantique : Zi,j = 1 ~ on lace une reine en case (i, j)<br />
+                                        0 ~ on ne places pas</p>
+<p><strong>Quantité a maximum (critere qualité)</strong></p>
+<pre><code>ΣTAB[i,j] * Zi,j
+i = 1..N
+j = 1..N
+</code></pre>
+<p><strong>Contraintes</strong></p>
+<ol>
+<li>
+<p>je veux exactement n reines<br />
+    Σi,j Zi,j = n</p>
+</li>
+<li>
+<p>Pas + de 1 reine par ligne<br />
+    Pour toute ligne j = 1..N<br />
+        Σ Zi,j =&lt; 1</p>
+</li>
+<li>
+<p>Pas + de 1 reine par colonne<br />
+    Pour toute colonne i = 1..N<br />
+        Σ Zi,j =&lt; 1</p>
+</li>
+<li>
+<p>Pas + de 1 reine pour une diagonale montante, 2n-1, diagonales montante</p>
+</li>
+</ol>
+<p>Pour tout k = -(n-1)..(n-1)</p>
+<p>Σ Zi,i+k =&lt; 1<br />
+i tq 1 &lt;= i &lt;= n<br />
+i tq 1 &lt;= i+k &lt;= n</p>
+<p>2 types d&rsquo;algos :<br />
+    - <em>exact</em> : Realise exactement la spécification<br />
+    - <em>approché</em> : Induisent une marge d&rsquo;erreur </p>
+<p>Prendre en compte temps d&rsquo;exec et critère de qualité de l&rsquo;approximation dans le cas d&rsquo;un algo approché (également la robustesse). </p>
+<h6 id="approche"><a name="user-content-approche" href="#approche" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Approché</h6>
+<p><strong>Remarque</strong> : Il faut préciser &ldquo;appoche&rdquo; :<br />
+    - J&rsquo;impose vraiment <em>n-reines</em> (sinon échec)<br />
+    - J&rsquo;accepte moins de n-reine → maximiser l&rsquo;argent donc pénalités (n - nbres de reines placées)</p>
+<p><pre><code>not stop;
+tant que not stop faire
+    choisir une case libre;
+    si echec(choisir)
+        alors stop;
+    sinon
+        placer une reine sur la case choisie;
+        déduire le plus de choses possibles;
+        mettre à jour stop;
+</code></pre><br />
+→ algo glouton avec propagation de contraintes</p>
+<p>Déduire des reines imposées, interdites</p>
+<p><strong>Exercice</strong> Écrire algorithme pour réalistion ces déductions imposé/interdit<br />
+→ SDD, Algo (on ne prend pas en compte le gains ici)</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody></tbody>
+</table></article></body></html>

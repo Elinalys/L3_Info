@@ -2,6 +2,8 @@
 
 Ici, mini-problèmes -> algorithme
 
+<!-- refaire hierarchie titres -->
+
 ## 3 cas
 
 1. Pb orienté optimisation et satisfaction des contraintes
@@ -81,3 +83,72 @@ Pour tout k = -(n-1)..(n-1)
 Σ Zi,i+k =< 1
 i tq 1 <= i <= n
 i tq 1 <= i+k <= n
+
+2 types d'algos :
+	- *exact* : Realise exactement la spécification
+	- *approché* : Induisent une marge d'erreur 
+
+Prendre en compte temps d'exec et critère de qualité de l'approximation dans le cas d'un algo approché (également la robustesse). 
+
+###### Approché
+
+**Remarque** : Il faut préciser "appoche" :
+	- J'impose vraiment *n-reines* (sinon échec)
+	- J'accepte moins de n-reine → maximiser l'argent donc pénalités (n - nbres de reines placées)
+
+```
+not stop;
+tant que not stop faire
+	choisir une case libre;
+	si echec(choisir)
+		alors stop;
+	sinon
+		placer une reine sur la case choisie;
+		déduire le plus de choses possibles;
+		mettre à jour stop;
+```
+→ algo glouton avec propagation de contraintes
+
+Déduire des reines imposées, interdites
+
+**Exercice** : Écrire algorithme pour réalistion ces déductions imposé/interdit
+→ SDD, Algo (on ne prend pas en compte le gains ici)
+
+
+- Un tableau deux dimensions i,j où :
+	- 0 case interdite
+	- -1 case libre
+	- 1 case occupée
+- Un tableau compteur ligne, en ligne j nbe de case libre
+- statut ligne, statutligne[1] = 1, il y a une reine en ligne j
+- Idem colonnes :
+	- compteur colonnes
+	- statut colonnes
+- Liste de reines imposées (fait déclencheurs en propagation de contraintes) :
+	- couples (i,j) correspond à des cases où une reine est imposée
+	- ehec, booleen diagnostiquant les impossibilités
+
+Algo : 
+
+```
+Echec ← 0;
+LISTE ← case qi'on vient de choisir dans la boucle principale de l'algo;
+Tant que (Not Échec) && (Liste != Nil) Faire
+	(i,j) ← Tête(LISTE);
+	LISTE ← Queue(LISTE);
+	Pour toute case (i',j') telle que (i = i') || (j = j') || [(i+j) = (i'+j')] || [(i-j)=(i'-j')] Faire
+	Si occupé[i',j'] = 1 alors Échec
+	Sinon 
+		Si (occupé[i',j'] = -1) alors 
+			occupé[i',j'] = O;
+			compteur_lignes[i'] ← compteur_lignes[i]-1
+			compteur_colonnes[j'] ← compteur_colonnes[j]-1
+			Si (compteur_lignes[i] = 0) && (statut_lignes[i'] = 0) alors ÉCHEC;
+			Sinon
+				Si (compteur_lignes[i'] = 1) && (statut_lignes[0] = 0)
+					soit j0 ← unique j tq occupé [i',j] = 0;
+					occupé[i',j0] ← 1;
+					LISTE ← (i',  j0).LISTE;
+					statut_lignes[i'] = 1;
+					statut_colonnes[j0] = 1;
+```
