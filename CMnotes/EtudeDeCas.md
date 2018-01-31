@@ -134,21 +134,121 @@ Algo :
 Echec ← 0;
 LISTE ← case qi'on vient de choisir dans la boucle principale de l'algo;
 Tant que (Not Échec) && (Liste != Nil) Faire
-	(i,j) ← Tête(LISTE);
-	LISTE ← Queue(LISTE);
-	Pour toute case (i',j') telle que (i = i') || (j = j') || [(i+j) = (i'+j')] || [(i-j)=(i'-j')] Faire
-	Si occupé[i',j'] = 1 alors Échec
-	Sinon 
-		Si (occupé[i',j'] = -1) alors 
-			occupé[i',j'] = O;
-			compteur_lignes[i'] ← compteur_lignes[i]-1
-			compteur_colonnes[j'] ← compteur_colonnes[j]-1
-			Si (compteur_lignes[i] = 0) && (statut_lignes[i'] = 0) alors ÉCHEC;
-			Sinon
-				Si (compteur_lignes[i'] = 1) && (statut_lignes[0] = 0)
-					soit j0 ← unique j tq occupé [i',j] = 0;
-					occupé[i',j0] ← 1;
-					LISTE ← (i',  j0).LISTE;
-					statut_lignes[i'] = 1;
-					statut_colonnes[j0] = 1;
+|	(i,j) ← Tête(LISTE);
+|	LISTE ← Queue(LISTE);
+|	Pour toute case (i',j') telle que (i = i') || (j = j') || [(i+j) = (i'+j')] || [(i-j)=(i'-j')] Faire
+|	Si occupé[i',j'] = 1 alors Échec
+|	Sinon 
+|	|	Si (occupé[i',j'] = -1) alors 
+|	|	|	occupé[i',j'] = O;
+|	|	|	compteur_lignes[i'] ← compteur_lignes[i]-1
+|	|	|	compteur_colonnes[j'] ← compteur_colonnes[j]-1
+|	|	|	Si (compteur_lignes[i] = 0) && (statut_lignes[i'] = 0) alors ÉCHEC;
+|	|	|	Sinon
+|	|	|	|	Si (compteur_lignes[i'] = 1) && (statut_lignes[0] = 0)
+|	|	|	|	|	soit j0 ← unique j tq occupé [i',j] = 0;
+|	|	|	|	|	occupé[i',j0] ← 1;
+|	|	|	|	|	LISTE ← (i',  j0).LISTE;
+|	|	|	|	|	statut_lignes[i'] = 1;
+|	|	|	|	|	statut_colonnes[j0] = 1;
 ```
+
+*Remarque* : le schéma peut échouer parce qu'il ne trouve pas une solution estimée acceptable. Il peut aussi renvoyer une solution de qualité médiocre.
+
+2 pistes d'améliorations :
+
+1. On garde le schéma glouton et on le rend non déterministe (“randomize”), de façon à pouvoir l'executer plusieurs fois de suite.
+	Fixe le nb de N “réplications”, pour i = 1..N faire 
+		Executer l'algo glouton (non déterministe);
+		récuperer le "meilleur" résultat obtenu;
+	Question : comment est-ce que je rends mon algo "non déterministe" ?
+	Algo courant (deterministe)
+	Itération courante : Cases imposées
+	interdites, Libres 
+	(Random avec proba si prob supérieure premier sinon deuxieme meilleur)
+
+2. À l'issue de l'execution de l'algo glouton, on récupère une solution REINE (ex : vecteur indexe sur les cases et à valeurs en [0,1]) On essaie alors d'ameliorer cette solution en lui appliquant des opérateurs de "Transformation locale" (local search )
+
+(...) 
+
+Schéma GRASP
+
+	Pour i = 1..N (Replcatio) Faire
+		Creer une solution REINE via
+		la procédure gloutonne "randomizée";
+		not stop;
+		tant que not stop;
+			Appliquer a reine l'opérateur 0 pour une valeur ad hoc de parametre;
+			mettre à jour stop;
+		Consinier le meilleur objet REINE obtenu;
+Pour mettre en oeuvre ce schema, il me faut définir le (ou les )opératur 0 + la façon d'aleer chercher les bonnes valeurs de paramètres
+
+Ici difficultés (liée au fait qu'il y a beaucoup de contrainessur l'obet cherché) → j'ai du mal à définir un opératuer 0 qui s'applique à un placement REINE satisfaisant les contraintes et qui le maintienne dans les contraines
+
+Question améliorer ?
+
+1ère Approche, replication
+
+2° approche, on applique sur l'objet REINE produit par l'algo glouton une boucle dite de transformation locale ("local search") :
+
+	not stop;
+	tant que not stop faire
+		perturber REINE;
+
+Cette 2° approche repose sur le design "d'operateurs", c'est à dire de prcédures `TRANSFO(Reine, λ)` Reine : adresse, λ : valeur.
+
+
+**Opérateurs génériques `Build/Destroy`**
+
+* J'enleve p reines parmi les *n* reines placées (p ~ x% · n)
+* Je me retrouve avec q = n-p (ou un peu moins) reines placées; J'applique la propagation de contraintes de ces q reines (j'interdis et impose des cases)
+* Je relance le procede glouton "randomise" à partir de la situation obtenue 
+
+l'objet RBIND transforme de ? de ces 3 étapes
+
+L'opérateur BUILD.DESTROY ainsi défini, prend comme paramètre.
+
+`BUILD.DESTROY(Reine, λ)`
+
+**Questions sous-jacentes**
+
+1. Comment je choisis p et les reines de la liste λ ?
+2. Qu'est ce qu'on met derriere "Tant que not stop faire perturber (Reine)" ?
+
+*Question 1*
+
+	Fixer les idées →
+		n = 100
+		L'objet REINE est un vecteur a taille 10000
+		➡ À chaque etape p = 20 (20%) → on enlève 20 reines
+		Pas possibilité d'enumerer toutes les possibilités
+
+1. Possibilité : Enlever les reines qui ont été placées en 1°
+2. Possibilité : Enlver les reines faibles (qui portent le moins d'argent)
+
+**NB :** Il est souhaitable de génerer plusieurs paquets de p reines à faire a les tester tous et selectionner le + approprié.
+
+Je peux mixer les 2 critères
+
+Spécification de la boucle "local search"
+
+	not stop; solcour ← reine;
+	tant que not stop faire
+		not stop 1;
+		Tant que not stop 1 faire
+			generer un paquet λ de reines à enlever; //  (on peut générer eventuellement tous les paquets des les début)
+			Tester l'application de BUILD.DESTROY(REINE, λ); // Utilise une copie de REINE
+			Si OK(Tester) alors
+				stop1;
+				Appliquer BUILD.DESTROY(Reine, λ);
+			Sinon mettre à jour stop1;
+
+*Reste à préciser*
+
+`OK(Tester)` ~ Dans quelles conditions j'estime que le paquet λ de reines à retirer justifie l'application de BUILD.DESTROY(Reine, λ)
+
+1. Approche : OK si l'application de l'operateur ameliore REINE (place plus de reine ou fait gagner + d'argent) (*Descente ou Hill-climbing*)
+
+2. Approche : OK toujours vrai → je genere 1 paquet et j'applique (*Marche aléatoire ou Random Walk*)
+
+→ Approche mixte : Recul simulé, Tabou, Genetique

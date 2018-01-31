@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.11.16)  23 JAN 2018 11:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.11.16)  27 JAN 2018 01:19
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1289,7 +1289,7 @@ runsystem(rm rapport.pyg)...executed.
 Here is how much of TeX's memory you used:
  32148 strings out of 492990
  621148 string characters out of 6135004
- 728943 words of memory out of 5000000
+ 728942 words of memory out of 5000000
  35190 multiletter control sequences out of 15000+600000
  570938 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191

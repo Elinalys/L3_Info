@@ -1016,6 +1016,8 @@ body .markdown-body
 }
 </style><title>EtudeDeCas</title></head><body><article class="markdown-body"><h1 id="etudes-de-cas"><a name="user-content-etudes-de-cas" href="#etudes-de-cas" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Études de cas</h1>
 <p>Ici, mini-problèmes -&gt; algorithme</p>
+<!-- refaire hierarchie titres -->
+
 <h2 id="3-cas"><a name="user-content-3-cas" href="#3-cas" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>3 cas</h2>
 <ol>
 <li>Pb orienté optimisation et satisfaction des contraintes</li>
@@ -1108,20 +1110,49 @@ tant que not stop faire
 </code></pre><br />
 → algo glouton avec propagation de contraintes</p>
 <p>Déduire des reines imposées, interdites</p>
-<p><strong>Exercice</strong> Écrire algorithme pour réalistion ces déductions imposé/interdit<br />
+<p><strong>Exercice</strong> : Écrire algorithme pour réalistion ces déductions imposé/interdit<br />
 → SDD, Algo (on ne prend pas en compte le gains ici)</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody></tbody>
-</table></article></body></html>
+<ul>
+<li>Un tableau deux dimensions i,j où :<ul>
+<li>0 case interdite</li>
+<li>-1 case libre</li>
+<li>1 case occupée</li>
+</ul>
+</li>
+<li>Un tableau compteur ligne, en ligne j nbe de case libre</li>
+<li>statut ligne, statutligne[1] = 1, il y a une reine en ligne j</li>
+<li>Idem colonnes :<ul>
+<li>compteur colonnes</li>
+<li>statut colonnes</li>
+</ul>
+</li>
+<li>Liste de reines imposées (fait déclencheurs en propagation de contraintes) :<ul>
+<li>couples (i,j) correspond à des cases où une reine est imposée</li>
+<li>ehec, booleen diagnostiquant les impossibilités</li>
+</ul>
+</li>
+</ul>
+<p>Algo : </p>
+<pre><code>Echec ← 0;
+LISTE ← case qi'on vient de choisir dans la boucle principale de l'algo;
+Tant que (Not Échec) &amp;&amp; (Liste != Nil) Faire
+|   (i,j) ← Tête(LISTE);
+|   LISTE ← Queue(LISTE);
+|   Pour toute case (i',j') telle que (i = i') || (j = j') || [(i+j) = (i'+j')] || [(i-j)=(i'-j')] Faire
+|   Si occupé[i',j'] = 1 alors Échec
+|   Sinon 
+|   |   Si (occupé[i',j'] = -1) alors 
+|   |   |   occupé[i',j'] = O;
+|   |   |   compteur_lignes[i'] ← compteur_lignes[i]-1
+|   |   |   compteur_colonnes[j'] ← compteur_colonnes[j]-1
+|   |   |   Si (compteur_lignes[i] = 0) &amp;&amp; (statut_lignes[i'] = 0) alors ÉCHEC;
+|   |   |   Sinon
+|   |   |   |   Si (compteur_lignes[i'] = 1) &amp;&amp; (statut_lignes[0] = 0)
+|   |   |   |   |   soit j0 ← unique j tq occupé [i',j] = 0;
+|   |   |   |   |   occupé[i',j0] ← 1;
+|   |   |   |   |   LISTE ← (i',  j0).LISTE;
+|   |   |   |   |   statut_lignes[i'] = 1;
+|   |   |   |   |   statut_colonnes[j0] = 1;
+</code></pre>
+
+<p><em>Remarque</em> : le schéma peut échouer parce qu&rsquo;il ne trouve pas une solution estimée acceptable. Il peut aussi renvoyer une solution de qualité médiocre.</p></article></body></html>
