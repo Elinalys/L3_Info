@@ -9,38 +9,32 @@ public class TableauPerePartition implements GestionPartition {
 		for (int i = 0; i < s; i++) hauteurs[i] = 1;
 	}
 
-	public int getClasse(int e)
-	{
+	public int getClasse(int e) {
 		while(peres[e] != e) e = peres[e];
 		return e;
 	}
 	
-	public void fusion(int c1, int c2)
-	{
+	public void fusion(int c1, int c2) {
 		int classe1 = getClasse(c1);
 		int classe2 = getClasse(c2);
 		
 		if (classe1 == classe2)
 			return;
 		
-		if (hauteurs[classe1] > hauteurs[classe2])
-		{
+		if (hauteurs[classe1] > hauteurs[classe2]) {
 			peres[classe2] = classe1;
 		}
-		else if (hauteurs[classe1] < hauteurs[classe2])
-		{
+		else if (hauteurs[classe1] < hauteurs[classe2]) {
 			peres[classe1] = classe2;
 		}
-		else
-		{
+		else {
 			peres[classe1] = classe2;
 			hauteurs[classe2] = hauteurs[classe2]+1;
 		}
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		String retour = new String();
 		retour += "\nIndex : \n| ";
 		for (int i = 0; i < this.peres.length; i++)

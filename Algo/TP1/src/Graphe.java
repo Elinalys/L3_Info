@@ -6,8 +6,7 @@ public class Graphe {
 	private Integer[][] aretes;
 	private Integer[] sommets;
 	
-	public Graphe(Integer[] sommets, Integer[][] aretes)
-	{
+	public Graphe(Integer[] sommets, Integer[][] aretes) {
 		this.aretes = aretes;
 		this.sommets = sommets;
 	}
@@ -16,7 +15,7 @@ public class Graphe {
 	public Integer[][] getAretes() { return this.aretes; }
 	
 	// Tri les aretes (ordre croissant)
-	public Integer[][] getOrdoredAretes()	{
+	public Integer[][]getOrdoredAretes()	{
 		Integer[][] ordoredAretes = getAretes();
 		
 		Arrays.sort(ordoredAretes, new Comparator<Integer[]>() {
