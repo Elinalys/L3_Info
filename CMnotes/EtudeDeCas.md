@@ -252,3 +252,76 @@ Spécification de la boucle "local search"
 2. Approche : OK toujours vrai → je genere 1 paquet et j'applique (*Marche aléatoire ou Random Walk*)
 
 → Approche mixte : Recul simulé, Tabou, Genetique
+
+(...)
+
+**Rappel**
+
+Exploration en Arbre (méthode exacte) → en largeur, liste de noeud créés : pb + décisions prises, placement de reines ; liste de triplés (ε(de signe +/-),i,j) 
+
+*ex* : Imposé reine en case (2,3) Interdire en (5,4) → {(+,2,3),(-,5,4)}
+
+Variable de controle de l'exploration en largeur de l'arbre : LISTE : Liste de noeuds
+
+*ex* : LIST : {{+,2,3},{+,5,4}} ← Noeud 1, {(+,2,3),(-5,4),{(-,2,3)}}
+
+**Squelette de l'Algo**
+
+```
+*SDD* : LISTE,
+				REINE_COUR, 
+				VAL_COUR, (meilleurs objets obtenus)
+				OCCUPÉ[n][n] : de 1..n, 0/1/-1,
+				libre_col, libre_lig, statut_col, statut_lig
+
+Initialisation
+	OCCUPÉ ← 1;
+	------
+	LISTE ← {nil}; not stop;
+	REINE_COUR ← Indéfini;
+	VAL_COUR ← -∞
+
+Corps Algorithme
+	Tant que (not stop) && (LISTE ≠ nil) faire
+		N ← Tete(LISTE);  // Liste  de cases imposées / interdites
+		LISTE ← Queue(LISTE);
+		Remplir OCCUPÉ, libre_col, ... via l'algo de déduction (prop de contraintes)
+
+		Choisir une case (i0,j0) libre
+		Généer les 2 noeuds 
+			n1 ← (+,i0,j0) · N; n2 ← (-,i0,j0);
+			En utilisant une copie a OCCUPÉ, appliquer le precessus de déduction a la décsion (+i0,j0);
+			Si succes, mois,aucune case de libre, on a une vraie solution et on cose sa valeur = valeur : si cette valeur > valcour, on met à jour REINE_COUR et VAL_COUR; sinon (et si succes), on met N1, dans LISTE;
+			Idem avec N2;
+```
+
+**Principe** : variable la plus contrainte
+
+*Question* : "Mettre n1 ou n2 dans LISTE"
+
+Est-ce qu'il y a un ordre pour les éléments de LISTE ?
+
+*Réponse* : On va essayer de noter les noeuds, à l'aide d'un procédé d'estimation optimiste. (Banch / Bound)
+→ LISTE sera alors ordonnée par notes décroissantes
+
+Je calcule une valeur VAL en tenant compte de de certaines contraintes "faciles" et en delaissant les contraintes "difficiles" (lignes, diagonales)
+
+VAL >= La valeur du meilleur placement compatible  ? le noeud  ( Estimation optimiste)
+
+**Mecanismes de filtrage induits**
+
+- Règle destructive
+	VAL <= VALCOUR |= Couper ~ j'élimine le noeud
+- Règle constructive 
+	Si la solution associée à VAL satisfait les contraintes difficiles, aors elles se ??
+
+Adaptation de l'algorithme REINE à l'utilisation de Estimation optimiste
+
+LISTE devient une liste de couples (noeud, valeur)
+1. Reste identique
+2. Si n1 (n2) débouche sur un succès et des cases libres après propagation → je calcule la note VAL1 de n1 (idem pour N2) et j'applique le me filtrage : 
+	* Si v1 <= VALCOUR alors Exit n1
+	* si v1 > VALCOUR, ET le placement induit satisfait toutes les contraintes → Je mets à jour REINE_COUR et Exit n1;
+	* Sinon j'insère (n1, val1) dans liste de façon à garder liste ordonné pour VAl1 décroissant (idem n2)
+
+STOP ? quand la note cal du 1e element dans liste est <= VALCOUR

@@ -1155,4 +1155,125 @@ Tant que (Not Échec) &amp;&amp; (Liste != Nil) Faire
 |   |   |   |   |   statut_colonnes[j0] = 1;
 </code></pre>
 
-<p><em>Remarque</em> : le schéma peut échouer parce qu&rsquo;il ne trouve pas une solution estimée acceptable. Il peut aussi renvoyer une solution de qualité médiocre.</p></article></body></html>
+<p><em>Remarque</em> : le schéma peut échouer parce qu&rsquo;il ne trouve pas une solution estimée acceptable. Il peut aussi renvoyer une solution de qualité médiocre.</p>
+<p>2 pistes d&rsquo;améliorations :</p>
+<ol>
+<li>
+<p>On garde le schéma glouton et on le rend non déterministe (“randomize”), de façon à pouvoir l&rsquo;executer plusieurs fois de suite.<br />
+    Fixe le nb de N “réplications”, pour i = 1..N faire <br />
+        Executer l&rsquo;algo glouton (non déterministe);<br />
+        récuperer le &ldquo;meilleur&rdquo; résultat obtenu;<br />
+    Question : comment est-ce que je rends mon algo &ldquo;non déterministe&rdquo; ?<br />
+    Algo courant (deterministe)<br />
+    Itération courante : Cases imposées<br />
+    interdites, Libres <br />
+    (Random avec proba si prob supérieure premier sinon deuxieme meilleur)</p>
+</li>
+<li>
+<p>À l&rsquo;issue de l&rsquo;execution de l&rsquo;algo glouton, on récupère une solution REINE (ex : vecteur indexe sur les cases et à valeurs en [0,1]) On essaie alors d&rsquo;ameliorer cette solution en lui appliquant des opérateurs de &ldquo;Transformation locale&rdquo; (local search )</p>
+</li>
+</ol>
+<p>(&hellip;) </p>
+<p>Schéma GRASP</p>
+<pre><code>Pour i = 1..N (Replcatio) Faire
+    Creer une solution REINE via
+    la procédure gloutonne "randomizée";
+    not stop;
+    tant que not stop;
+        Appliquer a reine l'opérateur 0 pour une valeur ad hoc de parametre;
+        mettre à jour stop;
+    Consinier le meilleur objet REINE obtenu;
+</code></pre>
+<p>Pour mettre en oeuvre ce schema, il me faut définir le (ou les )opératur 0 + la façon d&rsquo;aleer chercher les bonnes valeurs de paramètres</p>
+<p>Ici difficultés (liée au fait qu&rsquo;il y a beaucoup de contrainessur l&rsquo;obet cherché) → j&rsquo;ai du mal à définir un opératuer 0 qui s&rsquo;applique à un placement REINE satisfaisant les contraintes et qui le maintienne dans les contraines</p>
+<p>Question améliorer ?</p>
+<p>1ère Approche, replication</p>
+<p>2° approche, on applique sur l&rsquo;objet REINE produit par l&rsquo;algo glouton une boucle dite de transformation locale (&ldquo;local search&rdquo;) :</p>
+<pre><code>not stop;
+tant que not stop faire
+    perturber REINE;
+</code></pre>
+<p>Cette 2° approche repose sur le design &ldquo;d&rsquo;operateurs&rdquo;, c&rsquo;est à dire de prcédures <code>TRANSFO(Reine, λ)</code> Reine : adresse, λ : valeur.</p>
+<p><strong>Opérateurs génériques <code>Build/Destroy</code></strong></p>
+<ul>
+<li>J&rsquo;enleve p reines parmi les <em>n</em> reines placées (p ~ x% · n)</li>
+<li>Je me retrouve avec q = n-p (ou un peu moins) reines placées; J&rsquo;applique la propagation de contraintes de ces q reines (j&rsquo;interdis et impose des cases)</li>
+<li>Je relance le procede glouton &ldquo;randomise&rdquo; à partir de la situation obtenue </li>
+</ul>
+<p>l&rsquo;objet RBIND transforme de ? de ces 3 étapes</p>
+<p>L&rsquo;opérateur BUILD.DESTROY ainsi défini, prend comme paramètre.</p>
+<p><code>BUILD.DESTROY(Reine, λ)</code></p>
+<p><strong>Questions sous-jacentes</strong></p>
+<ol>
+<li>Comment je choisis p et les reines de la liste λ ?</li>
+<li>Qu&rsquo;est ce qu&rsquo;on met derriere &ldquo;Tant que not stop faire perturber (Reine)&rdquo; ?</li>
+</ol>
+<p><em>Question 1</em></p>
+<pre><code>Fixer les idées →
+    n = 100
+    L'objet REINE est un vecteur a taille 10000
+    ➡ À chaque etape p = 20 (20%) → on enlève 20 reines
+    Pas possibilité d'enumerer toutes les possibilités
+</code></pre>
+<ol>
+<li>Possibilité : Enlever les reines qui ont été placées en 1°</li>
+<li>Possibilité : Enlver les reines faibles (qui portent le moins d&rsquo;argent)</li>
+</ol>
+<p><strong>NB :</strong> Il est souhaitable de génerer plusieurs paquets de p reines à faire a les tester tous et selectionner le + approprié.</p>
+<p>Je peux mixer les 2 critères</p>
+<p>Spécification de la boucle &ldquo;local search&rdquo;</p>
+<pre><code>not stop; solcour ← reine;
+tant que not stop faire
+    not stop 1;
+    Tant que not stop 1 faire
+        generer un paquet λ de reines à enlever; //  (on peut générer eventuellement tous les paquets des les début)
+        Tester l'application de BUILD.DESTROY(REINE, λ); // Utilise une copie de REINE
+        Si OK(Tester) alors
+            stop1;
+            Appliquer BUILD.DESTROY(Reine, λ);
+        Sinon mettre à jour stop1;
+</code></pre>
+<p><em>Reste à préciser</em></p>
+<p><code>OK(Tester)</code> ~ Dans quelles conditions j&rsquo;estime que le paquet λ de reines à retirer justifie l&rsquo;application de BUILD.DESTROY(Reine, λ)</p>
+<ol>
+<li>
+<p>Approche : OK si l&rsquo;application de l&rsquo;operateur ameliore REINE (place plus de reine ou fait gagner + d&rsquo;argent) (<em>Descente ou Hill-climbing</em>)</p>
+</li>
+<li>
+<p>Approche : OK toujours vrai → je genere 1 paquet et j&rsquo;applique (<em>Marche aléatoire ou Random Walk</em>)</p>
+</li>
+</ol>
+<p>→ Approche mixte : Recul simulé, Tabou, Genetique</p>
+<p>(&hellip;)</p>
+<p><strong>Rappel</strong></p>
+<p>Exploration en Arbre (méthode exacte) → en largeur, liste de noeud créés : pb + décisions prises, placement de reines ; liste de triplés (ε(de signe +/-),i,j) </p>
+<p><em>ex</em> : Imposé reine en case (2,3) Interdire en (5,4) → {(+,2,3),(-,5,4)}</p>
+<p>Variable de controle de l&rsquo;exploration en largeur de l&rsquo;arbre : LISTE : Liste de noeuds</p>
+<p><em>ex</em> : LIST : {{+,2,3},{+,5,4}} ← Noeud 1, {(+,2,3),(-5,4),{(-,2,3)}}</p>
+<p><strong>Squelette de l&rsquo;Algo</strong></p>
+<pre><code>*SDD* : LISTE,
+                REINE_COUR, 
+                VAL_COUR, (meilleurs objets obtenus)
+                OCCUPÉ[n][n] : de 1..n, 0/1/-1,
+                libre_col, libre_lig, statut_col, statut_lig
+
+Initialisation
+    OCCUPÉ ← 1;
+    ------
+    LISTE ← {nil}; not stop;
+    REINE_COUR ← Indéfini;
+    VAL_COUR ← -∞
+
+Corps Algorithme
+    Tant que (not stop) &amp;&amp; (LISTE ≠ nil) faire
+        N ← Tete(LISTE);  // Liste  de cases imposées / interdites
+        LISTE ← Queue(LISTE);
+        Remplir OCCUPÉ, libre_col, ... via l'algo de déduction (prop de contraintes)
+
+        Choisir une case (i0,j0) libre
+
+
+
+</code></pre>
+
+<p><strong>Principe</strong> : variable la plus contrainte</p></article></body></html>
