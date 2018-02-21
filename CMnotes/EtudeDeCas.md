@@ -325,3 +325,46 @@ LISTE devient une liste de couples (noeud, valeur)
 	* Sinon j'insère (n1, val1) dans liste de façon à garder liste ordonné pour VAl1 décroissant (idem n2)
 
 STOP ? quand la note cal du 1e element dans liste est <= VALCOUR
+
+## Problème orienté "simulation"
+
+A,B,C postes de travail
+
+Produits (A), (B)
+
+Produit (A), (B) arrivent "aléatoirement" → L_A, L_B, *lois d'arrivées*
+
+On connait des durées de traitement pour (A), (B) sur A,B,C
+	T_A, T_B, T^C_A, T^C_B aléatoires
+
+→ On se fait une idée :
+	- Taux de perte
+	- durée d'attente
+	- Taille des buffers à augmenter ?
+
+*NB* : Ce n'est pas un poste d'assemblage, mais une machine de transformation
+
+**Questions à poser**
+	* Est-ce qu'on a observé des dysfonctionnements ?
+	* Quels sont les enjeux économiques de ces dysfonctionnements ?
+	* Données quatifiées
+		* stock : S_A = 10 ; S_B = 7 ; S_C = 13
+	* Dans la simulation faut-il prévoir (Ici non pour tout car pas réel)
+		* Maintenance préventive
+		* set-up (màj de la machine chaque fois qu'elle change de tâche)
+		* Relais liés aux changements d'activités humaines
+	* *Quantifier* les lois L_A, L_B d'arrivées des objets A et B
+
+**Plusieurs options**
+	- Rythme d'arrivée presque deterministe...
+	- Rythme d'arrivée avec grosses variations
+		* L'intervalle de temps devient une *variable aléatoire* avec sa moyenne, variance, sa loi...
+	- Il peut y avoir des correlations entre ces intervalles, et des correlations entre ces intervalles et les instants. (compliqués)
+
+Avec une loi
+	```
+	L_A ~ Proba qu'un objet A arrive entre 2 instants t et t+1 ~ O·3
+		L_B ~ 0·2
+	```
+	* Idem pour les durées => on va supposier ici
+		T_A ~ Proba que l'objet A étant strictement à l'instant t, il soit fini à l'instant t+1 = 0·4...

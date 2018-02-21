@@ -27,6 +27,7 @@ void affichage(int **D, int n, int m) {
 }
 
 // retourne la souchaine de 0 à len
+// https://www.developpez.net/forums/d115796/c-cpp/c/equivalent-substring-c/
 char *substr(char *chaineSource, int len) { 
   char *dest = NULL;                        
   if (len > 0) {                          
@@ -46,7 +47,9 @@ int distanceR(char *A, char *B) {
 	if (n == 0) return n;
 	if (m == 0) return m;
 	else {
-		if (A[n] == B[m]) return distanceR(substr(A, n-1), substr(B, m-1));
+		if (A[n] == B[m]) { 
+			return distanceR(substr(A, n-1), substr(B, m-1)); 
+		}
 		else {
 			return 1 + MIN(distanceR(substr(A, n-1), substr(B, m-1)), MIN(distanceR(A, substr(B, m-1)), distanceR(substr(A, n-1), B)));
 		}
@@ -88,12 +91,13 @@ int distance(char *A, char *B) {
 int main(int argc, char const *argv[]) {
 	char *A = "tourte";
 	char *B = "tartre";
-	printf("%ld\n", strlen(A));
-	char *C = substr(A, 5);
-	printf("%s\n", C);
+	// printf("%ld\n", strlen(A));
+	// char *C = substr(A, 5);
+	// printf("%s\n", C);
+	printf("%s\n", substr(A, strlen(A)-1));
 
-	// distance(A, B);
-	// printf(BOLD "distance %s et %s" RESET " = %d\n",A, B, distanceR(A, B));
+	//distance(A, B);
+	//printf(BOLD "distance %s et %s" RESET " = %d\n",A, B, distanceR(A, B));
 	// printf("%d\n",MIN(3,7));
 
 	return 0;

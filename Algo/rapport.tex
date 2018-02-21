@@ -1,0 +1,61 @@
+\documentclass[12pt, a4paper]{report}
+
+%====================== PACKAGES ======================
+% \usepackage{extsizes}
+\usepackage{tikz}
+\usepackage[french]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage[scale=0.8]{geometry}
+% \usepackage{fontspec}
+
+\newenvironment{Figure}
+  {\par\medskip\noindent\minipage{\linewidth}}
+  {\endminipage\par\medskip}
+
+\renewcommand{\baselinestretch}{1.25} 
+
+\usepackage{caption}
+
+\hypersetup{
+    % bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={Rapport},    % title
+    pdfauthor={Loris},     % author
+    pdfsubject={Prepro},   % subject of the document
+    pdfcreator={},   % creator of the document
+    pdfproducer={}, % producer of the document
+    pdfkeywords={}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=black,          % color of internal links (change box color with linkbordercolor)
+    linkbordercolor=white,
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+
+\usepackage[T1]{fontenc}
+
+\author{Loris \textsc{Croce}}
+
+\title{\rule{\textwidth}{1pt} \\ \Huge\textbf{Rapport de TP d'Algorithmique } \\ \rule{\textwidth}{1pt}}
+
+\begin{document}
+
+\maketitle{}
+
+\tableofcontents
+
+\chapter{Gestion de partitions}
+    \section{Composantes connexes}
+    \section{Arbres couvrants minimaux}
+\chapter{Programmation dynamique}
+    \section{Recherche de la distance d'édition}
+
+\end{document}
