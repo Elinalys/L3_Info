@@ -35,7 +35,9 @@ var clear = function() {
 }
 
 // window.addEventListener("load", draw);
-button = document.getElementById("delete");
-button.addEventListener("click", clear);
+suppr = document.getElementById("delete");
+suppr.addEventListener("click", clear);
+val = document.getElementById("send");
+val.addEventListener("click", draw);
 input = document.getElementById("chaine");
-input.addEventListener("input", draw);
+// input.addEventListener("input", draw);
