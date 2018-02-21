@@ -2,29 +2,13 @@
 <html>
 <head>
 	<title>Test Code color</title>
-	<script type="text/javascript">
-    function draw() {
-      // var canvas = document.getElementById('tutorial');
-      // if (canvas.getContext) {
-  	   //  var ctx = canvas.getContext('2d');
-
-      //   ctx.fillStyle = 'rgb(200, 0, 0)';
-      //   ctx.fillRect(10, 10, 50, 50);
-
-      //   ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-      //   ctx.fillRect(30, 30, 50, 50);
-      var ctx = document.getElementById('canvas').getContext('2d');
-  		ctx.font = '48px serif';
-  		ctx.fillText('Hello world', 10, 50);
-      }
-    }
-
-  </script>
+	<meta charset="utf-8">
 </head>
 
-<body onload="draw();">
-		<input type="text" name="texte"/>
+<body>
+    <input type="text" id="chaine" name="texte"/>
     <canvas id="tutorial" width="500" height="500"></canvas>
+		<script type="text/javascript" src="script.js"></script>
 </body>
 
 </html>
