@@ -5,20 +5,63 @@ TODO LIST
 - recuperer saisie et l'afficher pour le test
 - determiner taille matrice en fonction de la taille de la chaine
 - afficher "mire" couleurs fixe en haut à gauche à prendre en compte pour l'affichage du reste, zone à pas toucher
- 
+/ ! \ Ajouter un caractère pour changement de mot ou changement de couleurs à chaque mot
 */
 
+// récuperer le code unicode des caractères d'une chaîne
+String.prototype.getBytes = function() {
+  var bytes = [];
+  for (var i = 0; i < this.length; ++i) {
+    bytes.push(this.charCodeAt(i));
+  }
+  return bytes;
+};
+
+Array.prototype.toBits = function() {
+  var bits = [];
+  for (var i = 0; i < this.length; ++i) {
+    bits.push(this[i].toString(2));
+  }
+  return bits;
+}
+
+// test
+// var str = "Hello";
+// var bytes = str.getBytes();
+// console.log(bytes)
+// var bits = bytes.toBits();
+// console.log(bits);
+
+
 var draw = function() {
+  // var canvas = document.getElementById('tutorial');
+  // if (canvas.getContext) {
+  //   var ctx = canvas.getContext('2d');
+  //   ctx.fillStyle = 'rgb(200, 0, 0)';
+  //   ctx.fillRect(10, 10, 50, 50);
+  //   ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+  //   ctx.fillRect(30, 30, 50, 50);
+  // 	ctx.font = '48px monospace';
+  //   var msg = input.value;
+  //   ctx.fillText(msg, 50, 50);
+  // }
+  var msg = input.value;
+  console.log("msg : " + msg);
+  var codes = msg.getBytes();
+  console.log("codes : " + codes);
+  var bits = codes.toBits();
+  console.log("bits : " + bits);
   var canvas = document.getElementById('tutorial');
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'rgb(200, 0, 0)';
-    ctx.fillRect(10, 10, 50, 50);
-    ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-    ctx.fillRect(30, 30, 50, 50);
-  	ctx.font = '48px monospace';
-    msg = input.value;
-  	ctx.fillText(msg, 50, 50);
+    ctx.fillStyle = "red";
+    for (var i = 0; i < bits.length; i++) {
+      for (var j = 0; j < bits[i].length; j++) {
+        // si i pair un couple de couleurs | si i impair une autre
+        console.log(" b["+i+"]["+j+"] : " + bits[i][j]);
+        // ctx.fillRect(i,j,1,1);
+      }
+    }
   }
 }
 
@@ -31,7 +74,6 @@ var clear = function() {
       input.value = '';
     }
   }
-
 }
 
 // window.addEventListener("load", draw);

@@ -26,7 +26,7 @@ Ici, mini-problèmes -> algorithme
 
 Établier une spécification formelle via un modèle linéaire (PLNE).
 **modèle linéaire** : calculer un vecteur Z a valeurs dans des nombres (flottants ou entiers).
-	tq (1) pour i dans J > 1..N, Z, doit petre entier
+	tq (1) pour i dans J > 1..N, Z, doit etre entier
 		 (2) pour i dans 1..K, Σ Ak,i, , Zi ?? Bk
 		 (3) Maximiser Σ Ci Zi
 
@@ -126,7 +126,7 @@ Déduire des reines imposées, interdites
 	- statut colonnes
 - Liste de reines imposées (fait déclencheurs en propagation de contraintes) :
 	- couples (i,j) correspond à des cases où une reine est imposée
-	- ehec, booleen diagnostiquant les impossibilités
+	- ehec, booleen diagnostiquant les impossibiliftés
 
 Algo : 
 
@@ -151,6 +151,11 @@ Tant que (Not Échec) && (Liste != Nil) Faire
 |	|	|	|	|	LISTE ← (i',  j0).LISTE;
 |	|	|	|	|	statut_lignes[i'] = 1;
 |	|	|	|	|	statut_colonnes[j0] = 1;
+|	|	|	|	Fin Si
+|	|	|	Fin Sinon
+|	|	Fin si
+|	Fi Sinon
+Fin Tant que
 ```
 
 *Remarque* : le schéma peut échouer parce qu'il ne trouve pas une solution estimée acceptable. Il peut aussi renvoyer une solution de qualité médiocre.
@@ -173,7 +178,7 @@ Tant que (Not Échec) && (Liste != Nil) Faire
 
 Schéma GRASP
 
-	Pour i = 1..N (Replcatio) Faire
+	Pour i = 1..N (Replication) Faire
 		Creer une solution REINE via
 		la procédure gloutonne "randomizée";
 		not stop;

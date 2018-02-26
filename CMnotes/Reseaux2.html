@@ -1014,88 +1014,83 @@ body .markdown-body
     page-break-after: avoid;
   }
 }
-</style><title>Systemesdexploit</title></head><body><article class="markdown-body"><h1 id="gestion-des-processus"><a name="user-content-gestion-des-processus" href="#gestion-des-processus" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Gestion des processus</h1>
-<blockquote>
-<p>à la Linux</p>
-</blockquote>
-<p>Multiprocessus, à chaque instant t, 1 seul processus sur le processeur → Le systeme fait l&rsquo;entrelacement entre les processus, ce qui donne une illusion de parallelisme</p>
-<p>→ Gestion de priorité avec 1 ordonnanceur</p>
-<p>Pour gérer ceci on utilise une table des processus (lorsque l&rsquo;on fait 1 appel système à fork c&rsquo;est l&rsquo;index dans cette table qui est retourné).</p>
-<p>Par exemple 1 case de cette table peut contenir 3 classes d&rsquo;information :</p>
-<ul>
-<li>informations sur la gestion du processus : valeurs registres, compteur ordinal, pointeur sur la pile, numéro de processus parent, tableau d&rsquo;interruptions, &hellip;</li>
-<li>inforlations sur la mémoire : pointeur segement du code, pointeur segment données, pointeur segment pile</li>
-<li>informations sur les fichiers : description de fichiers, indentifiant groupe utilisateur, &hellip;</li>
-</ul>
-<p>Pour ces informations une partie doit se trouver en mémoire (autant que possible)<br />
-(autant que possible) ces informations sont regroupées en 2 catégories celle pour le systeme (à ne pas déplacer en disque)</p>
-<ul>
-<li>celle utilisateur que l&rsquo;on n&rsquo;a pas besoin de garder en mémoire</li>
-</ul>
-<p>Lorsque le système décide changer de processus, il fait ce que l&rsquo;on appelle 1 changement de contexte. Cela consiste à stocker les informations du processus courant et à charger les informations du processus suivant (choix de ce dernnier délégué à l&rsquo;ordonnanceur) et à demander au processus de commencer l&rsquo;exécution du processus choisi.</p>
-<p><strong>Exemple d&rsquo;opérations</strong></p>
-<ul>
-<li>Au niveau matériel on stocke le compteur ordinal; &hellip;</li>
-<li>Au niveau matériel on charge le nouveau compteur ordinal (pour executer du code du Système d&rsquo;exploitation)</li>
-<li>Par exemple à ce stade on peut continuer le stockage des informations du processus courant.</li>
-</ul>
-<p>On peut commencer l&rsquo;execution l&rsquo;execution du code du systeme d&rsquo;exploitation </p>
-<ul>
-<li>chargement pile (au niveau assembleur par exemple)</li>
-<li>typiquement l&rsquo;ordonnaceur qui choisit le prochain processus)</li>
-</ul>
-<p>On retourne au niveau assembleur pour charger les informations du processus courant et commencer son exécution</p>
-<h2 id="politique-dordonnancement"><a name="user-content-politique-dordonnancement" href="#politique-dordonnancement" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Politique d&rsquo;ordonnancement</h2>
-<p>L&rsquo;ordonnanceur choisit le processus à exécuter en maintenant souvent les structures de données suivantes :</p>
-<ul>
-<li>le processus courant </li>
-<li>la liste des processus prêts à s&rsquo;exécuter, en attente, zombies, &hellip; (ceci peut-être codé avec 1 drapeau)</li>
-<li>la liste des interruptions. Pour chacune les processus en attente (et peut-être traitement à faire !)</li>
-</ul>
-<h2 id="automate-des-etats-du-processus"><a name="user-content-automate-des-etats-du-processus" href="#automate-des-etats-du-processus" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Automate des états du processus</h2>
-<p>(trouver image)</p>
-<p>L&rsquo;ordonnanceur choisit à chaque changement de contexte 1 param les prêt à s&rsquo;exécuter, il peut choisir 1 politique de :</p>
-<ul>
-<li>FIFO le processuŝ prêts à s&rsquo;exécuter sont dans 1 file. Inconvénient le processus avec bcp d&rsquo;appels bloquants sont désanvantagés</li>
-<li>On peut améliorer le FIFO en gérant des priorités. L est 1 file de priorités</li>
-<li>Anneaux : chacun a 1 temps qui lui est imparti et ce temps doit être utilisé avant 1 changement de contexte. On désavantage les autrres qui ne sont pas en attente (ceux en attente occupant le processus sans rien faire)</li>
-</ul>
-<p>Solution pour ne pas désavantager ceux qui ne son pas en attente :</p>
-<ul>
-<li>si 1 processus en attente et son temps pas terminé, donné la main à 1 autre.</li>
-<li>lorsque le processus en attente est reveillé : <ul>
-<li>soit lui donner la main automatiquement (avec le temps qui lui restait)</li>
-<li>soit la prochaine fois lui ajouter ce temps à son temps imparti</li>
+</style><title>Reseaux2</title></head><body><article class="markdown-body"><h1 id="reseaux"><a name="user-content-reseaux" href="#reseaux" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Reseaux</h1>
+<p>(&hellip;)</p>
+<h2 id="codes-correcteurs"><a name="user-content-codes-correcteurs" href="#codes-correcteurs" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Codes correcteurs</h2>
+<p>distance de Hamming (entre 2 mots)</p>
+<pre><code>        011011011
+xor 011111100
+        ---------
+        000100111
+</code></pre>
+<p>→ 4 bits de différences, on peut le modèliser comme 4 erreurs</p>
+<p>Code = ensemble de mots &ldquo;valides&rdquo;</p>
+<p>Poids de Hamming d&rsquo;un code : distance minimale entre 2 mots du code.</p>
+<p>Exemple, bit de parité : <code>01110111</code>, poids = 2, si l&rsquo;on fait une erreur plus valide mais 2 OK.</p>
+<p><em>n = m + r</em>, 2^n mots, 2^m valides.</p>
+<p>Détection : comment détecter d erreurs ?<br />
+➡ code avec un poids de d + 1<br />
+Correction : comment corriger d erreurs ?<br />
+➡ code avec un poids de 2d + 1</p>
+<p>Code de Hamming &hellip; Parité paire, on rajoute les bits de controle au puissances de 2</p>
+<p>Permet de corriger 1 erreur, optimal dans la taille de r.</p>
+<h2 id="codes-detecteurs"><a name="user-content-codes-detecteurs" href="#codes-detecteurs" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Codes détecteurs</h2>
+<h3 id="codes-polynomiaux-ex-crc"><a name="user-content-codes-polynomiaux-ex-crc" href="#codes-polynomiaux-ex-crc" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Codes polynomiaux (ex : CRC)</h3>
+<p>basés sur Arithmétique polynomiale modulo 2. (+ = -)</p>
+<p>Emetteur et récepteur se mettent d&rsquo;accord sur un polynôme générateur G(x) de degré r+1.</p>
+<p>Message à emettre = M(x)<br />
+Message transmis T(x) = x^(r+1), M(x) + R(x) avec R(x) = reste de la division de x^(r+1)×M(x) par G(x)</p>
+<p><strong>Propriété</strong> : T(x) est divisible par G(x)</p>
+<h2 id="resultats-theoriques"><a name="user-content-resultats-theoriques" href="#resultats-theoriques" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Résultats théoriques</h2>
+<p>Si G(x) = (1+x)p(x) avec p(x) contenant au moins 3 termes (degré = n)<br />
+1. On détecte toutes les erreurs simples<br />
+2. On détecte toutes les erreurs doubles<br />
+3. On détecte toutes les erreurs impaires<br />
+4. On détecte tous les paquets d&rsquo;erreurs de taille &lt; n<br />
+5. Paquts d&rsquo;erreurs de tailles n+1, détectés avec une probabilité de 1-(1/2^(n-1))<br />
+6. Paquets de taille &gt; n+1, proba : 1-(1/2^n)</p>
+<p>CRC - 12 : x^12 + x^11 + x^3 + x^2 + x + 1<br />
+CRC - 16 :  x^16 + x^15 + x^2 + 1<br />
+CRC - CCITT : x^16 + x^12 + x^3 + 1</p>
+<h2 id="controle-de-flux"><a name="user-content-controle-de-flux" href="#controle-de-flux" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Contrôle de flux</h2>
+<p>Hypothèses simples :<br />
+- transmission par trames<br />
+- Pas d&rsquo;erreurs<br />
+- Trames reçues en fifo</p>
+<ol>
+<li>Stop and wait :<ul>
+<li>émission d&rsquo;une trame</li>
+<li>attente d&rsquo;un acknowledgement</li>
 </ul>
 </li>
+<li>Sliding window protocol :<ul>
+<li>numérotation de bits</li>
 </ul>
-<p>Les priorités dépendant du nomvre d&rsquo;exécutions à exécuter (par ex on choisit toujours le plus court on le 2 plus courts, &hellip;)</p>
-<p>Comment décider du nombre d&rsquo;instructions à executer ? On fait des stats basées sur le passé.</p>
-<p>L&rsquo;ordonnanceur peut choisir 1 polotique de &lsquo;la liste des pcs à s&rsquo;executer = L.)</p>
+</li>
+</ol>
+<p>Canal bruité :<br />
+- Trames peuvent se perdre (y compris 1AC)<br />
+- Trames peuvent être endommagées</p>
 <ul>
+<li>Détection d&rsquo;erreurs</li>
+<li>ACK</li>
+<li>NAK + retransmission</li>
+<li>Retransmission après <strong>timeout</strong></li>
+</ul>
+<p>Mécanisme ARQ (AUtomatic Repeat Request)</p>
+<ol>
 <li>
-<p>Susteme interactif : on prend en compte les types d&rsquo;instructions et on met à jour les priorités</p>
-<ul>
-<li>On fait des statistiques basées sur le passé (et ou futur ⚠ danger peut etre instructions non autorisées)</li>
-</ul>
+<p>Le plus simple : stop &amp; wait ARQ</p>
 </li>
 <li>
-<p>Mix : priorité + système interactif</p>
+<p>GO BAck ARQ <br />
+    basé sur SWP<br />
+    En cas d&rsquo;eeur on restransment tout à partir de la trame erronée<br />
+    Taille fenêtre 2^k - 1 pour détecter duplication</p>
 </li>
-</ul>
-<h1 id="le-diner-des-philosophes"><a name="user-content-le-diner-des-philosophes" href="#le-diner-des-philosophes" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Le diner des philosophes</h1>
-<p>5 philosophes assis autour d&rsquo;une table et on commandé un plat (supposé infini) de spaghettis. Cinq fourchettessont disposées autour de la table, une entre chaque assiette. Chaque philosophe passe alternativement dans 3 états : <em>en train de penser, affamé, en train de manger</em>. Tout d&rsquo;abord, il pense pendant un temps aléatoire. Puis, il est affamé et attend que la fourchette à sa gauche et que la fourchette ) sa droite se libèrent. Ensuite, il prend les deux fourchettes et commence à manger pendant un temps aléatoire. Quand il a fini de manger, le philosophe pense (jusqu&rsquo;à ce qu&rsquo;il soit à nouveau affamé).</p>
-<p><strong>Question 1</strong> <em>Pourquoi chaque philosophe est-il modélisé par un processus ? Est-ce qu&rsquo;autre chose est modélisé par un processus ?</em></p>
-<p>Un philosophe est un processus car il effectue des calculs. Non les autres éléments sont des ressources.</p>
-<p><strong>Question 2</strong> <em>Quelles sont les ressources critiques ?</em></p>
-<p>La fourchette.</p>
-<p><strong>Question 3</strong> <em>Quand un philosophe doit-il demander la ressource ?</em></p>
-<p>Quand il est affamé.</p>
-<p><strong>Question 4</strong> <em>Quand un philosophe doit-il libérer la ressource ?</em></p>
-<p>Quand il a fini de manger.</p>
-<p><strong>Question 5</strong> <em>Quelle est la section critique ?</em></p>
-<p>C&rsquo;est &ldquo;Manger&rdquo;.</p>
-<p><strong>Question 6</strong> <em>Pour protéger l&rsquo;utilisation des fourchettes dans la section critique, nous allon implémenter une sémaphore par fourchette? Décriver le pseudo-code d&rsquo;un programme qui implémente le diner des philosophes de la manière suivante :</em><br />
-    - <em>Chaque philosophe pense pendant un temps aléatoire,</em><br />
-    - <em>Chaque philosophe mange pendant un temps aléatoire,</em><br />
-    - <em>L&rsquo;accès aux ressources critiques est protégé.</em></p></article></body></html>
+<li>
+<p>Rejet selectif ARQ<br />
+    On ne réémet que les trames erronées<br />
+    Taille fenre 2^k-1</p>
+</li>
+</ol></article></body></html>
