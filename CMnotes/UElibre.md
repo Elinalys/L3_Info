@@ -66,3 +66,30 @@ s' : " chiffrés
 f: s→s'
 
 On joue sur la fréquence d'apparition de lettres, de digrammes, trigrammes 
+
+#### Substitution poly-alphabétique
+
+f:s x postition → s'
+
+Code de Vigenève
+
+...
+
+Règles : 
+
+1. Taille de la clé > Taille message
+2. Clé à **unique**
+3. Clé aléatoire (SETI, bruit de fond de l'espace)
+
+#### Les codes
+
+On remplace un mot par un autre mot
+
+#### Par transposition
+
+On prend le texte, on mélange les lettres
+
+### Fonctionnement ENIGMA
+
+une des failles en en-tête, deux fois la clef
+

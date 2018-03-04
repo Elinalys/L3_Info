@@ -6,13 +6,22 @@ TODO LIST
 - determiner taille matrice en fonction de la taille de la chaine
 - afficher "mire" couleurs fixe en haut à gauche à prendre en compte pour l'affichage du reste, zone à pas toucher
 / ! \ Ajouter un caractère pour changement de mot ou changement de couleurs à chaque mot
+
+
+ON peut proceder par "carrés" de deux couleurs, changeantes à chaque carac le code est un code de code
+
+IL est nécessaire de gérer idéalement chars codés sur 16bits.
+
+On a donc lettres codées sur des carrés de 4×4 (16) une couleur pour le 0 l'autre pour le 1
+
+Le premier est toujours la "mire" qui indique les couleurs utilisées (l'encodage)
 */
 
 // récuperer le code unicode des caractères d'une chaîne
 String.prototype.getBytes = function() {
   var bytes = [];
-  for (var i = 0; i < this.length; ++i) {
-    bytes.push(this.charCodeAt(i));
+  for (var i = 0; i < this.length; ++i) { 
+    bytes.push(this.charCodeAt(i) /*& 255*/); // si on met ça on passe en 8 bits et pas 16
   }
   return bytes;
 };
@@ -46,6 +55,8 @@ var draw = function() {
   //   ctx.fillText(msg, 50, 50);
   // }
   var msg = input.value;
+
+  /* -- Debug -- */
   console.log("msg : " + msg);
   var codes = msg.getBytes();
   console.log("codes : " + codes);
@@ -63,6 +74,11 @@ var draw = function() {
       }
     }
   }
+  /* -- -- */
+  if (canvas.getContext) {
+    
+  }
+
 }
 
 var clear = function() {
@@ -73,6 +89,7 @@ var clear = function() {
     if (input.value !== '') {
       input.value = '';
     }
+    console.clear();
   }
 }
 
