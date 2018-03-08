@@ -30,8 +30,7 @@ public class TableauPartition implements GestionPartition {
 	}
 
 	/* Question 2 */
-	public TableauPartition(Graphe graphe)
-	{
+	public TableauPartition(Graphe graphe) {
 		this(graphe.n());
 		
 		Integer[][] aretes = graphe.getAretes();
@@ -42,8 +41,7 @@ public class TableauPartition implements GestionPartition {
 	}
 	
 	/* Question 3 */
-	public Arbre GrapheToArbre(Graphe graphe)
-	{
+	public Arbre GrapheToArbre(Graphe graphe) {
 		Arbre arbre = new Arbre();
 		
 		Integer[][] aretes = graphe.getOrdoredAretes();

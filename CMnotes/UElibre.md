@@ -2,7 +2,7 @@
 
 ## Contrôle modalités
 
-2 notes projets (une présenation) + controle final.
+2 notes projets (une présenation) + controle final. Sur les exposés !
 
 ### Déroulement
 
@@ -92,4 +92,6 @@ On prend le texte, on mélange les lettres
 ### Fonctionnement ENIGMA
 
 une des failles en en-tête, deux fois la clef
+
+## DES : Data Encryption Standard
 

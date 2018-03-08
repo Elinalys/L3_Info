@@ -100,7 +100,7 @@ public class Comparaison {
 	}
 	
 	public static String tableauToString(int[][] array)
-	{#FFFFFF
+	{
 		String info = "";
 		
 		for (int i = 0; i < array.length; i++)
