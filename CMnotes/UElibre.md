@@ -95,3 +95,23 @@ une des failles en en-tête, deux fois la clef
 
 ## DES : Data Encryption Standard
 
+...
+
+## Crypto à clé publique (Diffie et Hellman 1976)
+
+2 algos : C et D
+
+1. D(C(message)) = message.
+2. Excessivement difficile à déduire D à partir de C.
+3. C ne peut-être cassé par une attaque de typ "texte clair choisi"
+
+1. Choisir 2 nombres premiers p et q
+2. Calculer n = p×q et z = (p - 1)(q - 1)
+3. Choisir un nombre d, premier avec z.
+4. Vérifier e tel que e×d = 1(mod z).
+
+Pour crypter : C = M^e (mod n)
+	 décrypter : M = C^d (mod n)
+
+M : message à crypter O <= |M| <= n
+
