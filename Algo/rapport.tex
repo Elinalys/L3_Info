@@ -44,7 +44,7 @@
 
 \author{Loris \textsc{Croce}}
 
-\title{\rule{\textwidth}{1pt} \\ \Huge\textbf{Rapport de TP d'Algorithmique } \\ \rule{\textwidth}{1pt}}
+\title{\rule{\textwidth}{1pt} \\ \Huge\textsc{Rapport de TP d'Algorithmique} \\ \rule{\textwidth}{1pt}}
 
 \begin{document}
 
@@ -53,8 +53,41 @@
 \tableofcontents
 
 \chapter{Gestion de partitions}
-    \section{Composantes connexes}
-    \section{Arbres couvrants minimaux}
+
+    \section{TDA Gestion de partition}
+
+    Le TDA \emph{Gestion de partition} est un TDA qui qui définit une partition $p$ composée d'éléments $e$\footnote{Ici, par souci de simplicité les éléments seront des entiers}, lesquels sont regroupés en son sein par classes. Il dispose de deux opérations :
+    \begin{itemize}
+        \item \texttt{p.classe(e)} : retourne la classe de l'élément $e$.
+        \item \texttt{p.fusion(c1, c2)} : fusionne les classes $c_1$ et $c_2$ de la partition $p$.
+    \end{itemize}
+
+    % \subsection{Implémentation}
+
+    Pour implémenter ce TDA une \emph{interface} \texttt{GestionPartition} qui définit la structure du TDA a été créée. Deux solutions ont été implémentées : Le \emph{Tableau de partition} et le \emph{Tableau de pères}.
+
+    \subsection{Tableau de partition}
+
+    Comme les éléments gérés ici sont des entiers, il est possible de les représenter sous la forme d'indices d'un tableau où les cases contiendront la classe dans laquelle chaque élément est stocké. La classe associée à cette implémentation est \texttt{TableauPartition}.
+
+    Les complexités associées à cette implémentation sont :
+    \begin{itemize}
+        \item \texttt{p.classe(e)} : $\mathcal{O}(1)$, ici implémentée par \texttt{getClasse(int e)}.
+        \item \texttt{p.fusion(c1, c2)} : $\mathcal{O}(n)$, ici implémentée par \texttt{fusion(int c1, int c2)}.
+    \end{itemize}
+
+    \subsection{Tableau de pères}
+
+    Cette implémentation est associée à celle par \emph{forêts} en la traduisant sous forme de tableau où comme pour le tableau de père les indices représentent les éléments mais les valeurs des cases renseignent le \emph{père} de l'élément\footnote{si cet élément est racine on considèrera qu'il est son propre père.}. La classe associée à cette implémentation est \texttt{TableauPerePartition}.
+
+    Les complexités associées à cette implémentation sont :
+    \begin{itemize}
+        \item \texttt{p.classe(e)} : $\mathcal{O}(h)$, ici implémentée par \texttt{getClasse(int e)}.
+        \item \texttt{p.fusion(c1, c2)} : $\mathcal{O}(1)$, ici implémentée par \texttt{fusion(int c1, int c2)}.
+    \end{itemize}
+
+    % \section{Composantes connexes}
+    % \section{Arbres couvrants minimaux}
 \chapter{Programmation dynamique}
     \section{Recherche de la distance d'édition}
 

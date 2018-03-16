@@ -13,16 +13,7 @@
 		<javac includeantruntime="true" srcdir="${src}" destdir="${build}"/>
 	</target>
 
-	<target name="dist" depends="compile" description="generate the distribution">
-		<mkdir dir="${dist}/lib"/>
-		<jar jarfile="${dist}/lib/MyProject−${DSTAMP}.jar" basedir="${build}">
-			<manifest>
-				<attribute name="Main−Class" value="Main"/>
-			</manifest>
-		</jar>
-	</target>
-
-	<target name="execute" depends="init" description="execution">
+	<target name="run" depends="init" description="execution">
 		<java classpath="${build}" classname="Main"/>
 	</target>
 

@@ -2,7 +2,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class Graphe {
-	// Connaitre n nb aretes et m nb sommets et hauteur
+	// Connaitre n le nombre d'aretes et m le nombre de sommets ainsi que la hauteur
 	private Integer[][] aretes;
 	private Integer[] sommets;
 	

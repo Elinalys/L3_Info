@@ -1,0 +1,543 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% % use upquote if available, for straight quotes in verbatim environments
+% \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% % use microtype if available
+% \IfFileExists{microtype.sty}{%
+% \usepackage{microtype}
+% \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+% }{}
+% \usepackage{hyperref}
+% \hypersetup{unicode=true,
+%             pdfborder={0 0 0},
+%             breaklinks=true}
+% \urlstyle{same}  % don't use monospace font for urls
+% \IfFileExists{parskip.sty}{%
+% \usepackage{parskip}
+% }{% else
+% \setlength{\parindent}{0pt}
+% \setlength{\parskip}{6pt plus 2pt minus 1pt}
+% }
+% \setlength{\emergencystretch}{3em}  % prevent overfull lines
+% \providecommand{\tightlist}{%
+%   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+% \setcounter{secnumdepth}{0}
+% % Redefines (sub)paragraphs to behave more like sections
+% \ifx\paragraph\undefined\else
+% \let\oldparagraph\paragraph
+% \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+% \fi
+% \ifx\subparagraph\undefined\else
+% \let\oldsubparagraph\subparagraph
+% \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+% \fi
+
+\date{}
+
+\title{Études de cas}
+
+\begin{document}
+
+
+Ici, mini-problèmes : algorithme
+
+\section{3 cas}\label{cas}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Pb orienté optimisation et satisfaction des contraintes
+\item
+  Pb orienté ``simulation''
+\item
+  Pb orienté ``Apprentissag et réseaux de neurones''
+\end{enumerate}
+
+\section{Problème orienté
+optimisation}\label{probluxe8me-orientuxe9-optimisation}
+
+\subsection{Pb n reines}\label{pb-n-reines}
+
+\begin{verbatim}
+Input : Tableau n×n TAB a valeurs dans nombres entiers ̛̛supérieurs ou égaux à 0
+    TAB[i,j] ...
+
+Output : Un placement de n "reines" sur l'échiquier (marquage de n cases)
+
+    tant que on a pas 2 cases marquées sur une même ligne, colonne, diagonales
+    l'argent correspondant aux cases marquées soit maximal
+\end{verbatim}
+
+\paragraph{Étape 1}\label{uxe9tape-1}
+
+Établier une spécification formelle via un modèle linéaire (PLNE).
+\textbf{modèle linéaire} : calculer un vecteur Z a valeurs dans des
+nombres (flottants ou entiers). tq (1) pour i dans J \textgreater{}
+1..N, Z, doit etre entier (2) pour i dans 1..K, Σ Ak,i, , Zi ?? Bk (3)
+Maximiser Σ Ci Zi
+
+\begin{verbatim}
+    Input : 
+        N
+        J <= (1..N)
+        Ak, k = 1..K
+        Bk, k = 1..K
+        Ci, i = 1..N
+\end{verbatim}
+
+\textbf{Ce qu'il faut savoir} : * Les modèles linéaires → Beaucoup
+d'effort des editeurs de logiciels - Bibliothèque dédiées IBM (OSL,
+CPLEX), XPRESS, GUROBI - Bibliothèques de calcul généraliste MATLAB,
+SAS, \ldots{} - Logiciels de gestion d'entreprises : SAP - Langages :
+CHIP, Prolog, CP-optimizer * Ces bibliothèques peuvent traiter des
+modèles avec =\textgreater{} 10\^{}5 variables ou contraintes * Rôle
+renctral en Algo car Beaucoup de Problèmes pratiques peuent être
+exprimés via ce formalisme
+
+\subparagraph{Le cas des n reines}\label{le-cas-des-n-reines}
+
+Vecteurs inconnu
+
+Z indexe sur les cases de l'echiquier
+
+Z=(Zi,j , i = 1..N, j = 1..N) Entier scrictement entre 0 et 1
+(exclues)\ldots{}
+
+Sémantique : Zi,j = 1 \textasciitilde{} on lace une reine en case (i, j)
+0 \textasciitilde{} on ne places pas
+
+\textbf{Quantité a maximum (critere qualité)}
+
+\begin{verbatim}
+ΣTAB[i,j] * Zi,j
+i = 1..N
+j = 1..N
+\end{verbatim}
+
+\textbf{Contraintes}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  je veux exactement n reines Σi,j Zi,j = n
+\item
+  Pas + de 1 reine par ligne Pour toute ligne j = 1..N Σ Zi,j
+  =\textless{} 1
+\item
+  Pas + de 1 reine par colonne Pour toute colonne i = 1..N Σ Zi,j
+  =\textless{} 1
+\item
+  Pas + de 1 reine pour une diagonale montante, 2n-1, diagonales
+  montante
+\end{enumerate}
+
+Pour tout k = -(n-1)..(n-1)
+
+Σ Zi,i+k =\textless{} 1 i tq 1 \textless{}= i \textless{}= n i tq 1
+\textless{}= i+k \textless{}= n
+
+2 types d'algos : - \emph{exact} : Realise exactement la spécification -
+\emph{approché} : Induisent une marge d'erreur
+
+Prendre en compte temps d'exec et critère de qualité de l'approximation
+dans le cas d'un algo approché (également la robustesse).
+
+Approché
+
+\textbf{Remarque} : Il faut préciser ``appoche'' : - J'impose vraiment
+\emph{n-reines} (sinon échec) - J'accepte moins de n-reine → maximiser
+l'argent donc pénalités (n - nbres de reines placées)
+
+\begin{verbatim}
+not stop;
+tant que not stop faire
+    choisir une case libre;
+    si echec(choisir)
+        alors stop;
+    sinon
+        placer une reine sur la case choisie;
+        déduire le plus de choses possibles;
+        mettre à jour stop;
+\end{verbatim}
+
+→ algo glouton avec propagation de contraintes
+
+Déduire des reines imposées, interdites
+
+\textbf{Exercice} : Écrire algorithme pour réalistion ces déductions
+imposé/interdit → SDD, Algo (on ne prend pas en compte le gains ici)
+
+\begin{itemize}
+\tightlist
+\item
+  Un tableau deux dimensions i,j où :
+
+  \begin{itemize}
+  \tightlist
+  \item
+    0 case interdite
+  \item
+    -1 case libre
+  \item
+    1 case occupée
+  \end{itemize}
+\item
+  Un tableau compteur ligne, en ligne j nbe de case libre
+\item
+  statut ligne, statutligne{[}1{]} = 1, il y a une reine en ligne j
+\item
+  Idem colonnes :
+
+  \begin{itemize}
+  \tightlist
+  \item
+    compteur colonnes
+  \item
+    statut colonnes
+  \end{itemize}
+\item
+  Liste de reines imposées (fait déclencheurs en propagation de
+  contraintes) :
+
+  \begin{itemize}
+  \tightlist
+  \item
+    couples (i,j) correspond à des cases où une reine est imposée
+  \item
+    ehec, booleen diagnostiquant les impossibiliftés
+  \end{itemize}
+\end{itemize}
+
+Algo :
+
+\begin{verbatim}
+Echec ← 0;
+LISTE ← case qi'on vient de choisir dans la boucle principale de l'algo;
+Tant que (Not Échec) && (Liste != Nil) Faire
+|   (i,j) ← Tête(LISTE);
+|   LISTE ← Queue(LISTE);
+|   Pour toute case (i',j') telle que (i = i') || (j = j') || [(i+j) = (i'+j')] || [(i-j)=(i'-j')] Faire
+|   Si occupé[i',j'] = 1 alors Échec
+|   Sinon 
+|   |   Si (occupé[i',j'] = -1) alors 
+|   |   |   occupé[i',j'] = O;
+|   |   |   compteur_lignes[i'] ← compteur_lignes[i]-1
+|   |   |   compteur_colonnes[j'] ← compteur_colonnes[j]-1
+|   |   |   Si (compteur_lignes[i] = 0) && (statut_lignes[i'] = 0) alors ÉCHEC;
+|   |   |   Sinon
+|   |   |   |   Si (compteur_lignes[i'] = 1) && (statut_lignes[0] = 0)
+|   |   |   |   |   soit j0 ← unique j tq occupé [i',j] = 0;
+|   |   |   |   |   occupé[i',j0] ← 1;
+|   |   |   |   |   LISTE ← (i',  j0).LISTE;
+|   |   |   |   |   statut_lignes[i'] = 1;
+|   |   |   |   |   statut_colonnes[j0] = 1;
+|   |   |   |   Fin Si
+|   |   |   Fin Sinon
+|   |   Fin si
+|   Fi Sinon
+Fin Tant que
+\end{verbatim}
+
+\emph{Remarque} : le schéma peut échouer parce qu'il ne trouve pas une
+solution estimée acceptable. Il peut aussi renvoyer une solution de
+qualité médiocre.
+
+2 pistes d'améliorations :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  On garde le schéma glouton et on le rend non déterministe
+  (``randomize''), de façon à pouvoir l'executer plusieurs fois de
+  suite. Fixe le nb de N ``réplications'', pour i = 1..N faire Executer
+  l'algo glouton (non déterministe); récuperer le ``meilleur'' résultat
+  obtenu; Question : comment est-ce que je rends mon algo ``non
+  déterministe'' ? Algo courant (deterministe) Itération courante :
+  Cases imposées interdites, Libres (Random avec proba si prob
+  supérieure premier sinon deuxieme meilleur)
+\item
+  À l'issue de l'execution de l'algo glouton, on récupère une solution
+  REINE (ex : vecteur indexe sur les cases et à valeurs en {[}0,1{]}) On
+  essaie alors d'ameliorer cette solution en lui appliquant des
+  opérateurs de ``Transformation locale'' (local search )
+\end{enumerate}
+
+(\ldots{})
+
+Schéma GRASP
+
+\begin{verbatim}
+Pour i = 1..N (Replication) Faire
+    Creer une solution REINE via
+    la procédure gloutonne "randomizée";
+    not stop;
+    tant que not stop;
+        Appliquer a reine l'opérateur 0 pour une valeur ad hoc de parametre;
+        mettre à jour stop;
+    Consinier le meilleur objet REINE obtenu;
+\end{verbatim}
+
+Pour mettre en oeuvre ce schema, il me faut définir le (ou les )opératur
+0 + la façon d'aleer chercher les bonnes valeurs de paramètres
+
+Ici difficultés (liée au fait qu'il y a beaucoup de contrainessur l'obet
+cherché) → j'ai du mal à définir un opératuer 0 qui s'applique à un
+placement REINE satisfaisant les contraintes et qui le maintienne dans
+les contraines
+
+Question améliorer ?
+
+1ère Approche, replication
+
+2° approche, on applique sur l'objet REINE produit par l'algo glouton
+une boucle dite de transformation locale (``local search'') :
+
+\begin{verbatim}
+not stop;
+tant que not stop faire
+    perturber REINE;
+\end{verbatim}
+
+Cette 2° approche repose sur le design ``d'operateurs'', c'est à dire de
+prcédures \texttt{TRANSFO(Reine,\ λ)} Reine : adresse, λ : valeur.
+
+\textbf{Opérateurs génériques \texttt{Build/Destroy}}
+
+\begin{itemize}
+\tightlist
+\item
+  J'enleve p reines parmi les \emph{n} reines placées (p
+  \textasciitilde{} x\% · n)
+\item
+  Je me retrouve avec q = n-p (ou un peu moins) reines placées;
+  J'applique la propagation de contraintes de ces q reines (j'interdis
+  et impose des cases)
+\item
+  Je relance le procede glouton ``randomise'' à partir de la situation
+  obtenue
+\end{itemize}
+
+l'objet RBIND transforme de ? de ces 3 étapes
+
+L'opérateur BUILD.DESTROY ainsi défini, prend comme paramètre.
+
+\texttt{BUILD.DESTROY(Reine,\ λ)}
+
+\textbf{Questions sous-jacentes}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Comment je choisis p et les reines de la liste λ ?
+\item
+  Qu'est ce qu'on met derriere ``Tant que not stop faire perturber
+  (Reine)'' ?
+\end{enumerate}
+
+\emph{Question 1}
+
+\begin{verbatim}
+Fixer les idées →
+    n = 100
+    L'objet REINE est un vecteur a taille 10000
+    ➡ À chaque etape p = 20 (20%) → on enlève 20 reines
+    Pas possibilité d'enumerer toutes les possibilités
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Possibilité : Enlever les reines qui ont été placées en 1°
+\item
+  Possibilité : Enlver les reines faibles (qui portent le moins
+  d'argent)
+\end{enumerate}
+
+\textbf{NB :} Il est souhaitable de génerer plusieurs paquets de p
+reines à faire a les tester tous et selectionner le + approprié.
+
+Je peux mixer les 2 critères
+
+Spécification de la boucle ``local search''
+
+\begin{verbatim}
+not stop; solcour ← reine;
+tant que not stop faire
+    not stop 1;
+    Tant que not stop 1 faire
+        generer un paquet λ de reines à enlever; //  (on peut générer eventuellement tous les paquets des les début)
+        Tester l'application de BUILD.DESTROY(REINE, λ); // Utilise une copie de REINE
+        Si OK(Tester) alors
+            stop1;
+            Appliquer BUILD.DESTROY(Reine, λ);
+        Sinon mettre à jour stop1;
+\end{verbatim}
+
+\emph{Reste à préciser}
+
+\texttt{OK(Tester)} \textasciitilde{} Dans quelles conditions j'estime
+que le paquet λ de reines à retirer justifie l'application de
+BUILD.DESTROY(Reine, λ)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Approche : OK si l'application de l'operateur ameliore REINE (place
+  plus de reine ou fait gagner + d'argent) (\emph{Descente ou
+  Hill-climbing})
+\item
+  Approche : OK toujours vrai → je genere 1 paquet et j'applique
+  (\emph{Marche aléatoire ou Random Walk})
+\end{enumerate}
+
+→ Approche mixte : Recul simulé, Tabou, Genetique
+
+(\ldots{})
+
+\textbf{Rappel}
+
+Exploration en Arbre (méthode exacte) → en largeur, liste de noeud créés
+: pb + décisions prises, placement de reines ; liste de triplés (ε(de
+signe +/-),i,j)
+
+\emph{ex} : Imposé reine en case (2,3) Interdire en (5,4) →
+\{(+,2,3),(-,5,4)\}
+
+Variable de controle de l'exploration en largeur de l'arbre : LISTE :
+Liste de noeuds
+
+\emph{ex} : LIST : \{\{+,2,3\},\{+,5,4\}\} ← Noeud 1,
+\{(+,2,3),(-5,4),\{(-,2,3)\}\}
+
+\textbf{Squelette de l'Algo}
+
+\begin{verbatim}
+*SDD* : LISTE,
+                REINE_COUR, 
+                VAL_COUR, (meilleurs objets obtenus)
+                OCCUPÉ[n][n] : de 1..n, 0/1/-1,
+                libre_col, libre_lig, statut_col, statut_lig
+
+Initialisation
+    OCCUPÉ ← 1;
+    ------
+    LISTE ← {nil}; not stop;
+    REINE_COUR ← Indéfini;
+    VAL_COUR ← -∞
+
+Corps Algorithme
+    Tant que (not stop) && (LISTE ≠ nil) faire
+        N ← Tete(LISTE);  // Liste  de cases imposées / interdites
+        LISTE ← Queue(LISTE);
+        Remplir OCCUPÉ, libre_col, ... via l'algo de déduction (prop de contraintes)
+
+        Choisir une case (i0,j0) libre
+        Généer les 2 noeuds 
+            n1 ← (+,i0,j0) · N; n2 ← (-,i0,j0);
+            En utilisant une copie a OCCUPÉ, appliquer le precessus de déduction a la décsion (+i0,j0);
+            Si succes, mois,aucune case de libre, on a une vraie solution et on cose sa valeur = valeur : si cette valeur > valcour, on met à jour REINE_COUR et VAL_COUR; sinon (et si succes), on met N1, dans LISTE;
+            Idem avec N2;
+\end{verbatim}
+
+\textbf{Principe} : variable la plus contrainte
+
+\emph{Question} : ``Mettre n1 ou n2 dans LISTE''
+
+Est-ce qu'il y a un ordre pour les éléments de LISTE ?
+
+\emph{Réponse} : On va essayer de noter les noeuds, à l'aide d'un
+procédé d'estimation optimiste. (Banch / Bound) → LISTE sera alors
+ordonnée par notes décroissantes
+
+Je calcule une valeur VAL en tenant compte de de certaines contraintes
+``faciles'' et en delaissant les contraintes ``difficiles'' (lignes,
+diagonales)
+
+VAL \textgreater{}= La valeur du meilleur placement compatible ? le
+noeud ( Estimation optimiste)
+
+\textbf{Mecanismes de filtrage induits}
+
+\begin{itemize}
+\tightlist
+\item
+  Règle destructive VAL \textless{}= VALCOUR \textbar{}= Couper
+  \textasciitilde{} j'élimine le noeud
+\item
+  Règle constructive Si la solution associée à VAL satisfait les
+  contraintes difficiles, aors elles se ??
+\end{itemize}
+
+Adaptation de l'algorithme REINE à l'utilisation de Estimation optimiste
+
+LISTE devient une liste de couples (noeud, valeur) 1. Reste identique 2.
+Si n1 (n2) débouche sur un succès et des cases libres après propagation
+→ je calcule la note VAL1 de n1 (idem pour N2) et j'applique le me
+filtrage : * Si v1 \textless{}= VALCOUR alors Exit n1 * si v1
+\textgreater{} VALCOUR, ET le placement induit satisfait toutes les
+contraintes → Je mets à jour REINE\_COUR et Exit n1; * Sinon j'insère
+(n1, val1) dans liste de façon à garder liste ordonné pour VAl1
+décroissant (idem n2)
+
+STOP ? quand la note cal du 1e element dans liste est \textless{}=
+VALCOUR
+
+\section{\texorpdfstring{Problème orienté
+``simulation''}{Problème orienté simulation}}\label{probluxe8me-orientuxe9-simulation}
+
+A,B,C postes de travail
+
+Produits (A), (B)
+
+Produit (A), (B) arrivent ``aléatoirement'' → L\_A, L\_B, \emph{lois
+d'arrivées}
+
+On connait des durées de traitement pour (A), (B) sur A,B,C T\_A, T\_B,
+T\^{}C\_A, T\^{}C\_B aléatoires
+
+→ On se fait une idée : - Taux de perte - durée d'attente - Taille des
+buffers à augmenter ?
+
+\emph{NB} : Ce n'est pas un poste d'assemblage, mais une machine de
+transformation
+
+\textbf{Questions à poser} * Est-ce qu'on a observé des
+dysfonctionnements ? * Quels sont les enjeux économiques de ces
+dysfonctionnements ? * Données quatifiées * stock : S\_A = 10 ; S\_B = 7
+; S\_C = 13 * Dans la simulation faut-il prévoir (Ici non pour tout car
+pas réel) * Maintenance préventive * set-up (màj de la machine chaque
+fois qu'elle change de tâche) * Relais liés aux changements d'activités
+humaines * \emph{Quantifier} les lois L\_A, L\_B d'arrivées des objets A
+et B
+
+\textbf{Plusieurs options} - Rythme d'arrivée presque
+deterministe\ldots{} - Rythme d'arrivée avec grosses variations *
+L'intervalle de temps devient une \emph{variable aléatoire} avec sa
+moyenne, variance, sa loi\ldots{} - Il peut y avoir des correlations
+entre ces intervalles, et des correlations entre ces intervalles et les
+instants. (compliqués)
+
+Avec une loi
+\texttt{L\_A\ \textasciitilde{}\ Proba\ qu\textquotesingle{}un\ objet\ A\ arrive\ entre\ 2\ instants\ t\ et\ t+1\ \textasciitilde{}\ O·3\ \ \ \ \ \ \ \ \ L\_B\ \textasciitilde{}\ 0·2}
+* Idem pour les durées =\textgreater{} on va supposier ici T\_A
+\textasciitilde{} Proba que l'objet A étant strictement à l'instant t,
+il soit fini à l'instant t+1 = 0·4\ldots{}
+
+\end{document}
