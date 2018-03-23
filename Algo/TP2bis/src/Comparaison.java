@@ -3,15 +3,14 @@ public class Comparaison {
 	public Comparaison()	{	}
 	
 	public int Recursif(String Aa, String Bb) {
-		// condition d'arret
+		// conditions d'arret
 		if (Aa.length() == 0) {
 			return Bb.length();
 		}
 		else if (Bb.length() == 0) {
 			return Aa.length();
-		}
-		
-		// si les 2 caracteres d'i et de j sont paraille, sauter aux les 2 precedants 
+		}	
+		// si les 2 caracteres d'i et de j sont pareils, sauter aux 2 précedents 
 		else if (Aa.substring(Aa.length()-1, Aa.length()).equals(Bb.substring(Bb.length() -1, Bb.length()))) {	
 			return Recursif(Aa.substring(0, Aa.length()-1), Bb.substring(0, Bb.length()-1));
 		}
@@ -68,45 +67,39 @@ public class Comparaison {
 	}
 	
 
-	public static int[][] Dynamique(char[] A, char[] B)
-	{
+	public static int[][] Dynamique(char[] A, char[] B) {
 		int[][] res = new int[A.length+1][];
 
 		/* Initialisation */
-		for (int i = 0; i < A.length+1; i++)
-		{
+		for (int i = 0; i < A.length+1; i++) {
 			res[i] = new int[B.length+1];
 			res[i][0] = i;
 		}
 		
-		for (int j = 0; j < B.length+1; j++)
-		{
+		for (int j = 0; j < B.length+1; j++) {
 			res[0][j] = j;
 		}
 
 		/* Calcul */
-		for (int i = 1; i < A.length+1; i++)
-		{
-			for (int j = 1; j < B.length+1; j++)
-			{
-				if (A[i-1] == B[j-1])
+		for (int i = 1; i < A.length+1; i++) {
+			for (int j = 1; j < B.length+1; j++) {
+				if (A[i-1] == B[j-1]) {
 					res[i][j] = Minimum(res[i][j-1]+1, res[i-1][j] + 1, res[i-1][j-1]);
-				else
+				}
+				else {
 					res[i][j] = Minimum(res[i][j-1]+1, res[i-1][j] + 1, res[i-1][j-1]+1);
+				}
 			}
 		}
 		
 		return res;
 	}
 	
-	public static String tableauToString(int[][] array)
-	{
+	public static String tableauToString(int[][] array) {
 		String info = "";
 		
-		for (int i = 0; i < array.length; i++)
-		{
-			for (int j = 0; j < array[i].length; j++)
-			{
+		for (int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array[i].length; j++) {
 				info += array[i][j] + "\t";
 			}
 			info+="\n";
@@ -116,7 +109,7 @@ public class Comparaison {
 	}
 	
 
-	public static void chemin(char[] A, char[] B, int[][] D){
+	public static void chemin(char[] A, char[] B, int[][] D) {
 		int i = D.length-1;
 		int j = D[0].length-1;
 		int c = 0;
@@ -134,22 +127,22 @@ public class Comparaison {
 		*/
 		
 		// cas d'arret : quand la distance est 0
-		while (D[i][j] != 0){
-			if (Minimum(D[i][j-1], D[i-1][j], D[i-1][j-1]) == D[i][j]){
+		while (D[i][j] != 0) {
+			if (Minimum(D[i][j-1], D[i-1][j], D[i-1][j-1]) == D[i][j]) {
 				i--;
 				j--;
 			}
-			else if (D[i][j-1] == D[i][j]-1){
+			else if (D[i][j-1] == D[i][j]-1) {
 				operation[c] = ("insertion: ajouter '" + B[j-1] + "' a la position " + i);
 				c++;
 				j--;
 			}
-			else if (D[i-1][j] == D[i][j]-1){
+			else if (D[i-1][j] == D[i][j]-1) {
 				operation[c] = ("suppression: enlever '" + A[i-1] + "' a la position " + i);
 				c++;
 				i--;
 			}
-			else if (D[i-1][j-1] == D[i][j]-1){
+			else if (D[i-1][j-1] == D[i][j]-1) {
 				operation[c] = ("substitution: remplacer '" + A[i-1] + "' par '" + B[j-1] + "' a la position " + i);
 				c++;
 				i--;
@@ -158,7 +151,7 @@ public class Comparaison {
 		}
 		// affichage des chemins. 
 		// Parce qu'on commence par la derniere case de la matrice, les chemins sont enregistrés dans une ordre inverse.
-		for (int k = c; k>0; k--){
+		for (int k = c; k>0; k--) {
 			System.out.println(operation[k-1]);
 		}
 	}
@@ -166,7 +159,7 @@ public class Comparaison {
 	
 	// cette fonction utilise la meme algo pour trouver le chemin correspondant de la memoration crée par la méthode récursif mémoration
 	// Les différences c'est juste les indice dans le mot A et B
-	public static void cheminRecMemo(char[] A, char[] B, int[][] D){
+	public static void cheminRecMemo(char[] A, char[] B, int[][] D) {
 		int i = D.length-1;
 		int j = D[0].length-1;
 		int c = 0;
@@ -174,22 +167,22 @@ public class Comparaison {
 		String[] operation = new String[D[i][j]];
 		
 		// cas d'arret : quand la distance est 0
-		while (D[i][j] != 0){
-			if (Minimum(D[i][j-1], D[i-1][j], D[i-1][j-1]) == D[i][j]){
+		while (D[i][j] != 0) {
+			if (Minimum(D[i][j-1], D[i-1][j], D[i-1][j-1]) == D[i][j]) {
 				i--;
 				j--;
 			}
-			else if (D[i][j-1] == D[i][j]-1){
+			else if (D[i][j-1] == D[i][j]-1) {
 				operation[c] = ("insertion: ajouter '" + B[j] + "' a la position " + (i + 1));
 				c++;
 				j--;
 			}
-			else if (D[i-1][j] == D[i][j]-1){
+			else if (D[i-1][j] == D[i][j]-1) {
 				operation[c] = ("suppression: enlever '" + A[i] + "' a la position " + (i + 1));
 				c++;
 				i--;
 			}
-			else if (D[i-1][j-1] == D[i][j]-1){
+			else if (D[i-1][j-1] == D[i][j]-1) {
 				operation[c] = ("substitution: remplacer '" + A[i] + "' par '" + B[j] + "' a la position " + (i + 1));
 				c++;
 				i--;
@@ -197,20 +190,22 @@ public class Comparaison {
 			}
 		}
 		// affichage des chemins. 
-		for (int k = c; k>0; k--){
+		for (int k = c; k>0; k--) {
 			System.out.println(operation[k-1]);
 		}
 	}
 
-	public static int Minimum(int a, int b, int c)
-	{
+	public static int Minimum(int a, int b, int c) {
 		int min = 0;
-		if (a <= b && a <= c)
+		if (a <= b && a <= c) {
 			min = a;
-		else if (b <= a && b <= c)
+		}
+		else if (b <= a && b <= c) {
 			min = b;
-		else
+		}
+		else {
 			min = c;
+		}
 		
 		return min;
 	}

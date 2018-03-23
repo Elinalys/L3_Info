@@ -57,6 +57,8 @@
 
 % ajouter manuel build file etc. compilation / execution
 
+\abstract{Pour ce TP le langage \textbf{Java} a été utilisé. Pour la compilation et l'éxecution, le logiciel \textbf{Ant} a été utilisé en utilisant des fichier de \emph{build}. Pour compiler le projet (Ant doit être installé au préalable) il faut se placer dans le répertoire du TP correspondant et taper la commande : \texttt{ant}, pour l’exécuter il faudra entrer : \texttt{ant run.}
+
 \chapter{Gestion de partitions}
 
     \section{TDA Gestion de partition}
@@ -132,9 +134,50 @@
 
     \section{Arbres couvrants minimaux}
 
-    (...)
+    (\dots)
 
-\chapter{Programmation dynamique}
-    \section{Recherche de la distance d'édition}
-        
+\chapter[Programmation dynamique. Distance d'édition]{Programmation dynamique {\ \normalfont\emph{Distance d'édition}}}
+
+    Ici, on va chercher à implémenter l'algorithme de \textbf{distance d'édition} qui consiste à rechercher le nombre d'opérations --\emph{insertion}, \emph{suppression} ou \emph{substitution} de caractères-- nécessaires pour passer d'un mot donné à un autre. On définit donc une classe \texttt{Comparaison} qui contiendra toutes les méthodes associées.
+
+    \section{Méthode récursive}
+
+    Pour cette méthode on créée donc une méthode \texttt{Recursif} avec pour paramètre deux chaines de caractères $A$ et $B$. On définit deux cas d'arrêts :
+    \begin{itemize}
+        \item $A$ est nul.
+        \item $B$ est nul.
+    \end{itemize}
+    Sinon on rappelle l'algorithme sur des sous parties de $A$ et $B$ en incrémentant la distance si les deux caractères sélectionnés sont différents.
+
+    \section{Avec mémoïzation}
+
+    La méthode récursive avec \emph{mémoïzation} reprend le même principe en ajoutant un tableau de distances entre sous-chaînes où les valeurs sont ici initialisées à $999$\footnote{Pour simuler un $+\infty$.} et un \emph{niveau} qui s'incrémentera si l'on repère une différence de caractère dans l'appel récursif.
+
+    \section{Méthode dynamique}
+
+    Pour l'algorithme de programmation dynamique les chaines de caractères placées en paramètres sont remplacées par des \emph{tableaux de caractères} (comme en C), pour effectuer la transformation à l'appel de la fonction on appelle la fonction \texttt{toCharArray()} du type \texttt{String} de Java. La fonction \texttt{Dynamique} utilise une matrice à deux dimensions qui stocke les résultats intermédiaires pour calculer les suivants et la retourne.
+
+    \paragraph{Exemple} avec les mots \emph{tourte} et \emph{tartre}
+
+    \begin{table}[h]
+    \centering
+    % \caption{My caption}
+    % \label{my-label}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{} & \textbf{$\epsilon$} & \textbf{t} & \textbf{a} & \textbf{r} & \textbf{t} & \textbf{r} & \textbf{e} \\ \hline
+    \textbf{$\epsilon$} & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline
+    \textbf{t} & 1 & 0 & 1 & 2 & 3 & 4 & 5 \\ \hline
+    \textbf{o} & 2 & 1 & 1 & 2 & 3 & 4 & 5 \\ \hline
+    \textbf{u} & 3 & 2 & 2 & 2 & 3 & 4 & 5 \\ \hline
+    \textbf{r} & 4 & 3 & 3 & 2 & 3 & 3 & 4 \\ \hline
+    \textbf{t} & 5 & 4 & 4 & 3 & 2 & 3 & 4 \\ \hline
+    \textbf{e} & 6 & 5 & 5 & 4 & 3 & 3 & 3 \\ \hline
+    \end{tabular}
+    \end{table}
+
+    \section{Affichage des opérations}
+
+    \section{Comparaison des résultats}
+            
 \end{document}
