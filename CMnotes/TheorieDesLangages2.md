@@ -148,3 +148,85 @@ Prenons w = w1, w2, ..., wn
 - qm appartient à F
 
 Si 1 pile p contient les valeurs ... on va le représenter par le mot a0, a1, a2, ..., an (téte de pile vers le haut)
+
+(...) 
+
+### Grammais non contextuells
+
+On commence par cet exemple 
+
+A → 0A1 ← règle
+A → B
+B → #
+
+Une grammaire est constituée de *règless de subsititution* appelées des fois *productions*.
+
+Pour une règle de type 
+
+A (variables appelée non terminal) → 0A1 (mots composés de non terminaux et de constantes appelées terminaux)
+
+Appliquer une règle c'est remplacer un non terminal par le mot se trouvant à droite de la règle.
+
+On a toujours une variable de début et la convention c'est le non terminal de la prmière regle.
+
+Dans notre exmple c'est A
+
+La séance de substitutions qui permet de vérifier qu'un mot est généré par la grammaire est appelée dérivation
+
+*Exemple :* A → 0A1 → 00A11 → 000A111 → 000B111 → 000#111
+
+L'arbre de dérivation de 000#111 est la représentation sous forme d'arbre des différentes règles appliquées pour générer 000#111
+
+				A
+		/		|		\
+	 0		A    1
+		 / 	|	 \
+		0   1   1
+			/	|	\
+		 0	A  1
+				|
+				B
+				|
+				#
+
+L'ensemble des mots que l'on peut générer avec la grammaire est appelé le **langage de la grammaire**
+
+*Exemple :* Le langage de notre grammaire c'est {0^n#1^n | n >= 1}
+
+Une grammaire non contextuelle est un tuple (V, Σ, R, S)
+
+1. *V* est un ensemble de variables (appelé souvent non-terminaux)
+2. *Σ* est un ensemble disjoint de V appelé ensemble de terminaux (on peut voir cela commes des constantes)
+3. *R* est l'ensemble des règles, une règle est composée d'une variable et d'un mot sur l'alphabet V U Σ. Une règle est notée X → ω où X est la variable et ω appartient (V U Σ)*
+4. *S* est la variable de début.
+
+Si u,v,ω appartient (V U Σ)*
+
+A appartient V, A → ω appartient à R
+
+On dira que uAv génère uωv
+
+On le note : uAv → uωv
+
+On dria que u génère v si u = v où il existe u1,...,uk tels que 
+	u → u1 → u2 → u3 → ... → uk → v
+
+On le note u →* v
+
+Le langage d'une grammaire G = (V, Σ, R, S) est l'ensemble {ω appartient Σ* | S →* ω}
+
+*Exemple :* Les mots correctement parenthèsés
+
+S → aSb			a = "(" b = ")"
+S → SS
+S → ε
+
+**Fait** : Tout langage régulier est reconnu par une grammaire non contextuelle
+	**Preuve** : Pour L un langage régulier et 1 tq L(A) = L
+	Notons (q0, q1,..., qn)
+	(...)
+
+
+### Langages ambigus
+
+### Forme normale de CHomsky

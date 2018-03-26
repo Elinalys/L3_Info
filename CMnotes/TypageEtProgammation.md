@@ -268,7 +268,7 @@ scheme@(guile-user) [2]> (f 3)
 
 ### Avantages de la stratégie statique
 
-- détection : des erreurs potentielles liées aux types avant l'évaluation.
+- détection : des erreurs potentielles liées aux types avant l'exécution (évaluation).
 - documentation des erreurs liée aux types.
 - parfois le compilateur permet d'optimiser le code.
 
@@ -282,3 +282,210 @@ Un système de types est dit explicite si les types doivent être déclarés. Si
 Un langage est implicite et statique doit avoir un moyen de vérifier les types à la compilation. Ce mécanisme c'est l'inférence de types.
 
 **Souvent** explicite et statique vont ensemble (Ada, C, Java), implicite et dynamique aussi (SmallTalk python), **Mais pas toujours** famille ML implicite et statique
+
+### Système fort vs faible
+
+Un système statique est dit **fort** si aucune erreur de type ne se produit pendant l'exécution. Un langage qui contient un système de type Fort est dit fortement typé. Tout langage non fortement possède un système de type dit **faible**.
+
+#### Vue ensembliste
+
+Pok = l'ensemble des programmes syntaxiquement corrects
+
+Psafe = ceux à l'exécution sans erreurs de type
+
+Fort <=> Pok = Psafe
+Faible <=> Pok \ Psafe != ø
+
+Si votre langage a la même puissance que la machine de Turing => il ne peut pas être fort
+
+*Ex :* On ne peut pas détecter dans x/y que y != 0.
+
+Les faibles seront classifiés par rapport aux types *d'erreur* : 
+
+1. Les erreurs non détectées à la compilation comme à l'exécution. (C, C++)
+2. Avortement brutal sans information.
+3. Déclenchement d'exceptions pour permettre aux programmeur de récupérer l'erreur. (Ocaml, Java)
+4. Le compilateur refuse l'expression sans information. 
+5. Refus de l'erreur et indication.
+
+Un système de type est d'ordre *j* si les programmes engendrent des erreurs au plus *i*.
+
+**L. Cardelli** : Considère un type fort ceux d'ordre au moins 2.
+
+### EXO 
+
+#### C
+
+Un ou plusieurs exemples d'ordre 1.
+
+Accès à une case non existante d'un tableau
+```c
+#include <stdio.h>
+
+int main() {
+	int tab[3] = {0, 1, 2};
+	printf("%d\n", tab[4]);
+	return 0;
+}
+```
+
+Les *casts* en C sont physiques et non logiques.
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	int *p = malloc(sizeof(int));
+	*p = 3;
+	void *r;
+	float *f;
+	r = (void *)p; // transition non nécessaire
+	f = (float *)r;
+	printf("%d, %g\n", *p, *f);
+	return 0;
+}
+```
+
+#### Java
+
+Un ou plusieurs exemples d'ordre 3
+
+Hiérarchie des types. `Object` est le type *racine* en java. Le cast n'est pas physique mais logique en java.
+```java
+class Test {
+	public static void main(String[] args) {
+		Integer p = new Integer(5);
+		Object o = (Object)p;
+		Double d = (Double)o;
+	}
+}
+```
+
+(...) ?
+
+## Polymorphisme
+
+Lorsqu'un objet peut admettre plusieurs types on dit qu'il est polymorphe.
+
+Le mécanisme dérrière cette propriété est appelé *polymorphisme*.
+
+*Exemple :* Un fonction polymorphe est une fonction dont les *paramètres* et le *résultat* peuvent être des instances de plusieurs types différents.
+
+*Remarque :* Un système de types dynamique induit un certain polymorphisme naturellement.
+
+### On va distinguer plusieurs sortes de polymorphismes
+
+#### Polymorphisme ad-hoc
+
+Un objet ne peut accepter qu'un ensemble fini de types distincts.
+
+Pas une seule façon d'implémenter ce polymorphisme. Le choix du type d'un objet peut être soit automatisé (intégré dans le système de types) soit laissé à la charge du programmeur.
+
+```
+struct point
+{
+	float x,
+	float y
+};
+
+union z {
+	int i,
+	char c,
+	struct point p,
+};
+
+/* ... */
+```
+
+#### Polymorphisme de surcharge 
+
+Un même *identificateur* peut représenter un nombre fini d'éléments distincts du programme c'est une facilité syntaxique. Le choix du bon objet est fait par le système de types *à la compilation* (résolution statique).
+
+*Question :*
+
+```
+int f() {
+	/* code */
+}
+
+char f() {
+	/* code */
+}
+```
+
+Impossible en C. Car le compilateur ne saura pas quelle fonction choisir à la compilation.
+
+/!\ En général l'implicite et la surcharge ne vont pas ensemble.
+
+*Exemple en Ocaml :*
+
+`+` pour les `int`
+`+.` pour les `float`
+
+#### Polymorphisme de coercition
+
+Le type *t1* est **transformable** au type *t2*. Si toute instance de *t1* peut être transformée en une instance de *t2*.
+
+Une transformation est faite par le système de types implicitement. Le polymorphisme de coercition = ensemble fixé (et fini) de transformations entre types (dans le but de se conformer à un contexte).
+
+La résolution par le système de types statiquement. 
+
+*Exemple :* en C : `4+5.` 4 est transformé en un flottant.
+
+#### Polymorphisme d'union/somme
+
+La possibilité de construire des types représentants plusieurs types différents la résolution peut être statique/dynamique une partie est parfois laissée au programmeur.
+
+##### En Ocaml
+
+Les types somme et le mécanisme de filtrage. Ce mécanisme permet au programmeur d'identifier le type réel d'un objet (d'une instance de type somme par exemple).
+
+```Ocaml
+type complex = C of float*float | R of float | I of float ;;
+```
+
+On a défini un type  `complex` qui est :
+
+- soit composé de deux flottants, ceux la sont construits avec le constructeur `C`
+- soit composé d'un seul flottant construit avec le constructeur `R` (sémantique une partie réelle)
+- soit composée d'un seul réel avec le constructeur `I` (ici juste une partie imaginaire)
+
+```Ocaml
+let print c = match c with C (x, y) -> "vrai complex"
+	| R(x) -> "complex réel"
+	| I(x) -> "complex imaginaire" ;;
+
+print complex->string = <fun>
+```
+
+##### En C
+
+```c
+struct 2reels {
+	float x;
+	float y;
+};
+
+union complex {
+	float f;
+	2reels c;
+};
+
+struct nombre {
+	complex c;
+	enum type {C, R, I} T;
+};
+
+char *print (nombre n) {
+	if (n.T ==C) {
+		return "on attent un vrai complex de type 2reels";
+	}
+	else if (n.T == R) {
+		return "on attend un complex reel";
+	}
+	else {
+		return "on attend un complex imaginaire";
+	}
+}
+```
+

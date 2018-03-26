@@ -1,4 +1,5 @@
 
+
 /*
 TODO LIST
 
@@ -85,6 +86,21 @@ String.prototype.hamming = function() {
   // return strs;
 }
 
+//Creation des tableau de 5*5 a afficher
+String.prototype.matrice = function(){
+  var tab = [];
+  var mot = this.hamming()+2+2+2+2; //Rajout des 4 bits vides
+  console.log("mot matrice :"+mot);
+  tab[0] = mot.slice(0,5);
+  tab[1] = mot.slice(5,10);
+  tab[2] = mot.slice(10,15);
+  tab[3] = mot.slice(15,20);
+  tab[4] = mot.slice(20,25);
+  return tab;
+}
+
+
+
 // var test = "0000000001100001";
 
 var draw = function() {
@@ -102,8 +118,10 @@ var draw = function() {
   for (var i = 0; i < bits.length; i++) {
     bits[i] = bits[i].fixBits(16);
     console.log(msg[i] + " : " + bits[i]);
+  //affichage de hamming, taille 21
+    console.log("Hamming "+msg[i]+" :"+bits[i].hamming());
+    console.log("matrice 5*5 :"+bits[i].matrice());
   }
-
   /* -- -- */
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
@@ -144,25 +162,25 @@ input = document.getElementById("chaine");
 // input.addEventListener("input", draw);
 
 
-// var old_Draw = function() {
-//   var canvas = document.getElementById('tutorial');
-//   if (canvas.getContext) {
-//     var ctx = canvas.getContext('2d');
-//     ctx.fillStyle = 'rgb(200, 0, 0)';
-//     ctx.fillRect(10, 10, 50, 50);
-//     ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-//     ctx.fillRect(30, 30, 50, 50);
-//     ctx.font = '48px monospace';
-//     var msg = input.value;
-//     ctx.fillText(msg, 50, 50);
+/*var old_Draw = function() {
+  var canvas = document.getElementById('tutorial');
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'rgb(200, 0, 0)';
+    ctx.fillRect(10, 10, 50, 50);
+    ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+    ctx.fillRect(30, 30, 50, 50);
+    ctx.font = '48px monospace';
+    var msg = input.value;
+    ctx.fillText(msg, 50, 50);
 
-//     // ctx.fillStyle = "red";
-//     // for (var i = 0; i < bits.length; i++) {
-//     //   for (var j = 0; j < bits[i].length; j++) {
-//     //     // si i pair un couple de couleurs | si i impair une autre
-//     //     // console.log(" b["+i+"]["+j+"] : " + bits[i][j]);
-//     //     // ctx.fillRect(i,j,1,1);
-//     //   }
-//     // }
-//   }
-// }
+    // ctx.fillStyle = "red";
+    // for (var i = 0; i < bits.length; i++) {
+    //   for (var j = 0; j < bits[i].length; j++) {
+    //     // si i pair un couple de couleurs | si i impair une autre
+    //     // console.log(" b["+i+"]["+j+"] : " + bits[i][j]);
+    //     // ctx.fillRect(i,j,1,1);
+    //   }
+    // }
+  }
+}*/
