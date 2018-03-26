@@ -5,12 +5,12 @@ public class Main {
 	public static void main(String[] argc) {	
 		String A = new String();
 		String B = new String();
-		/*
 			A = "tourte";
 			B = "tartre";
-		*/
+		/*
 		A = "blablacar";
 		B = "blatardar";
+		*/
 		/* 
 			A = "unlongmotenfrancaispouranalyser";
 			B = "unelongexpressionfrancaisepouranalyser"
@@ -57,7 +57,9 @@ public class Main {
 		// test pour la fonction des chemins
 		int[][] D = new int[A.length()+1][];
 		D = Comparaison.Dynamique(A.toCharArray(), B.toCharArray());
+		debut = System.nanoTime();
 		System.out.println(Comparaison.tableauToString(D)); 
+		System.out.println(System.nanoTime()-debut + " nanosecondes");
 		Comparaison.chemin(A.toCharArray(), B.toCharArray(), D);
 	}
 }

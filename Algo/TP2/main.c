@@ -90,13 +90,13 @@ int distance(char *A, char *B) {
 
 int main(int argc, char const *argv[]) {
 	char *A = "tourte";
-	char *B = "tartre";
+	char *B = "tartres";
 	// printf("%ld\n", strlen(A));
 	// char *C = substr(A, 5);
 	// printf("%s\n", C);
-	printf("%s\n", substr(A, strlen(A)-1));
+	//printf("%s\n", substr(A, strlen(A)-1));/**/
 
-	//distance(A, B);
+	distance(A, B);
 	//printf(BOLD "distance %s et %s" RESET " = %d\n",A, B, distanceR(A, B));
 	// printf("%d\n",MIN(3,7));
 
