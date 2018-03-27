@@ -230,3 +230,5 @@ S → ε
 ### Langages ambigus
 
 ### Forme normale de CHomsky
+
+analyseur lex

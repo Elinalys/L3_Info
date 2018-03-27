@@ -87,10 +87,10 @@ String.prototype.hamming = function() {
 }
 
 //Creation des tableau de 5*5 a afficher
-String.prototype.matrice = function(){
+String.prototype.matrice = function() {
   var tab = [];
-  var mot = this.hamming()+2+2+2+2; //Rajout des 4 bits vides
-  console.log("mot matrice :"+mot);
+  var mot = this.hamming()+'2'+'2'+'2'+'2'; //Rajout des 4 bits vides
+  // console.log("mot matrice :"+mot);
   tab[0] = mot.slice(0,5);
   tab[1] = mot.slice(5,10);
   tab[2] = mot.slice(10,15);
@@ -98,10 +98,6 @@ String.prototype.matrice = function(){
   tab[4] = mot.slice(20,25);
   return tab;
 }
-
-
-
-// var test = "0000000001100001";
 
 var draw = function() {
   var msg = input.value;
@@ -114,27 +110,42 @@ var draw = function() {
   /**/
   var canvas = document.getElementById('tutorial');
   
+  var matrix = new Array();
+  if (msg.length != 0) {  
+    if (msg.length+1 <= 2) {
+      matrix.length = 2;
+    }
+    else if ((msg.length+1) % 2 == 1) {
+      matrix.length = (msg.length+2) / 2;
+    }
+    else if ((msg.length+1) % 2 == 0) {
+      matrix.length = (msg.length+1) / 2;
+    }
+  }
+
+  for (var i = 0; i < matrix.length; i++) {
+    matrix[i] = new Array();
+    matrix[i].length = matrix.length;
+  }
+  console.log(matrix);
+  /* debug */
   // fix bits forcer la taille 16
   for (var i = 0; i < bits.length; i++) {
     bits[i] = bits[i].fixBits(16);
     console.log(msg[i] + " : " + bits[i]);
-  //affichage de hamming, taille 21
+  // affichage de hamming, taille 21
     console.log("Hamming "+msg[i]+" :"+bits[i].hamming());
     console.log("matrice 5*5 :"+bits[i].matrice());
   }
-  /* -- -- */
-  if (canvas.getContext) {
-    var ctx = canvas.getContext('2d');
-    for (var i = 0; i < bits.length; i++) {
-      for (var j = 0; j < bits[i].length; j++) {
-        if (bits[i][j] == '0') {
-          ctx.fillStyle = "Red";
-          // ctx.fillRect(j+50,i+50,50,50);
-        }
-        else if (bits[i][j] == '1') {
-          ctx.fillStyle = "Blue";
-          // ctx.fillRect(i+50,j+50,50,50);          
-        }
+  var cmpt = 0;
+  for (var i = 0; i < matrix.length; i++) {
+    for (var j = 0; j < matrix.length; j++) {
+      if (i == 0 && j == 0) {
+        // hardcode la mire
+      }
+      else {
+        matrix[i][j] = bits[cmpt].matrice();
+        cmpt ++;
       }
     }
   }
@@ -182,5 +193,21 @@ input = document.getElementById("chaine");
     //     // ctx.fillRect(i,j,1,1);
     //   }
     // }
+  }
+
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+    for (var i = 0; i < bits.length; i++) {
+      for (var j = 0; j < bits[i].length; j++) {
+        if (bits[i][j] == '0') {
+          ctx.fillStyle = "Red";
+          ctx.fillRect(j+50,i+50,50,50);
+        }
+        else if (bits[i][j] == '1') {
+          ctx.fillStyle = "Blue";
+          ctx.fillRect(i+50,j+50,50,50);          
+        }
+      }
+    }
   }
 }*/

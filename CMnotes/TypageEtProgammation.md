@@ -1,4 +1,8 @@
-<!-- # --> <title>Typages et programmation - Option</title>
+<!--  <title>Typages et programmation - Option</title> -->
+
+\title{Typages et programmation - Option}
+
+\maketitle
 
 # Simuler de l'objet en C (modularité)
 
@@ -489,3 +493,135 @@ char *print (nombre n) {
 }
 ```
 
+#### Polymorphisme paramétrique
+
+Polymorphisme paramétrique c'est le fait d'utiliser des variables qui représentent des types. Et ces variables sont instanciées statiquement.
+
+On l'appelle dans certains langages : **généricité**. À priori c'est un polymorphisme *universel*. Un polymorphisme universel signifie que tout élément typable peut être instancié avec un nombre non borné de types.
+
+*Exemple :* En `Ocaml`
+
+```Ocaml
+let id x = x;;
+	val id : 'a -> 'a = <fun> (* Variable représentant n'importe quel type *)
+```
+
+En `C++`
+
+```cpp
+template <typename T> // on déclare le besoin de définir une fonction générique
+T id(T x) {
+	return x;
+}
+```
+
+Un polymorphisme paramétrique implicite : le système de types s'occupe de la gestion automatique des variables de type. (Exemple : Ocaml)
+
+Généralisation de la notion de système de types implicite. Sinon c'est explicite (i.e. on déclare les noms des types) (Exemples : C++, Java, \dots)
+
+Le système de types va ajouter dans le code du programme une fonction appelée par exemple `id_chart`, qui remplace toute occurrence de `id(s)` où `s` est un `char[]`, par `id_chart`.
+
+Le polymorphisme paramétrique contraint on peut typer les variables de types (?).
+
+→ Cela signifie que l'on peut donner des propriétés que les valeurs de certaines variables de types doivent satisfaire.
+
+*Exemple :* Java, ML (foncteurs).
+
+**NB :** Le polymorphisme paramétrique en C++ n'est pas contraint. 
+
+Exemple de polymorphisme contraint en Java :
+
+```java
+class C <T implements Runnable> {
+	/* ~ */
+}
+```
+
+Les valeurs possibles pour `T` sont exactement les classes qui implémentent `Runnable`.
+
+##### Supposons ces 2 fonctions en C
+
+```c
+int f() {
+	/* code */
+}
+```
+
+```c
+void f() {
+	/* code */
+}
+```
+
+Ces deux fonctions dans le même fichier produit une erreur de redéfinition → À priori le type de retour n'est pas pris en compte dans la définition des fonctions. Car idéalement `int f() {}` devrait représenter une fonction de type `void`→`int`. `void f() {}` une fonction de type `void`→`void`.
+
+En C on peut appeler une fonction sans utiliser la valeur de retour. Cette ambiguïté n'est pas gérée par le compilateur.
+
+En `Ocaml`
+```OCaml
+let s a b = a+b;;
+	val s : int -> int -> int = <fun>
+let s a b = a+.b;;
+	val s : float -> float -> float = <fun>
+s 5 10;;
+Error: This expression has type int but an expression was expected of type
+         float
+(* La première définition n'existe plus dans le système s*)
+```
+
+Il n'a pas surchargé mais *redéfinit* la fonction `s`. 
+
+```OCaml
+let f x y = (s x y);; (* on appelle la fonction s sur les entrées x et y *)
+```
+
+Ici le système de types si on permettait la redéfinition de s, il serait incapable de choisir parmi les deux car rien ne permet dans `(s x y)` d'inférer les types de `x` et `y`.
+
+## Syntaxe C++ (Différence  avec C si besoin)
+
+L'objectif est d'introduire à la fin les fonctions/classes virtuelles.
+
+Le système de types est principalement statique. On peut avoir une version dynamique, mais à la demande.
+
+* Affichage / Lecture : deux fonctions génériques : `cout` et `cin`, équivalent de `printf` et `scanf` sans formatage.
+	```cpp
+	#include <iostream> // on définit les fonctions entrée / sortie
+	using namespace std; // package standard appelé namespace en C++, module
+	// cout et cin s'appellent en réalité std::cout et std::cin
+	// facilité syntaxique
+	int main() {
+		int x;
+		cin >> x; // saisie entier
+		cout << "entier saisi : " << x << endl;
+		char s[100];
+		cin >> s;
+		cout << "chaine saisie : " << s << endl;
+		return 0;
+	}
+	```
+* Pour les fichiers
+	```cpp
+	#include <ofstream> // écrire dans un fichier
+	#include <ifstream> // lire ""
+	int main() {
+		ifstream f("fic1"); // ouverture en lecture ...
+		char c;
+		f.get(c); // lire un caractère stocké dans c
+		ofstream g("fic2"); // ouverture en écriture
+		g.put(c); // on écrit le caractère c
+		return 0;
+	}
+	```
+* Un type booléen `bool`.
+* Les mêmes autres types de bases qu'en C. Par exemple pour `int`, versions `short`, `long`, `signed`, `unsigned`.
+* Les constantes `const`, sauf qu'en C++ on doit les initialiser. La raison : les constantes sont par défaut internes en C++ et externes en C.
+* En C++ toute variable a une valeur par défaut.
+	```cpp
+	int x; // par défaut c'est 0
+	```
+* Les *cast* sont comme en C (physique).
+* Les `enum`, `union` sont comme en C. En revanche dans une `union` on peut encapsuler des fonctions contrairement au C. Pour rappel :
+```cpp
+int x; // déclaration
+int x = 0; // déclaration + définition
+```
