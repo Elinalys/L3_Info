@@ -87,69 +87,97 @@ String.prototype.hamming = function() {
 }
 
 //Creation des tableau de 5*5 a afficher
-String.prototype.matrice = function() {
+// Le pb vient de cette fonction -> non c'est juste tu l'appelles deux fois ducon
+String.prototype.toMatrix = function() {
   var tab = [];
   var mot = this.hamming()+'2'+'2'+'2'+'2'; //Rajout des 4 bits vides
   // console.log("mot matrice :"+mot);
-  tab[0] = mot.slice(0,5);
-  tab[1] = mot.slice(5,10);
-  tab[2] = mot.slice(10,15);
-  tab[3] = mot.slice(15,20);
-  tab[4] = mot.slice(20,25);
+  tab[0] = mot.slice(0,5).split('');
+  tab[1] = mot.slice(5,10).split('');
+  tab[2] = mot.slice(10,15).split('');
+  tab[3] = mot.slice(15,20).split('');
+  tab[4] = mot.slice(20,25).split('');
   return tab;
 }
 
 var draw = function() {
   var msg = input.value;
-  /* -- Debug -- */
-  // console.log("msg : " + msg);
   var codes = msg.getBytes();
-  // console.log("codes : " + codes);
   var bits = codes.toBits();
-  // console.log("bits : " + bits);
-  /**/
+
+  
+  console.log("msg : " + msg);
+  console.log("codes : " + codes);
+  console.log("bits : " + bits);
+  
+
   var canvas = document.getElementById('tutorial');
   
-  var matrix = new Array();
-  if (msg.length != 0) {  
-    if (msg.length+1 <= 2) {
-      matrix.length = 2;
-    }
-    else if ((msg.length+1) % 2 == 1) {
-      matrix.length = (msg.length+2) / 2;
-    }
-    else if ((msg.length+1) % 2 == 0) {
-      matrix.length = (msg.length+1) / 2;
-    }
-  }
-
-  for (var i = 0; i < matrix.length; i++) {
-    matrix[i] = new Array();
-    matrix[i].length = matrix.length;
-  }
-  console.log(matrix);
-  /* debug */
-  // fix bits forcer la taille 16
+  // matrice qui contiendra le code a afficher
   for (var i = 0; i < bits.length; i++) {
     bits[i] = bits[i].fixBits(16);
-    console.log(msg[i] + " : " + bits[i]);
-  // affichage de hamming, taille 21
-    console.log("Hamming "+msg[i]+" :"+bits[i].hamming());
-    console.log("matrice 5*5 :"+bits[i].matrice());
-  }
-  var cmpt = 0;
-  for (var i = 0; i < matrix.length; i++) {
-    for (var j = 0; j < matrix.length; j++) {
-      if (i == 0 && j == 0) {
-        // hardcode la mire
-      }
-      else {
-        matrix[i][j] = bits[cmpt].matrice();
-        cmpt ++;
-      }
-    }
+    console.log("bits fixed : ")
+    console.log(""+bits[i]);
   }
 
+  for (var i = 0; i < bits.length; i++) {
+    bits[i] = bits[i].toMatrix();
+    console.log("bits fixed hamming : ")
+    console.log(""+bits[i]);
+  }
+
+/*  console.log(" ".getBytes());
+  console.log(" ".getBytes().toBits());
+  console.log(" ".getBytes().toBits().fixBits(16));
+  console.log(" ".getBytes().toBits().fixBits(16).hamming());*/
+  //console.log("☭ ".getBytes().toBits().fixBits(16).hamming().toMatrix());
+
+    if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+    //mire
+    ctx.fillStyle = "#66CCE1";
+    ctx.fillRect(0,0,10*5,10);
+    ctx.fillStyle = "#AA7DFC";
+    ctx.fillRect(0,10,10*5,10);
+    ctx.fillStyle = "#B2F64C";
+    ctx.fillRect(0,20,10*5,10);
+    ctx.fillStyle = "#FF5794";
+    ctx.fillRect(0,30,10*5,10);
+    ctx.fillStyle = "#FAA23D";
+    ctx.fillRect(0,40,10*5,10);
+    // faire boucle while aec modulo pour saut de ligne proportionnel
+    // ajouter le swap des '2' avec le reste
+    var cpt = 50;
+    var cpt2 = 0;
+    var b = true
+    for (var k = 0; k < bits.length; k++) {
+      for (var i = 0; i < bits[k].length; i++) {
+        for (var j = 0; j < bits[k][i].length; j++) {
+          // console.log("i : "+i+" j : "+j);
+          if (bits[k][i][j] == 0) {
+            if (b == true) {
+              ctx.fillStyle = "#66CCE1";
+            } else if (b == false) {
+              ctx.fillStyle = "#B2F64C";
+            }
+            ctx.fillRect(cpt+(j*10),cpt2+(i*10),10,10);
+          } else if (bits[k][i][j] == 1) {
+            if (b == true) {
+              ctx.fillStyle = "#AA7DFC";
+            } else if (b == false) {
+              ctx.fillStyle = "#FF5794";
+            }
+            ctx.fillRect(cpt+(j*10),cpt2+(i*10),10,10);
+          } else if (bits[k][i][j] == 2) {
+            ctx.fillStyle = "#FAA23D";
+            ctx.fillRect(cpt+(j*10),cpt2+(i*10),10,10);
+          }
+        }
+      }
+      b = !b;
+      cpt+=50;
+    }
+  }
 }
 
 var clear = function() {
@@ -157,57 +185,18 @@ var clear = function() {
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (input.value !== '') {
-      input.value = '';
-    }
-    console.clear();
   }
+  if (input.value !== '') {
+    input.value = '';
+  }
+  console.clear();
+  console.log("ok");
 }
 
 // window.addEventListener("load", draw);
+input = document.getElementById("chaine");
+val = document.getElementById("send");
+val.addEventListener("click", draw);
 suppr = document.getElementById("delete");
 suppr.addEventListener("click", clear);
-val = document.getElementById("send");
-val = addEventListener("click", draw);
-input = document.getElementById("chaine");
 // input.addEventListener("input", draw);
-
-
-/*var old_Draw = function() {
-  var canvas = document.getElementById('tutorial');
-  if (canvas.getContext) {
-    var ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'rgb(200, 0, 0)';
-    ctx.fillRect(10, 10, 50, 50);
-    ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-    ctx.fillRect(30, 30, 50, 50);
-    ctx.font = '48px monospace';
-    var msg = input.value;
-    ctx.fillText(msg, 50, 50);
-
-    // ctx.fillStyle = "red";
-    // for (var i = 0; i < bits.length; i++) {
-    //   for (var j = 0; j < bits[i].length; j++) {
-    //     // si i pair un couple de couleurs | si i impair une autre
-    //     // console.log(" b["+i+"]["+j+"] : " + bits[i][j]);
-    //     // ctx.fillRect(i,j,1,1);
-    //   }
-    // }
-  }
-
-  if (canvas.getContext) {
-    var ctx = canvas.getContext('2d');
-    for (var i = 0; i < bits.length; i++) {
-      for (var j = 0; j < bits[i].length; j++) {
-        if (bits[i][j] == '0') {
-          ctx.fillStyle = "Red";
-          ctx.fillRect(j+50,i+50,50,50);
-        }
-        else if (bits[i][j] == '1') {
-          ctx.fillStyle = "Blue";
-          ctx.fillRect(i+50,j+50,50,50);          
-        }
-      }
-    }
-  }
-}*/

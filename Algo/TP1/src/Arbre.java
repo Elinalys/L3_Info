@@ -6,8 +6,7 @@ public class Arbre {
 	public Arbre() {
 		this.parents = new ArrayList<int[]>();
 	}
-	
-	/* TP1 question 2 */
+
 	public void ajouter(int enfant, int parent, int poids) {
 		this.parents.add(new int[]{enfant, parent, poids});
 	}

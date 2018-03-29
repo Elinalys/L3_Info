@@ -134,7 +134,7 @@
 
     \section{Arbres couvrants minimaux}
 
-    (\dots)
+    Pour le problème des arbres recouvrant de poids minimaux on définit une classe \texttt{Arbre}, une méthode \texttt{getOrdoredAretes} dans \texttt{Graphe}. Dans \texttt{TableauPartition} on a une méthode \texttt{GrapheToArbre} qui, comme son nom l'indique, prend en paramètre un graphe et retourne l'arbre de poids minimum en passant par le tableau de partition.
 
 \chapter[Programmation dynamique. Distance d'édition]{Programmation dynamique {\ \normalfont\emph{Distance d'édition}}}
 
@@ -151,13 +151,13 @@
 
     \section{Avec mémoïzation}
 
-    La méthode récursive avec \emph{mémoïzation} reprend le même principe en ajoutant un tableau de distances entre sous-chaînes où les valeurs sont ici initialisées à $999$\footnote{Pour simuler un $+\infty$.} et un \emph{niveau} qui s'incrémentera si l'on repère une différence de caractère dans l'appel récursif.
+    La méthode récursive avec \emph{mémoïzation} reprend le même principe en ajoutant un tableau de distances entre sous-chaînes où les valeurs sont ici initialisées à $999$\footnote{Pour simuler un $+\infty$.} et un \emph{niveau} qui s'incrémentera si l'on repère une différence de caractère dans l'appel récursif. Elle est ici implémentée par \texttt{RecursifMemo}.
 
     \section{Méthode dynamique}
 
     Pour l'algorithme de programmation dynamique les chaines de caractères placées en paramètres sont remplacées par des \emph{tableaux de caractères} (comme en C), pour effectuer la transformation à l'appel de la fonction on appelle la fonction \texttt{toCharArray()} du type \texttt{String} de Java. La fonction \texttt{Dynamique} utilise une matrice à deux dimensions qui stocke les résultats intermédiaires pour calculer les suivants et la retourne.
 
-    \paragraph{Exemple} avec les mots \emph{tourte} et \emph{tartre}
+    \paragraph{Exemple} avec les mots \emph{tourte} et \emph{tartre} :
 
     \begin{table}[h]
     \centering
@@ -178,6 +178,10 @@
 
     \section{Affichage des opérations}
 
+    Pour l'affichage (en mode console) on dispose de plusieurs méthodes. Tout d'abord \texttt{tableauToString} prend en paramètre une matrice $2\times2$ d'entiers fournies par \texttt{Dynamique} et \texttt{RecursifMemo} et l'affiche. Les fonctions \texttt{chemin} et \texttt{cheminRecMemo} prennent en paramètre les matrices retournées par les fonctions respectives et des chaines sous forme de tableau d'entier pour afficher à l'écran les opérations effectuées pour passer d'un mot à un autre.
+
     \section{Comparaison des résultats}
+
+    Après études des temps d’exécution on peut observer que en raison de sa complexité exponentielle l'algorithme \emph{récursif} ``naïf'' présente de loin le temps le plus élevé car on effectue énormément de calculs inutiles. Le récursif avec \emph{mémoïzation} augmente significativement la rapidité mais l'algorithme de \emph{programmation dynamique} reste de loin le plus optimisé. Cependant pour l'affichage des opérations \texttt{cheminRecMemo} semble plus performant que que \texttt{chemin}.
             
 \end{document}

@@ -8,8 +8,8 @@ public class Main {
 
 		double debut;
 
-		/* Comparaison entre tableau partition et tableau père */
-		/*System.out.println("Tableau partition");
+		//Comparaison entre tableau partition et tableau père
+		System.out.println("Tableau partition");
 		debut = System.nanoTime();
 		TableauPartition test = new TableauPartition(5);
 		System.out.println(System.nanoTime() - debut + " nanosecondes");
@@ -40,20 +40,21 @@ public class Main {
 
 		debut = System.nanoTime();
 		System.out.println("Classe de 2 : " + test2.getClasse(2));
-		System.out.println(System.nanoTime() - debut + " nanosecondes");*/
+		System.out.println(System.nanoTime() - debut + " nanosecondes");
 
+		System.out.println("\nComposantes connexes");
 		Graphe grapheTest = new Graphe(new Integer[] {0, 1, 2, 3}, new Integer[][] { {1, 3}, {0, 2} });
 		TableauPartition tableauPartTest = new TableauPartition(grapheTest);
 		System.out.println(tableauPartTest);
 		
-		/*Graphe grapheValue = new Graphe(new Integer[] { 0, 1, 2, 3, 4 },
+		Graphe grapheValue = new Graphe(new Integer[] { 0, 1, 2, 3, 4 },
 			new Integer[][] { {0, 2, 40}, {0, 1, 3}, {1, 3, 80}, {3, 0, 2}, {2, 3, 1}, {4, 3, 6} });
 
 		TableauPartition test3 = new TableauPartition(grapheValue.n());
 		System.out.println("\nTableau partition graphe via graphe : " );
 		System.out.println(test3);
 		Arbre arbre = test3.GrapheToArbre(grapheValue);
-		System.out.println("Arbre : \n" + arbre);*/
+		System.out.println("Arbre : \n" + arbre);
 
 
 	}

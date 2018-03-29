@@ -27,3 +27,9 @@
 Convertir string en array et transformer en matrice pour encoder
 on a alors une taille de matrice calculée en fonction de la chaine et une "mire" de taille fixe
 Premiere étape un couleur logo une couleur correction une couleur msg
+
+
+# Rapport
+
+améliorations possibles taille pixel variable
+correction d'erreur variable
