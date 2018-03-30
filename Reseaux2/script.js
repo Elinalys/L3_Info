@@ -148,35 +148,53 @@ var draw = function() {
     ctx.fillRect(0,40,10*5,10);
     // faire boucle while aec modulo pour saut de ligne proportionnel
     var cpt2 = 0;
-    // ajouter le swap des '2' avec le reste
-    var cpt = 50;
-    var b = true
-    for (var k = 0; k < bits.length; k++) {
-      for (var i = 0; i < bits[k].length; i++) {
-        for (var j = 0; j < bits[k][i].length; j++) {
-          // console.log("i : "+i+" j : "+j);
-          if (bits[k][i][j] == 0) {
-            if (b == true) {
-              ctx.fillStyle = "#66CCE1";
-            } else if (b == false) {
-              ctx.fillStyle = "#B2F64C";
+    var cpt;
+    var len;
+    if (msg.length != 0) {  
+      if (msg.length+1 <= 2) {
+        len = 2;
+      }
+      else if ((msg.length+1) % 2 == 1) {
+        len = (msg.length+2) / 2;
+      }
+      else if ((msg.length+1) % 2 == 0) {
+        len = (msg.length+1) / 2;
+      }
+    }
+    console.log(len)
+    
+    for (var m = 0; m < len; m++) {
+      if (m == 0) { cpt = 50; }
+      else { cpt = 0; }
+      var b = true
+      for (var k = 0; k < bits.length; k++) {
+        for (var i = 0; i < bits[k].length; i++) {
+          for (var j = 0; j < bits[k][i].length; j++) {
+            // console.log("i : "+i+" j : "+j);
+            if (bits[k][i][j] == 0) {
+              if (b == true) {
+                ctx.fillStyle = "#66CCE1";
+              } else if (b == false) {
+                ctx.fillStyle = "#B2F64C";
+              }
+              ctx.fillRect(cpt+(j*10),cpt2+(i*10),10,10);
+            } else if (bits[k][i][j] == 1) {
+              if (b == true) {
+                ctx.fillStyle = "#AA7DFC";
+              } else if (b == false) {
+                ctx.fillStyle = "#FF5794";
+              }
+              ctx.fillRect(cpt+(j*10),cpt2+(i*10),10,10);
+            } else if (bits[k][i][j] == 2) {
+              ctx.fillStyle = "#FAA23D";
+              ctx.fillRect(cpt+(j*10),cpt2+(i*10),10,10);
             }
-            ctx.fillRect(cpt+(j*10),cpt2+(i*10),10,10);
-          } else if (bits[k][i][j] == 1) {
-            if (b == true) {
-              ctx.fillStyle = "#AA7DFC";
-            } else if (b == false) {
-              ctx.fillStyle = "#FF5794";
-            }
-            ctx.fillRect(cpt+(j*10),cpt2+(i*10),10,10);
-          } else if (bits[k][i][j] == 2) {
-            ctx.fillStyle = "#FAA23D";
-            ctx.fillRect(cpt+(j*10),cpt2+(i*10),10,10);
           }
         }
+        b = !b;
+        cpt+=50;
       }
-      b = !b;
-      cpt+=50;
+      cpt2+=50;
     }
   }
 }

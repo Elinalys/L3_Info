@@ -1,0 +1,5 @@
+\select@language {french}
+\contentsline {section}{\numberline {1}Fonctionnement du protocole}{1}{section.1}
+\contentsline {section}{\numberline {2}Technologie utilis\IeC {\'e}e}{1}{section.2}
+\contentsline {section}{\numberline {3}Impl\IeC {\'e}mentations}{1}{section.3}
+\contentsline {section}{\numberline {4}am\IeC {\'e}liorations, remarques}{1}{section.4}
