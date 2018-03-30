@@ -55,6 +55,7 @@ String.prototype.fixBits = function(nb) {
     return zeros;
     // console.log(msg[i] + " : " + bits[i]);
   }
+  return "";
 }
 
 String.prototype.hamming = function() {
@@ -146,9 +147,9 @@ var draw = function() {
     ctx.fillStyle = "#FAA23D";
     ctx.fillRect(0,40,10*5,10);
     // faire boucle while aec modulo pour saut de ligne proportionnel
+    var cpt2 = 0;
     // ajouter le swap des '2' avec le reste
     var cpt = 50;
-    var cpt2 = 0;
     var b = true
     for (var k = 0; k < bits.length; k++) {
       for (var i = 0; i < bits[k].length; i++) {

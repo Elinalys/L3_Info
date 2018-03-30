@@ -33,3 +33,10 @@ Premiere étape un couleur logo une couleur correction une couleur msg
 
 améliorations possibles taille pixel variable
 correction d'erreur variable
+
+plan :
+
+1. Fonctionnement du protocole : choix effectués
+2. Technologie utilisée pourquoi
+3. implémentation explications
+4. améliorations, remarques
