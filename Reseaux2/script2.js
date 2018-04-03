@@ -1,30 +1,3 @@
-
-
-/*
-TODO LIST
-
-- recuperer saisie et l'afficher pour le test
-- determiner taille matrice en fonction de la taille de la chaine
-- afficher "mire" couleurs fixe en haut à gauche à prendre en compte pour l'affichage du reste, zone à pas toucher
-/ ! \ Ajouter un caractère pour changement de mot ou changement de couleurs à chaque mot
-
-
-ON peut proceder par "carrés" de deux couleurs, changeantes à chaque carac le code est un code de code
-
-IL est nécessaire de gérer idéalement chars codés sur 16bits.
-
-On a donc lettres codées sur des carrés de 4×4 (16) une couleur pour le 0 l'autre pour le 1
-
-Le premier est toujours la "mire" qui indique les couleurs utilisées (l'encodage)
-
-UPDATE : On doit effectuer hamming qui effectue une correction on doit rajouter 5 bits pour 16  donc on passe au mutiple
- de 4 supérieur un carré de 5×5 (25)
-
-Les cases restantes pourraient etre utilisées pour placer des pixels de logo
-
-  On est plus obligés de changer la couleur à chaque caractère
-*/
-
 // récuperer le code unicode des caractères d'une chaîne
 String.prototype.getBytes = function() {
   var bytes = [];
@@ -55,6 +28,7 @@ String.prototype.fixBits = function(nb) {
     return zeros;
     // console.log(msg[i] + " : " + bits[i]);
   }
+  return "";
 }
 
 String.prototype.hamming = function() {
@@ -87,7 +61,7 @@ String.prototype.hamming = function() {
 }
 
 //Creation des tableau de 5*5 a afficher
-String.prototype.matrice = function() {
+String.prototype.toMatrix = function() {
   var tab = [];
   var mot = this.hamming()+'2'+'2'+'2'+'2'; //Rajout des 4 bits vides
   // console.log("mot matrice :"+mot);
@@ -101,56 +75,95 @@ String.prototype.matrice = function() {
 
 var draw = function() {
   var msg = input.value;
-  /* -- Debug -- */
-  // console.log("msg : " + msg);
   var codes = msg.getBytes();
-  // console.log("codes : " + codes);
   var bits = codes.toBits();
-  // console.log("bits : " + bits);
-  /**/
+
+  
+  /*console.log("msg : " + msg);
+  console.log("codes : " + codes);
+  console.log("bits : " + bits);*/
+  
+
   var canvas = document.getElementById('tutorial');
   
-  var matrix = new Array();
-  if (msg.length != 0) {  
-    if (msg.length+1 <= 2) {
-      matrix.length = 2;
-    }
-    else if ((msg.length+1) % 2 == 1) {
-      matrix.length = (msg.length+2) / 2;
-    }
-    else if ((msg.length+1) % 2 == 0) {
-      matrix.length = (msg.length+1) / 2;
-    }
-  }
-
-  for (var i = 0; i < matrix.length; i++) {
-    matrix[i] = new Array();
-    matrix[i].length = matrix.length;
-  }
-/*  console.log(matrix);
-  console.log(bits);*/
-  /* debug */
-  // fix bits forcer la taille 16
+  // matrice qui contiendra le code a afficher
   for (var i = 0; i < bits.length; i++) {
     bits[i] = bits[i].fixBits(16);
-    console.log(msg[i] + " : " + bits[i]);
-  // affichage de hamming, taille 21
-    console.log("Hamming "+msg[i]+" :"+bits[i].hamming());
-    console.log(/*"matrice 5*5 :"+*/bits[i].matrice());
+    /*console.log("bits fixed : ")
+    console.log(""+bits[i]);*/
   }
-  var cmpt = 0;
-  for (var i = 0; i < matrix.length; i++) {
-    for (var j = 0; j < matrix.length; j++) {
-      if (i == 0 && j == 0) {
-        // hardcode la mire
-      }
-      else {
-        //matrix[i][j] = bits[j].matrice();
-        
-      }
+
+  for (var i = 0; i < bits.length; i++) {
+    bits[i] = bits[i].toMatrix();
+    /*console.log("bits fixed hamming : ")
+    console.log(""+bits[i]);*/
+  }
+
+/*  console.log(" ".getBytes());
+  console.log(" ".getBytes().toBits());
+  console.log(" ".getBytes().toBits().fixBits(16));
+  console.log(" ".getBytes().toBits().fixBits(16).hamming());*/
+  //console.log("☭ ".getBytes().toBits().fixBits(16).hamming().toMatrix());
+
+    if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+    //mire
+    ctx.fillStyle = "#66CCE1";
+    ctx.fillRect(0,0,5*5,5);
+    ctx.fillStyle = "#AA7DFC";
+    ctx.fillRect(0,5,5*5,5);
+    ctx.fillStyle = "#B2F64C";
+    ctx.fillRect(0,10,5*5,5);
+    ctx.fillStyle = "#FF5794";
+    ctx.fillRect(0,15,5*5,5);
+    ctx.fillStyle = "#FAA23D";
+    ctx.fillRect(0,20,5*5,5);
+    var cpt2 = 0;
+    var cpt = 0;
+    var len;
+
+    var len = bits.length+1;
+    while(Math.sqrt(len) !== Math.round(Math.sqrt(len))){
+      len++;
     }
+    len = Math.sqrt(len);
+    //console.log(len);
+
+    /*for (var m = 0; m < bits.length; m++) {
+      else { cpt = 0; }
+    */var b = true;
+    for (var k = 0; k < bits.length; k++) {
+      if (k == 0) { cpt = 25; }
+      for (var i = 0; i < bits[k].length; i++) {
+        for (var j = 0; j < bits[k][i].length; j++) {
+          // console.log("i : "+i+" j : "+j);
+
+          if (bits[k][i][j] == 0) {
+            if (b == true) {
+              ctx.fillStyle = "#66CCE1";
+            } else if (b == false) {
+              ctx.fillStyle = "#B2F64C";
+            }
+            ctx.fillRect(cpt+(j*5),cpt2+(i*5),5,5);
+          } else if (bits[k][i][j] == 1) {
+            if (b == true) {
+              ctx.fillStyle = "#AA7DFC";
+            } else if (b == false) {
+              ctx.fillStyle = "#FF5794";
+            }
+            ctx.fillRect(cpt+(j*5),cpt2+(i*5),5,5);
+          } else if (bits[k][i][j] == 2) {
+            ctx.fillStyle = "#FAA23D";
+            ctx.fillRect(cpt+(j*5),cpt2+(i*5),5,5);
+          }
+        }
+      }
+      b = !b;
+      cpt+=25;
+    }
+      /*cpt2+=50;*/
+    /*}*/
   }
-  console.log(matrix);
 }
 
 var clear = function() {
@@ -158,104 +171,18 @@ var clear = function() {
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (input.value !== '') {
-      input.value = '';
-    }
-    console.clear();
   }
+  if (input.value !== '') {
+    input.value = '';
+  }
+  console.clear();
+  //console.log("ok");
 }
 
 // window.addEventListener("load", draw);
+input = document.getElementById("chaine");
+val = document.getElementById("send");
+val.addEventListener("click", draw);
 suppr = document.getElementById("delete");
 suppr.addEventListener("click", clear);
-val = document.getElementById("send");
-val = addEventListener("click", draw);
-input = document.getElementById("chaine");
 // input.addEventListener("input", draw);
-
-
-var old_Draw = function() {
-  var canvas = document.getElementById('tutorial');
-  if (canvas.getContext) {
-    var ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'rgb(200, 0, 0)';
-    ctx.fillRect(10, 10, 50, 50);
-    ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-    ctx.fillRect(30, 30, 50, 50);
-    ctx.font = '48px monospace';
-    var msg = input.value;
-    ctx.fillText(msg, 50, 50);
-
-    // ctx.fillStyle = "red";
-    // for (var i = 0; i < bits.length; i++) {
-    //   for (var j = 0; j < bits[i].length; j++) {
-    //     // si i pair un couple de couleurs | si i impair une autre
-    //     // console.log(" b["+i+"]["+j+"] : " + bits[i][j]);
-    //     // ctx.fillRect(i,j,1,1);
-    //   }
-    // }
-  }
-
-  if (canvas.getContext) {
-    var ctx = canvas.getContext('2d');
-    for (var i = 0; i < bits.length; i++) {
-      for (var j = 0; j < bits[i].length; j++) {
-        if (bits[i][j] == '0') {
-          ctx.fillStyle = "Red";
-          ctx.fillRect(j+50,i+50,50,50);
-        }
-        else if (bits[i][j] == '1') {
-          ctx.fillStyle = "Blue";
-          ctx.fillRect(i+50,j+50,50,50);          
-        }
-      }
-    }
-  }
-
-  /*  if (canvas.getContext) {
-    var ctx = canvas.getContext('2d');
-    //mire
-    ctx.fillStyle = "#66CCE1";
-    ctx.fillRect(0,0,10*5,10);
-    ctx.fillStyle = "#AA7DFC";
-    ctx.fillRect(0,10,10*5,10);
-    ctx.fillStyle = "#B2F64C";
-    ctx.fillRect(0,20,10*5,10);
-    ctx.fillStyle = "#FF5794";
-    ctx.fillRect(0,30,10*5,10);
-    ctx.fillStyle = "#FAA23D";
-    ctx.fillRect(0,40,10*5,10);
-
-
-  }*/
-}
-
-
-/*> bits
-[ '1110100', '1100101', '1110011', '1110100' ]
->   for (var i = 0; i < bits.length; i++) {
-...     bits[i] = bits[i].fixBits(16).hamming().toMatrix();
-...     console.log(bits[i]);
-...   }
-[ [ '0', '0', '0', '0', '0' ],
-  [ '0', '0', '0', '0', '0' ],
-  [ '0', '1', '1', '0', '1' ],
-  [ '1', '0', '0', '1', '0' ],
-  [ '1', '2', '2', '2', '2' ] ]
-[ [ '0', '0', '0', '0', '0' ],
-  [ '0', '0', '0', '0', '0' ],
-  [ '0', '1', '1', '0', '0' ],
-  [ '0', '0', '0', '1', '0' ],
-  [ '0', '2', '2', '2', '2' ] ]
-[ [ '0', '0', '0', '0', '0' ],
-  [ '0', '0', '0', '0', '0' ],
-  [ '0', '1', '1', '0', '1' ],
-  [ '1', '0', '0', '0', '1' ],
-  [ '0', '2', '2', '2', '2' ] ]
-[ [ '0', '0', '0', '0', '0' ],
-  [ '0', '0', '0', '0', '0' ],
-  [ '0', '1', '1', '0', '1' ],
-  [ '1', '0', '0', '1', '0' ],
-  [ '1', '2', '2', '2', '2' ] ]
-undefined
->*/

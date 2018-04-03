@@ -1,11 +1,3 @@
 div#entrees {
-	float : left;
-}
-
-canvas {
-	float : right;
-}
-
-div#tab {
-	float: right;
+	margin-bottom: 1%;
 }

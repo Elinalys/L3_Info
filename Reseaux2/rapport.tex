@@ -4,11 +4,13 @@
 % \usepackage{fontspec}
 \usepackage{amssymb,amsmath}
 \usepackage[T1]{fontenc}
-\usepackage[scale=0.8]{geometry} 
+\usepackage[scale=0.7]{geometry} 
 \usepackage[french]{babel}% pour un document en français.
-\usepackage{minted}
-\usepackage{graphicx}
+% \usepackage{minted}
+% \usepackage{pygmentize}
+% \usepackage{graphicx}
 \usepackage[colorlinks=true, linkcolor=blue]{hyperref}
+\renewcommand{\baselinestretch}{1.25} 
 \date{}
 \title{Rapport de TP de Réseaux II}
 \author{Emilie \textsc{Péret} \and Loris \textsc{Croce}}
@@ -17,22 +19,62 @@
 
 \maketitle
 
+\hrule
+
 % \tableofcontents
 
 \section*{Fonctionnement du protocole}
 
+Nous avons opté pour un protocole faisant usage de 5 couleurs, ici en hexadécimal :
+\begin{itemize}
+	\item \verb|#66CCE1| 
+	\item \verb|#AA7DFC| 
+	\item \verb|#B2F64C| 
+	\item \verb|#FF5794| 
+	\item \verb|#FAA23D|
+\end{itemize}
 
+Les caractères du message sont représentés sous forme de ``carrés'' de $5\times5$ pixels. Où les $0$ et les $1$ sont sont représentés par des couples de couleurs, celles-ci changent pour 1 caractère sur 2, ce qui permet un décodage aisé en séparant les caractères. La dernière couleur reste disponible pour un éventuel logo. 
+
+Le tout premier ``carré'' est une \emph{mire} représentant l'ensemble des couleurs utilisées (une par ligne). Il permet de donner l'orientation de lecture du code car il est placé en haut à gauche ainsi que la taille d'un pixel de par les lignes dessinées.
+
+Les caractères sont codés sur $16bits$ cela permettant une bonne prise en charge des caractères spéciaux. Ils sont ensuite transformés par code de \emph{hamming} ce qui ramène la taille d'un caractère à $21bits$. Sur un carré de $5\times5$ on a donc 4 ``pixels'' libres pour un logo.  
 
 \section*{Technologie utilisée}
 
-Pour ce TP, nous avons choisi d'utiliser le langage Javascript pour plusieurs raisons. D'une part son haut niveau permettait de s'abstraire de certaines contraintes telles que le typage ou la gestion de la mémoire. Mais c'est aussi pour ses propriétés inhérentes, en effet, fournir une interface sous la forme d'une page HTML simple nous a paru une solution efficace. De plus, Javascript permet de dessiner dans un \emph{canvas} déclaré dans la page.
-Et meme si Javascript a pour défaut de nas as être uassi rapide que certains autres langages cet inconvenient était négligeable ici.
+Pour ce TP, nous avons choisi d'utiliser le langage \textsf{JavaScript} pour plusieurs raisons. D'une part son haut niveau permettait de s'abstraire de certaines contraintes telles que le typage ou la gestion de la mémoire. Mais c'est aussi pour ses propriétés inhérentes, en effet, fournir une interface sous la forme d'une page HTML simple nous a paru une solution efficace. De plus, \textsf{JavaScript} permet de dessiner dans un \emph{canvas} déclaré dans la page.
+
+Toutefois si \textsf{JavaScript} a pour défaut de ne pas être aussi performant (car haut niveau) que certains autres langages (comme le \textsf{C} par exemple) cet inconvénient était négligeable ici étant donné la faible complexité des opérations tout en étant dans une situation où l'instantanéité du programme n'est pas à maximiser.
+
 \section*{Implémentation}
 
+\paragraph{Côté HTML} Nous avons déclaré simplement une un groupe d'éléments pour les entrées alignés à gauche composé d'une zone de saisie de texte, et de deux boutons : \emph{Valider} et \emph{Supprimer}. À droite un \emph{canvas} comme précisé ci-dessus destiné à afficher le code graphique.
 
+\paragraph{Traitement du message} Les événements du et éléments du DOM\footnote{Document Object Model} ont été récupérés respectivement par les méthodes \texttt{addEventLister(\emph{event, function})} et \texttt{document.getElementById(\emph{id})}. Ceux-ci ont étés stockés et assignés à des variables. Ensuite des traitements sur le message ont étés effectués pour parvenir à une forme interprétable pour notre protocole. Pour cela un ensemble de fonctions ont été créées : 
+\begin{itemize}
+	\item \texttt{getBytes} permettant de récupérer les codes unicode d'un chaîne.
+	\item \texttt{toBits} permettant de transformer ces codes sous forme binaire.
+	\item \texttt{fixBits} normalisant les nombres binaires en rajoutant si nécessaire des $0$ supplémentaires par rapport on nombre fixé en paramètre.
+	\item \texttt{hamming} effectue une correction de hamming sur un nombre binaire.
+	\item \texttt{toMatrix} transforme le tout en une matrice pour être dessinée.
+\end{itemize}
 
+\paragraph{Affichage} Pour gérer l'affichage du code de fonctions ont été créés : \texttt{draw} et \texttt{clear} permettant respectivement d'afficher et supprimer un code correspondant à au message entré. Il faut au préalable assigner le contexte du canvas à une variable, ici \texttt{ctx}. Pour dessiner --ici les ``pixels''-- on dispose d'une fonction fournie par le canvas : \texttt{ctx.fillRect(\emph{x,y,width,height})} permettant de dessiner un rectangle --ici carré-- et \texttt{ctx.fillStyle} permettant auquel il est possible d'assigner la couleur voulue.
+Pour dessiner le code on dessine d'abord la mire ``en dur'', puis on parcoure le tableau \texttt{bits} en 3 dimensions pour créer les carrés bits par bits. On sélectionne la couleur en vérifiant le contenu de la cellule et grâce à une variable booléenne permettant le changement de couples de couleurs entre chaque caractère.
 
 \section*{Améliorations, remarques}
 
+En premier lieu, il est important de rappeler que le code devait avoir à priori une forme s'approchant d'un carré (ou au moins s'afficher sur plusieurs colonnes), cependant cela n'a pas été mis en place car les tentatives n'ont pas permis de former de revenir à la ligne au moment opportun en fonction de la taille du message.
+
+Ensuite, afin d'améliorer le protocole la taille des pixels aurait pu être inversement proportionnelle à la taille du message. Une correction d'erreur variable ainsi qu'un choix des couleurs aurait également pu être implémenté. Pour finir, les pixels inutilisés aurait pu être déplacés dans chaque caractère codé pour retranscrire un logo.
+
+
+
 % taille pixel variable, correction d'erreur variable
+
+% pas complet car pas de retour à la ligne ligne proportionnel à la taille du message afin de s'approcher d'un carré 
+
+% code verbeux
+
+% swap les '2' pour placer les oranges differment pour faire un logo.
 \end{document}

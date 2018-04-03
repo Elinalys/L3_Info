@@ -1,3 +1,19 @@
+/*
+TODO LIST
+- recuperer saisie et l'afficher pour le test
+- determiner taille matrice en fonction de la taille de la chaine
+- afficher "mire" couleurs fixe en haut à gauche à prendre en compte pour l'affichage du reste, zone à pas toucher
+/ ! \ Ajouter un caractère pour changement de mot ou changement de couleurs à chaque mot
+ON peut proceder par "carrés" de deux couleurs, changeantes à chaque carac le code est un code de code
+IL est nécessaire de gérer idéalement chars codés sur 16bits.
+On a donc lettres codées sur des carrés de 4×4 (16) une couleur pour le 0 l'autre pour le 1
+Le premier est toujours la "mire" qui indique les couleurs utilisées (l'encodage)
+UPDATE : On doit effectuer hamming qui effectue une correction on doit rajouter 5 bits pour 16  donc on passe au mutiple
+ de 4 supérieur un carré de 5×5 (25)
+Les cases restantes pourraient etre utilisées pour placer des pixels de logo
+  On est plus obligés de changer la couleur à chaque caractère
+*/
+
 // récuperer le code unicode des caractères d'une chaîne
 String.prototype.getBytes = function() {
   var bytes = [];
@@ -61,10 +77,10 @@ String.prototype.hamming = function() {
 }
 
 //Creation des tableau de 5*5 a afficher
-// Le pb vient de cette fonction -> non c'est juste tu l'appelles deux fois ducon
 String.prototype.toMatrix = function() {
   var tab = [];
-  var mot = this.hamming()+'2'+'2'+'2'+'2'; //Rajout des 4 bits vides
+  var mot1 = this.hamming()
+  var mot = '2'+mot1.slice(0,3)+'2'+mot1.slice(3,18)+'2'+mot1.slice(18,21)+'2';
   // console.log("mot matrice :"+mot);
   tab[0] = mot.slice(0,5).split('');
   tab[1] = mot.slice(5,10).split('');
@@ -74,20 +90,27 @@ String.prototype.toMatrix = function() {
   return tab;
 }
 
+String.prototype.recup = function() {
+  var taille = this+1;
+  console.log("t : " + taille);
+  while(Math.sqrt(taille) !== Math.round(Math.sqrt(taille))){
+    taille++;
+  }
+  return Math.sqrt(taille);
+}
+
 var draw = function() {
   var msg = input.value;
   var codes = msg.getBytes();
   var bits = codes.toBits();
-
-  
-  /*console.log("msg : " + msg);
+  /*
+  console.log("msg : " + msg);
   console.log("codes : " + codes);
-  console.log("bits : " + bits);*/
-  
+  console.log("bits : " + bits);
+  */
 
   var canvas = document.getElementById('tutorial');
-  
-  // matrice qui contiendra le code a afficher
+
   for (var i = 0; i < bits.length; i++) {
     bits[i] = bits[i].fixBits(16);
     /*console.log("bits fixed : ")
@@ -100,73 +123,78 @@ var draw = function() {
     console.log(""+bits[i]);*/
   }
 
-/*  console.log(" ".getBytes());
+  /* console.log(" ".getBytes());
   console.log(" ".getBytes().toBits());
   console.log(" ".getBytes().toBits().fixBits(16));
   console.log(" ".getBytes().toBits().fixBits(16).hamming());*/
   //console.log("☭ ".getBytes().toBits().fixBits(16).hamming().toMatrix());
 
-    if (canvas.getContext) {
+  //Recuperation de la racine carre pour la taille du carre (ex: taille mot =9 ou 8, racine et 3 donc cote et 3)
+  //Pas reussis a le mettre dans une fonction :x
+  var taille = bits.length+1;
+  while(Math.sqrt(taille) !== Math.round(Math.sqrt(taille))){
+    taille++;
+  }
+  taille = Math.sqrt(taille);
+
+  if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
     //mire
     ctx.fillStyle = "#66CCE1";
-    ctx.fillRect(0,0,5*5,5);
+    ctx.fillRect(0,0,10*5,10);
     ctx.fillStyle = "#AA7DFC";
-    ctx.fillRect(0,5,5*5,5);
+    ctx.fillRect(0,10,10*5,10);
     ctx.fillStyle = "#B2F64C";
-    ctx.fillRect(0,10,5*5,5);
+    ctx.fillRect(0,20,10*5,10);
     ctx.fillStyle = "#FF5794";
-    ctx.fillRect(0,15,5*5,5);
+    ctx.fillRect(0,30,10*5,10);
     ctx.fillStyle = "#FAA23D";
-    ctx.fillRect(0,20,5*5,5);
-    // faire boucle while aec modulo pour saut de ligne proportionnel
-    var cpt = 0
-
-    /*
+    ctx.fillRect(0,40,10*5,10);
     var cpt2 = 0;
-    var len = bits.length+1;
-    while(Math.sqrt(len) !== Math.round(Math.sqrt(len))){
-      len++;
-    }
-    len = Math.sqrt(len);
-    console.log(len);
-    */
-
-    /*for (var m = 0; m < bits.length; m++) {
-      else { cpt = 0; }
-    */
-    var b = true;
-    for (var k = 0; k < bits.length; k++) {
-      if (k == 0) { cpt = 25; }
-      for (var i = 0; i < bits[k].length; i++) {
-        for (var j = 0; j < bits[k][i].length; j++) {
+    var cpt = 50;
+    var b = true
+    console.log(taille);
+    var l = taille;
+    var m = taille;
+    for (var k = 1; k < bits.length+1; k++) {
+          if(k>taille){
+            console.log(k);
+            console.log(taille);
+            console.log((k%taille));
+            l = 50*(k%taille);
+            m = 50*(k+1-k%taille);
+            console.log(l+"ee"+m);
+          }
+          else{
+            l = 0;
+            m = 0;
+          }
+      for (var i = 0; i < bits[k-1].length; i++) {
+        for (var j = 0; j < bits[k-1][i].length; j++) {
           // console.log("i : "+i+" j : "+j);
-
-          if (bits[k][i][j] == 0) {
+          if (bits[k-1][i][j] == 0) {
             if (b == true) {
               ctx.fillStyle = "#66CCE1";
             } else if (b == false) {
               ctx.fillStyle = "#B2F64C";
             }
-            ctx.fillRect(cpt+(j*5),/*cpt2+*/(i*5),5,5);
-          } else if (bits[k][i][j] == 1) {
+            ctx.fillRect(cpt+(j*10)-(m),(l)+cpt2+(i*10),10,10);
+          } else if (bits[k-1][i][j] == 1) {
             if (b == true) {
               ctx.fillStyle = "#AA7DFC";
             } else if (b == false) {
               ctx.fillStyle = "#FF5794";
             }
-            ctx.fillRect(cpt+(j*5),/*cpt2+*/(i*5),5,5);
-          } else if (bits[k][i][j] == 2) {
+            ctx.fillRect(cpt+(j*10)-(m),(l)+cpt2+(i*10),10,10);
+          } else if (bits[k-1][i][j] == 2) {
             ctx.fillStyle = "#FAA23D";
-            ctx.fillRect(cpt+(j*5),/*cpt2+*/(i*5),5,5);
+            ctx.fillRect(cpt+(j*10)-(m),(l)+cpt2+(i*10),10,10);
           }
         }
       }
       b = !b;
-      cpt+=25;
+      cpt+=50;
     }
-      /*cpt2+=50;*/
-    /*}*/
   }
 }
 
@@ -180,6 +208,7 @@ var clear = function() {
     input.value = '';
   }
   console.clear();
+  console.log("ok");
 }
 
 // window.addEventListener("load", draw);
